@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/default_gray_clickable_selector">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/user_video_imageview"
+        android:layout_width="134dp"
+        android:layout_height="75dp"
+        android:scaleType="fitXY"
+        android:layout_marginStart="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/user_video_timelength_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:background="@color/dimfilter"
+        app:layout_constraintBottom_toBottomOf="@id/user_video_imageview"
+        app:layout_constraintEnd_toEndOf="@id/user_video_imageview"
+        tools:text="03:45"/>
+
+    <TextView
+        android:id="@+id/user_video_title_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_video_imageview"
+        app:layout_constraintEnd_toStartOf="@id/user_video_overflow_imagebutton"
+        tools:text="SummerZeit 2012" />
+
+    <TextView
+        android:id="@+id/user_video_user_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/user_video_imageview"
+        app:layout_constraintTop_toBottomOf="@id/user_video_title_textview"
+        app:layout_constraintEnd_toStartOf="@id/user_video_overflow_imagebutton"
+        tools:text="Andrea Allen" />
+
+    <TextView
+        android:id="@+id/user_video_plays_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="8dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/user_video_imageview"
+        app:layout_constraintTop_toBottomOf="@id/user_video_user_textview"
+        tools:text="1.7k plays ⋅ 4 years ago" />
+
+    <ImageButton
+        android:id="@+id/user_video_overflow_imagebutton"
+        style="@style/Base.Widget.AppCompat.ActionButton.Overflow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:padding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/video_feed_overflow"/>
+
+</android.support.constraint.ConstraintLayout>

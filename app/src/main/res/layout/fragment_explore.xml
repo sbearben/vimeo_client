@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_explore_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/fragment_explore_collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/white">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/fragment_explore_categories_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fragment_explore_categories_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    style="@style/TextAppearance.AppCompat.Widget.Button"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="@string/fragment_explore_categories_textview_string"/>
+
+                <View
+                    android:id="@+id/fragment_explore_categories_underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/mediumLightGray"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_explore_categories_textview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fragment_explore_categories_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_explore_categories_underline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/fragment_explore_staffpicks_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_explore_categories_recyclerview"
+                    style="@style/TextAppearance.AppCompat.Widget.Button"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="@string/fragment_explore_staffpicks_textview_string"/>
+
+                <View
+                    android:id="@+id/fragment_explore_staffpicks_underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/mediumLightGray"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_explore_staffpicks_textview"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/layout_recyclerview_with_message"
+        android:id="@+id/fragment_explore_videos_recyclerview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <include layout="@layout/layout_content_progress" />
+
+    <include layout="@layout/layout_message" />
+
+</android.support.design.widget.CoordinatorLayout>

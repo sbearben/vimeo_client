@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.bumptech.glide:recyclerview-integration-4.7.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/recyclerview-integration-4.7.1.aar/76f233e44e5e26c9784014ecdcf8a711/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/recyclerview-integration-4.7.1.aar/76f233e44e5e26c9784014ecdcf8a711/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/recyclerview-integration/4.7.1/211ade07bf9293e30cbd3c8354b0b5f960a50373/recyclerview-integration-4.7.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

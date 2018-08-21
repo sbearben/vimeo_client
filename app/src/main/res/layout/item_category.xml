@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_cardview"
+    android:layout_width="98dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="4dp"
+    android:background="@drawable/default_gray_clickable_selector">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:id="@+id/category_imageview_container_layout"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@color/darkGray" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/category_background_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/category_dimfilter_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@color/dimfilter" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/category_icon_imageview"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/category_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:gravity="center"
+            android:textColor="@color/mediumDarkGray"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_imageview_container_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Reporting and Journalism" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

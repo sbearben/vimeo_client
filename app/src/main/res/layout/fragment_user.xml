@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_user_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/fragment_user_collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/fragment_user_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/fragment_user_imageview"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@color/transparent" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/fragment_user_guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.40" />
+
+                <TextView
+                    android:id="@+id/fragment_user_followers_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/UserProfileStatsTextview"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_user_following_textview"
+                    app:layout_constraintStart_toEndOf="@id/fragment_user_guideline1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2.4k\nfollowers" />
+
+                <TextView
+                    android:id="@+id/fragment_user_following_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/UserProfileStatsTextview"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_user_likes_textview"
+                    app:layout_constraintStart_toEndOf="@id/fragment_user_followers_textview"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="686\nfollowing" />
+
+                <TextView
+                    android:id="@+id/fragment_user_likes_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/UserProfileStatsTextview"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fragment_user_following_textview"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="4.1k\nlikes" />
+
+                <TextView
+                    android:id="@+id/fragment_user_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_user_imageview"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Riley Hooper"/>
+
+                <TextView
+                    android:id="@+id/fragment_user_location_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_user_name_textview"
+                    android:textSize="11sp"
+                    android:drawableStart="@drawable/ic_place_black_11dp"
+                    android:drawablePadding="1dp"
+                    tools:text="Brooklyn, NY"/>
+
+                <include layout="@layout/layout_expandable_textview"
+                    android:id="@+id/fragment_user_bio_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_user_location_textview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                </include>
+
+                <View
+                    android:id="@+id/fragment_user_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/mediumLightGray"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_user_bio_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/fragment_user_videocount_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    style="@style/TextAppearance.AppCompat.Widget.Button"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorPrimaryText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_user_divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="27 videos"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/mediumLightGray"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/layout_recyclerview_with_message"
+        android:id="@+id/fragment_user_recyclerview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <WebView
+        android:id="@+id/fragment_user_signin_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <include layout="@layout/layout_content_progress" />
+
+    <include layout="@layout/layout_message" />
+
+</android.support.design.widget.CoordinatorLayout>

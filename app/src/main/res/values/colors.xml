@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorPrimaryLight">#B3E5FC</color>
+    <color name="colorAccent">#448AFF</color>
+
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorRegentGray">#8699A6</color>
+
+    <color name="gray">#ffdfdfdf</color>
+    <color name="dirtyWhite">#E0E0E0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whiteOpacity54">#8AFFFFFF</color>
+    <color name="whiteOpacity5">#0DFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="dimfilter">#4f000000</color>
+
+    <color name="lightLightGray">#F5F5F5</color>
+    <color name="lightGray">#F1F1F1</color>
+    <color name="mediumLightGray">#E7E7E7</color>
+    <color name="darkLightGray">#D1D1D1</color>
+    <color name="lightMediumGray">#C1C1C1</color>
+    <color name="mediumGray">#B1B1B1</color>
+    <color name="mediumMediumGray">#A1A1A1</color>
+    <color name="darkMediumGray">#888888</color>
+    <color name="mediumDarkGray">#4c4c4c</color>
+    <color name="darkGray">#2b2b2b</color>
+    <color name="black">#000000</color>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/item_comment_imageview"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user_image_placeholder" />
+
+    <TextView
+        android:id="@+id/item_comment_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/item_comment_imageview"
+        app:layout_constraintTop_toTopOf="@id/item_comment_imageview"
+        tools:text="Keith Lehman" />
+
+    <TextView
+        android:id="@+id/item_comment_age_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/mediumGray"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/item_comment_name_textview"
+        app:layout_constraintTop_toTopOf="@id/item_comment_imageview"
+        tools:text=" ⋅ 7 hours ago" />
+
+    <TextView
+        android:id="@+id/item_comment_comment_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="11.5sp"
+        app:layout_constraintTop_toBottomOf="@id/item_comment_name_textview"
+        app:layout_constraintStart_toEndOf="@id/item_comment_imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Good video, but sad how what should have been a joyful meeting with Martin's parents turned dark. Odd - but well done." />
+
+    <TextView
+        android:id="@+id/item_comment_reply_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:padding="8dp"
+        android:textSize="13sp"
+        android:textAllCaps="true"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/item_comment_comment_textview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/item_comment_reply_button_string"/>
+
+</android.support.constraint.ConstraintLayout>

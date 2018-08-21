@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="uk.co.victoriajanedavis.vimeo_api_test" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".VimeoApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.BrandedLaunch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="vimeo78b7127abe92b9a6951a6d7f9030b89a87e79f67" android:host="auth" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:parentActivityName=".ui.MainActivity">
+        </activity>
+
+        <activity
+            android:name=".ui.video.VideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name=".ui.user.otheruser.OtherUserActivity">
+        </activity>
+
+        <activity
+            android:name=".ui.channel.ChannelActivity">
+        </activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/5487be2c2165e3bb85ff60cc5ca3ff95c44a7c45/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="ec657bb192b20229696216bf233779b16bf75a54">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-4d4c7314b39129ab4a7af75444f723afd4790e5d.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/cdaf927652e7838d32bac6e55c67a8f21e86d57b/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="c1e9d140d3260619ce2fa991d30b14b531d61dec">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-7614abb197d1e40a0c64427a6c6404ca4a83cbae.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/27.1.1/39ded76b5e1ce1c5b2688e1d25cdc20ecee32007/support-annotations-27.1.1.jar"
+        revision="27.0.3"
+        sha1="39ded76b5e1ce1c5b2688e1d25cdc20ecee32007">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-27.1.1-8ba28145aa40f7f2a12b25f2f706163dad83bf0d.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/35effb650e0531fafaf942947b63c7063e7db74c/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="d968b9bd0011800e0d333d1571b8d34bcb8a0b6e">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1ddfcb902efc667cc4cf5b664bafd1d2d8bf94cf.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
+        revision="27.0.3"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/gson-2.7-bf2d4da6eef214224a0e73006983dff49ad88a41.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/93c5844d010b271a08be9350ebc2c4a91efafbc9/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="88c68e5ef7c5ace393d014c9ec5fe736b1ca55cf">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-7eca7d0528d9d6dc2596180a7c93072b1b8fa15f.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/9e539165c5c20af328780aa536a5ec65f5549dda/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="2feadd535770271ca57b7b431f42151aa4af324a">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-78ec6e549ed9794891f568f38b22cd63a416f63c.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.7.1/796c0bf0a61141278c4bc32de2b92e6eb7fa8b1a/annotations-4.7.1.jar"
+        revision="27.0.3"
+        sha1="796c0bf0a61141278c4bc32de2b92e6eb7fa8b1a">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/annotations-4.7.1-179a23d74acf024e785f2afd5a558dc72758d9d1.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/a125e026950e54cefc5c38e43b58e693b3ddedea/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="4798b2c2dd1fa53176696fa416890d27acbf5617">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-752483ad5e4667ae6c6944b1eabcb7553b5433c5.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/1cfe02aa8dfa1cd81ca5ee961029622e1bf2d2b2/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="d03ef62657e209f303f172be072e9a0e45ec661f">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3ee72ea62baa8d9fa019e5a4c825023674ddd0c1.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.4.0/ea392375cf9ff59234a82e7928a204215ccc98cd/butterknife-annotations-8.4.0.jar"
+        revision="27.0.3"
+        sha1="ea392375cf9ff59234a82e7928a204215ccc98cd">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/butterknife-annotations-8.4.0-fae5dd0a7f6817d932d5cf27ef3a462877990996.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.1.0/edf3f7bfb84a7521d0599efa3b0113a0ee90f85/common-1.1.0.jar"
+        revision="27.0.3"
+        sha1="0edf3f7bfb84a7521d0599efa3b0113a0ee90f85">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/common-1.1.0-599871058d1c586237f7f0b4dbf2940d77c38b06.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/cec3f2fdbcf0154b28e4837c7c9e6d763de79ec8/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="2d8334c5cb1948de5dde77f8b72c82991af32f8a">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-6cf62c20ecfefe1e7f1e659921ab30a5a356c539.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/0266ec6c51ceb97e674fc3923cf6e49c82533d8f/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="e2bbe48deed35056023eed2cdc0cc92e5c7d3617">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-7fcfd553fbd0734e4a843c37d2358be53a4c5232.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.auto/auto-common/0.6/cf7212b0f8bfef12657b942df8f4f2cf032d3f41/auto-common-0.6.jar"
+        revision="27.0.3"
+        sha1="cf7212b0f8bfef12657b942df8f4f2cf032d3f41">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/auto-common-0.6-848b5a5caa05195d447326cb9ed2dd1f4bd5ec6d.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        revision="27.0.3"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/javax.inject-1-2ad076e41987e0d22fe5d704bbbcc9fc275b8d53.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.7.0/4fdcf1fc27c1a8f55d1109df986c923152f07759/javapoet-1.7.0.jar"
+        revision="27.0.3"
+        sha1="4fdcf1fc27c1a8f55d1109df986c923152f07759">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/javapoet-1.7.0-ca42b6c4fa6091bf5cdb895f7858b69c13c0e005.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
+        revision="27.0.3"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/guava-18.0-f55c2c4008017cd4fa20dad8eb05c59e4ee7042a.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/Library/Android/sdk/platforms/android-27/android.jar"
+        revision="27.0.3"
+        sha1="12eb956e542eb175497f596d6f375afbfcb08837">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/android-6deb4211491c11c5a2a1e93d6b19df4e496e7cae.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/Library/Android/sdk/platforms/android-27/optional/org.apache.http.legacy.jar"
+        revision="27.0.3"
+        sha1="788fbce697ee4079accfd05d69e1409990f960ba">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/org.apache.http.legacy-5061d52b3e07920e06603ce488424a8257436ad5.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.jakewharton.auto.value/auto-value-annotations/1.3/272131d81480a826536b4fca0f47f59c5e285fb1/auto-value-annotations-1.3.jar"
+        revision="27.0.3"
+        sha1="272131d81480a826536b4fca0f47f59c5e285fb1">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/auto-value-annotations-1.3-019bf378c96e3a84bee32db223f53ef7b7d94a1b.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.10.0/55f574ec622f65ac9c0e2e922d3ffa01dc4f139e/logging-interceptor-3.10.0.jar"
+        revision="27.0.3"
+        sha1="55f574ec622f65ac9c0e2e922d3ffa01dc4f139e">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/logging-interceptor-3.10.0-9ddd6c33b80ee32bfe4d57abd2ebdd444e3709b2.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/20fa7da4a10c50956fb915ae7783c2b616cecf30/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="c9a721adcd7dbae7a197b0ef81102336539f63ff">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-33325dbacdfd49749b189158f8a267524089fa9c.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.ryanharter.auto.value/auto-value-gson/0.4.2/d4d308e856fddf4bbbfca8d8a4d414a75b2bcc14/auto-value-gson-0.4.2.jar"
+        revision="27.0.3"
+        sha1="d4d308e856fddf4bbbfca8d8a4d414a75b2bcc14">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/auto-value-gson-0.4.2-90c8446a752d51e7aa729c11a232afb179c582ed.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.1.14/20dbf7496e417da474eda12717bf4653dbbd5a6b/rxjava-2.1.14.jar"
+        revision="27.0.3"
+        sha1="20dbf7496e417da474eda12717bf4653dbbd5a6b">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/rxjava-2.1.14-1a1d835e54244f951649d4ee93e8b469a46e624c.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.3-rc1/b764e0fb7e11353fbff493b22fd6e83bf091a179/auto-value-1.3-rc1.jar"
+        revision="27.0.3"
+        sha1="b764e0fb7e11353fbff493b22fd6e83bf091a179">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/auto-value-1.3-rc1-00cfb9c9e558388884825d5aad83f4b2e04aed35.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/298bdce4e40d18788b4b24e834049b61f5a7d34d/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="1fd3ceac7f415975323d52c6c6057db409a907f6">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-40b6d1925fd68052047bffaffae47a66222a45ed.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/f33f4a123ee7456aad91d2adac14cfb168e10dc3/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="3a64f14f460e307f5dfce75e9804e20077d3e6e8">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-c4cb3a1c386a72b74a72b30b762f84c2f6fa4bac.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/17ecae3edfad30402fa38d45e67b8048e26a847f/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="6980ea27453d2bb99d8a484d359442ec6b1fe28c">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-df9302b2ea6e8ada7528bb227b1b8f343be67194.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/ee571a978e6421e20e2342f768aceef20d8b4cfb/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="a07818a1ecabdb149998823429cce555af4b9cba">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8aadf0d04899ab77de1f4dde727d023f26dabf0f.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/cc069472e651fed28ed9a29ae37c3be867d3e72f/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="6d468b69c3baff6635f9a7d09a558ced41fdbdf4">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-aaf6c2f65fdbe21897d2f5204c1e8a1b2d628223.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/65850bce7a3c0079977922da83d37420141d9167/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="8a9fd7c97f1d13f97f3b52f9d2e54cd857d5acf9">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-aa2be348c387f9e31d9001d0e8b13c5b29f79d47.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.1.0/8007981f7d7540d89cd18471b8e5dcd2b4f99167/common-1.1.0.jar"
+        revision="27.0.3"
+        sha1="8007981f7d7540d89cd18471b8e5dcd2b4f99167">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/common-1.1.0-8a60c90c28fc9a0cca76f736b6c2fef4bc7461fc.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/d2d4405a0bb7a12d0977cbf395079e56d008873d/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="221de83c08ed1502286513b4d472d256341e8839">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-b14e1e3fd81cc28c9333ddaaa3b775710ccf5381.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/1a22e8d2ebb6bc7ef1270eb121e3a5226b932932/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="23dcb4803d3103bde3f3f5db978a726338fe49ae">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1caad8c9e274d9ca2ddf949f1edd4dad97f69c4d.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/d4daff478ed63a62d81bc7315de2836c02893301/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="32ac362d6f6a636ab4f737a90cda4a35c9402025">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ba5c1503572d8bf09bca42929c1f486e69da48a6.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/c3ee84f42c13dcf5e1baf2478a1648e8756dafc6/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="aba9abcfe7ce6d935add115f5ce20254b037d583">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-b2984db9a22e489be11b42903bb24d52f2fd9e78.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/adapter-rxjava2/2.3.0/f436637f9500ab5b8bc32afe556373180894b4a5/adapter-rxjava2-2.3.0.jar"
+        revision="27.0.3"
+        sha1="f436637f9500ab5b8bc32afe556373180894b4a5">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/adapter-rxjava2-2.3.0-dd98915dc9cebcc51fb4cb48bc49cdc22500daec.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.5/571f4e0451db64a7b41dbeb5f2503986fe5acdb4/dagger-2.5.jar"
+        revision="27.0.3"
+        sha1="571f4e0451db64a7b41dbeb5f2503986fe5acdb4">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/dagger-2.5-c0a05d6704e5105097a23dac40c849d0e71bb6f7.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/34a218959f2abb01330fb133bf648c2c3e3c2bba/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="d8fe6d91310b54734f454dd490c3c869f6290576">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-629f94ebe9a7f61db5fb38fe4371da04b2ec367f.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.3.0/9e09011e9767bb76b5e27c9b8223476b93b14631/converter-gson-2.3.0.jar"
+        revision="27.0.3"
+        sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/converter-gson-2.3.0-98b26c0df0736911ee842686b69d3f2b705b2006.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/161fabe106dc164c6c9ea4c1e0c09cf3b6e2fff0/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="3304d33470ff64cf83bce9189ff3648a42eb2aa7">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-6272fd5544f4f95dce90ffcd300a14c681702d78.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/e8177a9ca35dde76716bce380b3a7a9bcbd5b4b9/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="4d2b8ad415048e88b41ba4afcaafe36150e69b8c">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ed50bb32f9a3be3bd839282d193974014850908d.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/7b44f181ced2d2521e2dc2a8eae4606d26658071/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="8d813c05361147f6f515f749df19223cd6256314">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8abdfc0a78e92f02a018ddfaad490b40df9f86cf.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/257d203882180893037265bc72464384cdef95d8/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="7038c6d960d3fe26fd41bc509f256c9692d886ce">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-95afe8b291fd6d50267336fd33eb7fe81a127cec.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/1aa5ea91fddb6cfa2a95572af7db52b7eb550df6/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="0c46a5a897439810b6c437ce188bd07d9d8dffb0">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-4cad76584fa8361c4744d0f9199d0599da152d87.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.7.1/21e6054c134c7f5c435ab7635984f39c5375083e/disklrucache-4.7.1.jar"
+        revision="27.0.3"
+        sha1="21e6054c134c7f5c435ab7635984f39c5375083e">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/disklrucache-4.7.1-eccd807a416a0a45698fc74e4a93049f6ddba9be.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/60817f85184d2ff259a2fd14a85fb8ebb196f0a0/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="a42a5bc694841ef9009239870e946d9dc9c33794">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ee138101cb72101bd860b48e5e30f2e34e1ebfe6.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.3.0/bcacde6a8ccedcc56c127403d26b76072fe6214d/retrofit-2.3.0.jar"
+        revision="27.0.3"
+        sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/retrofit-2.3.0-f39b5ce0009452f1ae1e01ddc06f19d33ded8eee.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/00607255e9010b31e225888c1a925b605520616f/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="2f9a9b21b70965cde70f6eb8f2ee68794fb482e6">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-b6de05720c621a8f40999753f46521872336001a.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.2/323964c36556eb0e6209f65c1cef72b53b461ab8/reactive-streams-1.0.2.jar"
+        revision="27.0.3"
+        sha1="323964c36556eb0e6209f65c1cef72b53b461ab8">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/reactive-streams-1.0.2-721e6fa3589355cdb12952445ba2651b778da3e5.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.14.0/102d7be47241d781ef95f1581d414b0943053130/okio-1.14.0.jar"
+        revision="27.0.3"
+        sha1="102d7be47241d781ef95f1581d414b0943053130">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okio-1.14.0-8ef873b27103a8dd1e588d90eaf2bc6cca54844b.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.10.0/7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e/okhttp-3.10.0.jar"
+        revision="27.0.3"
+        sha1="7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okhttp-3.10.0-641e83ce0dbe0046d3b527e0867d054fa51ba842.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/2ca2abe4dda733b163e0c90b142418a680f65fd0/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="874f1143c11f5d38533efe512bf913e3e847e7df">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-ce5599691ee42e6a887352998fc01b574e5a848f.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/7ee74ca7b23afd1bc47eeb4b6416a7a4b81a6571/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="0362076a0fa8c125691f759ba4652f11ad31b05a">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-997d44ec5c4915d4ea7c31c806bd9a6d688ce718.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/com.google.auto.service/auto-service/1.0-rc2/51033a5b8fcf7039159e35b6878f106ccd5fb35f/auto-service-1.0-rc2.jar"
+        revision="27.0.3"
+        sha1="51033a5b8fcf7039159e35b6878f106ccd5fb35f">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/auto-service-1.0-rc2-de0f7bde61a2df86784f4ec9e1a987490edffab9.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/529d820062097c533cad171e48c4e2b556a1d9b1/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="4d4d98a0428b2e620e6b4a228ef9f7cb2f0debd2">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-829eb12ac4f85144fd09175ada25ee5dcf6a7a24.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/ffc54af10d064f4330486c3beca542ec87c07254/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="71d380aeac037e63bab7bda2ba211777e16a2f42">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-53c0fa0d395da1238abd7c05da73a8deb611b2bd.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/cfbf509a93831787d78f11e9468dbdae0f90c6fb/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="ae6d33f37143b08cd8c477c9e348d61ef7ed7eba">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-a187928fc8f3f68f3f177b3691fd307cb57fdb62.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.android/build-cache/5c9524d4ac8b65f4796345302239ad351039f7de/output/jars/classes.jar"
+        revision="27.0.3"
+        sha1="3575e73a22dce98f0bdbcdb475ef55a84606a9a6">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-5b9d7322add0595f5b5b343b1b1b65924f788b46.jar" />
+    </item>
+    <item
+        jar="/Users/victoriajanedavis/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.annotation/10.0-b28/30eb3b3cc9cb0863a4edaea5a7575f8ace1b96ba/javax.annotation-10.0-b28.jar"
+        revision="27.0.3"
+        sha1="30eb3b3cc9cb0863a4edaea5a7575f8ace1b96ba">
+        <dex dex="/Users/victoriajanedavis/pickaxe/java/android/from_github/vimeo_api_test/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/javax.annotation-10.0-b28-e5869f3debb2f9a5563739d5d6507d8f8ba7e09e.jar" />
+    </item>
+
+</items>
