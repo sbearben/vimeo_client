@@ -1,5 +1,5 @@
 # Vimeo Client
-For fun/learning I decided to try and replicate Vimeo's Andrid app. I decided not to use their Android SDK since I wanted to gain expereince using Retrofit/RxJava, as well as handle Oauth2 login myself.
+For fun/learning I decided to try and replicate Vimeo's Android app. I decided not to use their Android SDK since I wanted to gain expereince using Retrofit/RxJava, as well as handle Oauth2 login myself.
 
 ### Usage
 Clone the repository and import the root folder into your IDE (tested on Android Studio). In order for the network calls to work you will need to register as a [Vimeo Developer](https://developer.vimeo.com/) and get your Client ID and Client Secret keys.
