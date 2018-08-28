@@ -23,14 +23,11 @@ public class SuggestionsViewHolder extends ListItemViewHolder<SuggestionItem> im
     @BindView(R.id.item_suggestion_name_textview) TextView mSuggestionTextView;
     @BindView(R.id.item_suggestion_arrow_imageview) AppCompatImageView mArrowImageView;
 
-    private Context mContext;
-
 
     public SuggestionsViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
         super (context, baseFragment, inflater.inflate (R.layout.item_suggestion, parent, false));
         ButterKnife.bind(this, itemView);
 
-        mContext = context;
         itemView.setOnClickListener (this);
 
     }

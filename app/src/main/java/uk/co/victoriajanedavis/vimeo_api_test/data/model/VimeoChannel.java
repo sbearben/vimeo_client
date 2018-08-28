@@ -92,7 +92,7 @@ public class VimeoChannel implements ParcelableListItem {
 
     @Override
     public long getId() {
-        if (id == ListItem.ID_UNINITIALIZED) {
+        if (id == ListItem.ID_UNINITIALIZED || id == 0) {
             id = VimeoApiServiceUtil.generateIdFromUri(getUri());
         }
         return id;

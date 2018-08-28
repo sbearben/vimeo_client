@@ -8,15 +8,20 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoChannel;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
 
-public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> {
+public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> implements FollowButtonViewHolder.FollowButtonClickListener {
 
     private static final String TAG = "ChannelsFragment";
 
@@ -53,7 +58,7 @@ public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> {
 
     @Override
     public ListAdapter<VimeoChannel> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, ChannelViewHolder::new);
+        return new FollowButtonListAdapter<VimeoChannel>(getContext(), this, ChannelViewHolder::new, this);
     }
 
     @Override
@@ -69,5 +74,16 @@ public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> {
     @Override
     public String getPluralHeaderMetric() {
         return "channels";
+    }
+
+    // The next two Overrides are for FollowButtonViewHolder.FollowButtonClickListener
+    @Override
+    public Single<Response<Void>> onFollowButtonClick(long channel_id) {
+        return mPresenter.getSubscribeToChannelCompletable(channel_id);
+    }
+
+    @Override
+    public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
+        return mPresenter.getUnsubscribeFromChannelCompletable(channel_id);
     }
 }

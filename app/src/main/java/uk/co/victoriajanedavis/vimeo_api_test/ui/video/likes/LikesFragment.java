@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoComment;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoConnection;
@@ -16,11 +18,13 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people.UserViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabPresenter;
 
-public class LikesFragment extends VideoTabFragment<VimeoUser> {
+public class LikesFragment extends VideoTabFragment<VimeoUser> implements FollowButtonViewHolder.FollowButtonClickListener {
 
     private static final String TAG = "LikesFragment";
 
@@ -66,11 +70,22 @@ public class LikesFragment extends VideoTabFragment<VimeoUser> {
 
     @Override
     public ListAdapter<VimeoUser> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserViewHolder::new);
+        return new FollowButtonListAdapter<VimeoUser>(getContext(), this, UserViewHolder::new, this);
     }
 
     @Override
     public VimeoConnection getConnectionFromVideo (VimeoVideo video) {
         return video.getMetadata().getLikesConnection();
+    }
+
+    // The next two Overrides are for FollowButtonViewHolder.FollowButtonClickListener
+    @Override
+    public Single<Response<Void>> onFollowButtonClick(long channel_id) {
+        return null;
+    }
+
+    @Override
+    public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
+        return null;
     }
 }

@@ -22,11 +22,13 @@
         app:srcCompat="@drawable/user_image_placeholder" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/item_user_details_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@id/item_user_imageview"
+        app:layout_constraintEnd_toStartOf="@id/item_user_follow_button_layout"
         app:layout_constraintTop_toTopOf="@id/item_user_imageview"
         app:layout_constraintBottom_toBottomOf="@id/item_user_imageview">
 
@@ -49,7 +51,14 @@
             android:maxLines="1"
             android:textSize="12sp"
             tools:text="397 videos ⋅ 168K followers" />
-
     </LinearLayout>
+
+    <include layout="@layout/item_follow_button"
+        android:id="@+id/item_user_follow_button_layout"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/item_user_details_layout"
+        app:layout_constraintBottom_toBottomOf="@id/item_user_details_layout"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

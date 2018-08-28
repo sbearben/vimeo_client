@@ -5,22 +5,19 @@ import javax.net.ssl.HttpsURLConnection;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import retrofit2.Response;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
 public abstract class RemoteObserver<T> implements Observer<Response<T>> {
 
     @Override
     public final void onNext(@NonNull Response<T> response) {
-        switch (response.code()) {
-            case HttpsURLConnection.HTTP_OK:
-            case HttpsURLConnection.HTTP_CREATED:
-            case HttpsURLConnection.HTTP_ACCEPTED:
-            case HttpsURLConnection.HTTP_NOT_AUTHORITATIVE:
+        switch (VimeoApiServiceUtil.responseType(response)) {
+            case VimeoApiServiceUtil.RESPONSE_OK:
                 if (response.body() != null) {
                     onSuccess(response.body());
                 }
                 break;
-
-            case HttpsURLConnection.HTTP_UNAUTHORIZED:
+            case VimeoApiServiceUtil.RESPONSE_UNAUTHORIZED:
                 onUnauthorized(response);
                 break;
 

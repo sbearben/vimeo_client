@@ -9,7 +9,10 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
+
     <color name="colorRegentGray">#8699A6</color>
+    <color name="colorGlacier">#89b2c6</color>
+    <color name="colorConifer">#AAD450</color>
 
     <color name="gray">#ffdfdfdf</color>
     <color name="dirtyWhite">#E0E0E0</color>

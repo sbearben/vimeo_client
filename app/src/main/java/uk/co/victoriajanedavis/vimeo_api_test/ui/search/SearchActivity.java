@@ -106,6 +106,12 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         onRequestPastSearches();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSearchView.setOnQueryTextListener(null);
+    }
+
     private void onRequestPastSearches() {
         Disposable d = Observable.fromCallable(mPreferencesHelper::getSearchSuggestionsSet)
                 .subscribeOn(Schedulers.io())

@@ -69,5 +69,9 @@
     <!-- CommentsFragment -->
     <string name="item_comment_reply_button_string">Reply</string>
 
+    <!-- Follow Button -->
+    <string name="follow_button_follow">Follow</string>
+    <string name="follow_button_following">Following</string>
+
 
 </resources>

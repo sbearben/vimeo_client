@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowToggleButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:minHeight="0dp"
+    android:padding="8dp"
+    android:textColor="@drawable/button_follow_textcolor_selector"
+    android:textSize="12sp"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:drawableStart="@drawable/button_follow_icon_selector"
+    android:gravity="center"
+    android:drawablePadding="0dp"
+    android:background="@drawable/button_follow_selector"
+    android:textOff="@string/follow_button_follow"
+    android:textOn="@string/follow_button_following"
+    android:visibility="gone">
+
+</uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowToggleButton>

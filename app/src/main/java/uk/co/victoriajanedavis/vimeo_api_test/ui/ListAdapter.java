@@ -81,6 +81,7 @@ public class ListAdapter<T extends ListItem> extends RecyclerView.Adapter<ListIt
     @Override
     public long getItemId(int position) {
         if (hasStableIds()) {
+            Log.d ("ListAdapter", "HAS STABLE IDS IS USED");
             return mDataList.size() >= position ? mDataList.get(position).getId() : -1;
         } else {
             return RecyclerView.NO_ID;

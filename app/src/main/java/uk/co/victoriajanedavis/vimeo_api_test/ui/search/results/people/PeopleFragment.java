@@ -8,15 +8,19 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
 
-public class PeopleFragment extends ResultsTabFragment<VimeoUser> {
+public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements FollowButtonViewHolder.FollowButtonClickListener {
 
     private static final String TAG = "PeopleFragment";
 
@@ -53,7 +57,7 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> {
 
     @Override
     public ListAdapter<VimeoUser> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserViewHolder::new);
+        return new FollowButtonListAdapter<VimeoUser>(getContext(), this, UserViewHolder::new, this);
     }
 
     @Override
@@ -69,5 +73,16 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> {
     @Override
     public String getPluralHeaderMetric() {
         return "users";
+    }
+
+    // The next two Overrides are for FollowButtonViewHolder.FollowButtonClickListener
+    @Override
+    public Single<Response<Void>> onFollowButtonClick(long channel_id) {
+        return null;
+    }
+
+    @Override
+    public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
+        return null;
     }
 }

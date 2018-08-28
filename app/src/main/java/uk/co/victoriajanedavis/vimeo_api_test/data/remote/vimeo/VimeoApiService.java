@@ -2,13 +2,17 @@ package uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Response;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -139,5 +143,17 @@ public interface VimeoApiService {
                                                                   @Query("query") String query,
                                                                   @Query("page") Integer page,
                                                                   @Query("per_page") Integer per_page);
+
+    @PUT("me/following/{user_id}")
+    Single<Response<Void>> followUser(@Path("user_id") long user_id);
+
+    @DELETE("me/following/{user_id}")
+    Single<Response<Void>> unfollowUser(@Path("user_id") long user_id);
+
+    @PUT("me/channels/{channel_id}")
+    Single<Response<Void>> subscribeToChannel(@Path("channel_id") long channel_id);
+
+    @DELETE("me/channels/{channel_id}")
+    Single<Response<Void>> unsubscribeFromChannel(@Path("channel_id") long channel_id);
 
 }

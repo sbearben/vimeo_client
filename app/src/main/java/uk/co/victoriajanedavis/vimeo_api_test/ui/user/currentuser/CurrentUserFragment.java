@@ -62,6 +62,7 @@ public class CurrentUserFragment extends UserFragment {
         showSignInWebView(true);
         String authUrl = "https://api.vimeo.com/oauth/authorize?client_id=" + BuildConfig.CLIENT_ID +
                 "&response_type=code&redirect_uri=" + BuildConfig.OAUTH_REDIRECT +
+                "&scope=private%20interact" +
                 "&state=" + UUID.randomUUID().toString();
 
         mWebView.getSettings().setJavaScriptEnabled(true);

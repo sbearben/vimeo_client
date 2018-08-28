@@ -14,6 +14,7 @@ public class VimeoConnection implements Parcelable {
     public static final String OPTION_GET = "GET";
     public static final String OPTION_PUT = "PUT";
     public static final String OPTION_POST = "POST";
+    public static final String OPTION_DELETE = "DELETE";
 
     @SerializedName("uri") @Expose private String uri;
     @SerializedName("options") @Expose private List<String> optionsList;

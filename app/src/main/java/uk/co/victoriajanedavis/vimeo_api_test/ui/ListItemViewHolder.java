@@ -34,6 +34,13 @@ public abstract class ListItemViewHolder<T extends ListItem> extends RecyclerVie
 
     public abstract void recycle();
 
+    /*
+    public void recycle() {
+        mContext = null;
+        mBaseFragment = null;
+    }
+    */
+
     /**
      * Interface for generating new ViewHolders
      */

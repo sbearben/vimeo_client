@@ -31,18 +31,28 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_channel_follow_button_layout"
         app:layout_constraintTop_toBottomOf="@id/item_channel_imageview"
         tools:text="Comedy" />
 
     <TextView
         android:id="@+id/item_channel_videosfollowers_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_channel_follow_button_layout"
         app:layout_constraintTop_toBottomOf="@id/item_channel_name_textview"
         tools:text="397 videos 168K followers" />
+
+    <include layout="@layout/item_follow_button"
+        android:id="@+id/item_channel_follow_button_layout"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/item_channel_name_textview"
+        app:layout_constraintBottom_toBottomOf="@id/item_channel_videosfollowers_textview"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

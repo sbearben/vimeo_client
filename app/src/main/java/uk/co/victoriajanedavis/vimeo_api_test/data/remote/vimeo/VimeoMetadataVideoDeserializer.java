@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoConnection;
+import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoInteraction;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoMetadataVideo;
 
 public class VimeoMetadataVideoDeserializer implements JsonDeserializer<VimeoMetadataVideo>{
@@ -22,6 +23,13 @@ public class VimeoMetadataVideoDeserializer implements JsonDeserializer<VimeoMet
         VimeoConnection likes = context.deserialize(jsonConnectionsObject.get("likes"), VimeoConnection.class);
         VimeoConnection recommendations = context.deserialize(jsonConnectionsObject.get("recommendations"), VimeoConnection.class);
 
-        return new VimeoMetadataVideo(comments, likes, recommendations);
+        JsonObject jsonInteractionsObject = jsonObject.getAsJsonObject("interactions");
+        if (jsonInteractionsObject != null) {
+            VimeoInteraction watch_later = context.deserialize(jsonInteractionsObject.get("watchlater"), VimeoInteraction.class);
+            VimeoInteraction like = context.deserialize(jsonInteractionsObject.get("like"), VimeoInteraction.class);
+            return new VimeoMetadataVideo(comments, likes, recommendations, watch_later, like);
+        }
+
+        return new VimeoMetadataVideo(comments, likes, recommendations, null, null);
     }
 }

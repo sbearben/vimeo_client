@@ -7,11 +7,13 @@ public class VimeoMetadataChannel implements Parcelable {
 
     private VimeoConnection users;
     private VimeoConnection videos;
+    private VimeoInteraction follow;
 
 
-    public VimeoMetadataChannel(VimeoConnection users, VimeoConnection videos) {
+    public VimeoMetadataChannel(VimeoConnection users, VimeoConnection videos, VimeoInteraction follow) {
         this.users = users;
         this.videos = videos;
+        this.follow = follow;
     }
 
     public VimeoConnection getUsersConnection() {
@@ -30,6 +32,14 @@ public class VimeoMetadataChannel implements Parcelable {
         this.videos = videos;
     }
 
+    public VimeoInteraction getFollowInteraction() {
+        return follow;
+    }
+
+    public void setFollowInteraction(VimeoInteraction follow) {
+        this.follow = follow;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -39,11 +49,13 @@ public class VimeoMetadataChannel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.users, flags);
         dest.writeParcelable(this.videos, flags);
+        dest.writeParcelable(this.follow, flags);
     }
 
     protected VimeoMetadataChannel(Parcel in) {
         this.users = in.readParcelable(VimeoConnection.class.getClassLoader());
         this.videos = in.readParcelable(VimeoConnection.class.getClassLoader());
+        this.follow = in.readParcelable(VimeoInteraction.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<VimeoMetadataChannel> CREATOR = new Parcelable.Creator<VimeoMetadataChannel>() {

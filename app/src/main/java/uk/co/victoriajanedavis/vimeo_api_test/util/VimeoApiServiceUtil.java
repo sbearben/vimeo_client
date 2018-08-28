@@ -124,6 +124,7 @@ public class VimeoApiServiceUtil {
             case HttpsURLConnection.HTTP_OK:
             case HttpsURLConnection.HTTP_CREATED:
             case HttpsURLConnection.HTTP_ACCEPTED:
+            case HttpsURLConnection.HTTP_NO_CONTENT:
             case HttpsURLConnection.HTTP_NOT_AUTHORITATIVE:
                 return RESPONSE_OK;
 
@@ -131,7 +132,7 @@ public class VimeoApiServiceUtil {
                 return RESPONSE_UNAUTHORIZED;
 
             default:
-                return  RESPONSE_ERROR;
+                return RESPONSE_ERROR;
         }
     }
 

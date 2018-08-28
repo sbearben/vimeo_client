@@ -5,7 +5,9 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.BuildConfig;
 import uk.co.victoriajanedavis.vimeo_api_test.data.local.PreferencesHelper;
@@ -24,12 +26,12 @@ import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 @ApplicationScope
 public class DataManager {
 
-    private final VimeoApiService mViemoApiService;
+    private final VimeoApiService mVimeoApiService;
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
     public DataManager(VimeoApiService vimeoApiService, PreferencesHelper preferencesHelper) {
-        mViemoApiService = vimeoApiService;
+        mVimeoApiService = vimeoApiService;
         mPreferencesHelper = preferencesHelper;
     }
 
@@ -38,13 +40,13 @@ public class DataManager {
     }
 
     public Observable<VimeoAccessToken> getUnauthenticatedAccessToken() {
-        return mViemoApiService.getUnauthenticatedToken (VimeoApiServiceUtil.basicAuthorizationHeader(
+        return mVimeoApiService.getUnauthenticatedToken (VimeoApiServiceUtil.basicAuthorizationHeader(
                 BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET),
                 null);
     }
 
     public Observable<VimeoAccessToken> getAuthenticatedAccessToken (String code, String redirect_uri) {
-        return mViemoApiService.getAuthenticatedToken (VimeoApiServiceUtil.basicAuthorizationHeader(
+        return mVimeoApiService.getAuthenticatedToken (VimeoApiServiceUtil.basicAuthorizationHeader(
                 BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET),
                 code, redirect_uri);
     }
@@ -66,23 +68,23 @@ public class DataManager {
     }
 
     public Observable<Response<VimeoCollection<VimeoVideo>>> getStaffPicksVideoCollection (Integer page, Integer per_page) {
-        return mViemoApiService.getStaffPicksVideos(page, per_page);
+        return mVimeoApiService.getStaffPicksVideos(page, per_page);
     }
 
     public Observable<Response<VimeoCollection<VimeoVideo>>> getVideoCollectionByUrl (String url, Integer page, Integer per_page) {
-        return mViemoApiService.getVideoList(url, null, page, per_page);
+        return mVimeoApiService.getVideoList(url, null, page, per_page);
     }
 
     public Observable<Response<VimeoCollection<VimeoVideo>>> getVideoCollectionByQuery (String query, Integer page, Integer per_page) {
-        return mViemoApiService.searchVideos(query, page, per_page);
+        return mVimeoApiService.searchVideos(query, page, per_page);
     }
 
     public Observable<Response<VimeoCollection<VimeoVideo>>> getVideoCollectionByUrlAndQuery (String url, String query, Integer page, Integer per_page) {
-        return mViemoApiService.getVideoList(url, query, page, per_page);
+        return mVimeoApiService.getVideoList(url, query, page, per_page);
     }
 
     public Observable<Response<VimeoUser>> getUserProfile() {
-        return mViemoApiService.getMyProfile();
+        return mVimeoApiService.getMyProfile();
     }
 
     public Observable<Response<VimeoUser>> getUserAndVideoCollection (Integer page, Integer per_page) {
@@ -115,7 +117,7 @@ public class DataManager {
     }
 
     public Observable<Response<VimeoCollection<VimeoCategory>>> getCategoriesCollection (Integer page, Integer per_page) {
-        return mViemoApiService.getCategories(page, per_page);
+        return mVimeoApiService.getCategories(page, per_page);
     }
 
     /*
@@ -148,14 +150,30 @@ public class DataManager {
     }
 
     public Observable<Response<VimeoCollection<VimeoChannel>>> getChannelCollectionByUrlAndQuery (String url, String query, Integer page, Integer per_page) {
-        return mViemoApiService.searchChannels(url, query, page, per_page);
+        return mVimeoApiService.searchChannels(url, query, page, per_page);
     }
 
     public Observable<Response<VimeoCollection<VimeoUser>>> getUserCollectionByUrlAndQuery (String url, String query, Integer page, Integer per_page) {
-        return mViemoApiService.searchUsers(url, query, page, per_page);
+        return mVimeoApiService.searchUsers(url, query, page, per_page);
     }
 
     public Observable<Response<VimeoCollection<VimeoComment>>> getCommentCollectionByUrl (String url, String direction, Integer page, Integer per_page) {
-        return mViemoApiService.getComments(url, direction, page, per_page);
+        return mVimeoApiService.getComments(url, direction, page, per_page);
+    }
+
+    public Single<Response<Void>> getFollowUserCompletable (long user_id) {
+        return mVimeoApiService.followUser(user_id);
+    }
+
+    public Single<Response<Void>> getUnfollowUserCompletable (long user_id) {
+        return mVimeoApiService.unfollowUser(user_id);
+    }
+
+    public Single<Response<Void>> getSubscribeToChannelCompletable (long channel_id) {
+        return mVimeoApiService.subscribeToChannel(channel_id);
+    }
+
+    public Single<Response<Void>> getUnsubscribeFromChannelCompletable (long channel_id) {
+        return mVimeoApiService.unsubscribeFromChannel(channel_id);
     }
 }

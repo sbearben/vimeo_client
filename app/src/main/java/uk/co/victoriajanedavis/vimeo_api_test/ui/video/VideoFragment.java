@@ -55,7 +55,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
 
     private static final String ARG_VIMEO_VIDEO = "vimeo_video";
 
-    @BindView(R.id.fragment_video_imageview) WebView mImageView;
+    @BindView(R.id.fragment_video_imageview) AppCompatImageView mImageView;
     @BindView(R.id.fragment_video_timelength_textview) TextView mTimeTextView;
 
     @BindView(R.id.fragment_video_details_layout) ConstraintLayout mDetailsLayout;
@@ -149,7 +149,6 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         params.setMargins(0, videoHeight, 0, 0);
         mDetailsLayout.setLayoutParams(params);
 
-        /*
         GlideApp.with(this)
                 .load(mVideo.getPictures().getSizesList().get(3).getLinkWithPlayButton())
                 .thumbnail(Glide.with(this)
@@ -158,8 +157,8 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
                 .transition(withCrossFade())
-                .into(mImageView); */
-        initWebView();
+                .into(mImageView);
+        //initWebView();
 
 
 
@@ -190,6 +189,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         mUserVideosFollowersTextView.setText(videoCountAndFollowers);
     }
 
+    /*
     @SuppressLint("SetJavaScriptEnabled")
     public void initWebView() {
         String webplayerUrl = "https://player.vimeo.com/video/" + mVideo.getId();
@@ -220,6 +220,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         mImageView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; U; Android 2.0; en-us; Droid Build/ESD20) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17");
         mImageView.loadUrl(webplayerUrl);
     }
+    */
 
     public int getStatusBarHeight() {
         int result = 0;
