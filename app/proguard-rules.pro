@@ -80,7 +80,3 @@
 -keepclassmembers class * implements android.os.Parcelable {
     static ** CREATOR;
 }
-
--keepclassmembers class * implements uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem {
-    static ** CREATOR;
-}

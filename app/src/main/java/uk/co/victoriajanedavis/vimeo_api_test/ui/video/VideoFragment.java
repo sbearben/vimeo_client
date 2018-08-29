@@ -139,7 +139,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
             videoHeight = (int)(mScreenWidth/1.777);
         }
         else {
-            // We're in portrait mode
+            // We're in landscape mode
             videoHeight = mScreenHeight - getStatusBarHeight();
         }
         mImageView.setLayoutParams(new Constraints.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, videoHeight));
@@ -159,7 +159,6 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
                 .transition(withCrossFade())
                 .into(mImageView);
         //initWebView();
-
 
 
         mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mVideo.getDurationSeconds()));

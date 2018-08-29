@@ -28,7 +28,7 @@
         android:orientation="vertical"
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@id/item_user_imageview"
-        app:layout_constraintEnd_toStartOf="@id/item_user_follow_button_layout"
+        app:layout_constraintEnd_toStartOf="@id/item_follow_button_layout"
         app:layout_constraintTop_toTopOf="@id/item_user_imageview"
         app:layout_constraintBottom_toBottomOf="@id/item_user_imageview">
 
@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <include layout="@layout/item_follow_button"
-        android:id="@+id/item_user_follow_button_layout"
+        android:id="@+id/item_follow_button_layout"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/item_user_details_layout"

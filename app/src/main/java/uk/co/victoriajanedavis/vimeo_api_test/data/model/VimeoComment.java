@@ -9,10 +9,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
-public class VimeoComment implements ParcelableListItem {
+public class VimeoComment implements ListItem, Parcelable {
 
     @SerializedName("uri") @Expose private String uri;
     @SerializedName("text") @Expose private String text;

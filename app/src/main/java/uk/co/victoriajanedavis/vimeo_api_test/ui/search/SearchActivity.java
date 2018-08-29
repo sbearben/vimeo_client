@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +35,6 @@ import uk.co.victoriajanedavis.vimeo_api_test.injection.module.ActivityModule;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseActivity;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.ResultsFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionItem;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionsFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionsViewHolder;
 
@@ -67,7 +68,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     private MenuItem mSearchItem;
 
     private String mSearchQuery = "";
-    private List<SuggestionItem> mSugggestionItemsList;
+    private List<String> mSugggestionsList;
 
 
     public static Intent newIntent (Context packageContext) {
@@ -117,7 +118,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(stringsSet -> {
-                    mSugggestionItemsList = SuggestionItem.stringSetToSuggestionItemList(stringsSet);
+                    mSugggestionsList = new ArrayList<>(stringsSet);// SuggestionItem.stringSetToSuggestionItemList(stringsSet);
                     displayFragment(mSelectedFragmentTag);
                 });
     }
@@ -164,29 +165,32 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     private void saveSearch (String query) {
         // Check to make sure query isn't already in list
-        if (!suggestionsListContainsQuery(query)) {
-            SuggestionItem newItem = new SuggestionItem(query);
+        if (!mSugggestionsList.contains(query)) {
+        //if (!suggestionsListContainsQuery(query)) {
+            //SuggestionItem newItem = new SuggestionItem(query);
 
-            mSugggestionItemsList.add(newItem);
-            Set<String> searchesSet = SuggestionItem.suggestionItemListToStringSet(mSugggestionItemsList);
+            mSugggestionsList.add(query);
+            Set<String> searchesSet = new HashSet<>(mSugggestionsList);// SuggestionItem.suggestionItemListToStringSet(mSugggestionsList);
 
             mPreferencesHelper.setSearchSuggestionsSet(searchesSet);
 
             // Add new query to adapter in SuggestionsFragment
             SuggestionsFragment suggestionsFragment = (SuggestionsFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_SEARCH_SUGGESTIONS_TAG);
             if (suggestionsFragment != null) {
-                suggestionsFragment.getSearchAdapter().add(newItem);
+                suggestionsFragment.getSearchAdapter().add(query);
             }
         }
     }
 
+    /*
     public boolean suggestionsListContainsQuery (String query) {
-        for (SuggestionItem item : mSugggestionItemsList) {
+        for (SuggestionItem item : mSugggestionsList) {
             if (item.getSuggestion().equals(query))
                 return true;
         }
         return false;
     }
+    */
 
     @Override
     public void onSaveInstanceState (Bundle outState) {

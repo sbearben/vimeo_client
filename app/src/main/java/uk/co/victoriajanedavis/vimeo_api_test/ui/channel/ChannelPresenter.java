@@ -3,6 +3,7 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.channel;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.data.DataManager;
@@ -28,5 +29,13 @@ public class ChannelPresenter extends CollectionPresenter<ChannelMvpView, VimeoV
     @Override
     public Observable<Response<VimeoCollection<VimeoVideo>>> getObservable(String url, String query, Integer page, Integer per_page) {
         return mDataManager.getVideoCollectionByUrlAndQuery(url, query, page, per_page);
+    }
+
+    public Single<Response<Void>> getSubscribeToChannelSingle (long channel_id) {
+        return mDataManager.getSubscribeToChannelSingle(channel_id);
+    }
+
+    public Single<Response<Void>> getUnsubscribeFromChannelSingle (long channel_id) {
+        return mDataManager.getUnsubscribeFromChannelSingle(channel_id);
     }
 }

@@ -2,6 +2,7 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,19 +30,12 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
-import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoConnection;
-import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.EndlessRecyclerViewOnScrollListener;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.VideoFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabMvpView;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabPresenter;
 import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 
-public abstract class CollectionFragment<A extends CollectionMvpView<T>, T extends ParcelableListItem>
+public abstract class CollectionFragment<A extends CollectionMvpView<T>, T extends Parcelable>
         extends BaseFragment implements CollectionMvpView<T> {
 
     private static final String TAG = "CollectionFragment";
@@ -63,6 +57,7 @@ public abstract class CollectionFragment<A extends CollectionMvpView<T>, T exten
     @BindView(R.id.message_tryagain_button) protected Button mMessageButton;
 
     protected Unbinder mUnbinder;
+
 
 
 

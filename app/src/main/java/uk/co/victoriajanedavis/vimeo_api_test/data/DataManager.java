@@ -161,19 +161,19 @@ public class DataManager {
         return mVimeoApiService.getComments(url, direction, page, per_page);
     }
 
-    public Single<Response<Void>> getFollowUserCompletable (long user_id) {
+    public Single<Response<Void>> getFollowUserSingle (long user_id) {
         return mVimeoApiService.followUser(user_id);
     }
 
-    public Single<Response<Void>> getUnfollowUserCompletable (long user_id) {
+    public Single<Response<Void>> getUnfollowUserSingle (long user_id) {
         return mVimeoApiService.unfollowUser(user_id);
     }
 
-    public Single<Response<Void>> getSubscribeToChannelCompletable (long channel_id) {
+    public Single<Response<Void>> getSubscribeToChannelSingle (long channel_id) {
         return mVimeoApiService.subscribeToChannel(channel_id);
     }
 
-    public Single<Response<Void>> getUnsubscribeFromChannelCompletable (long channel_id) {
+    public Single<Response<Void>> getUnsubscribeFromChannelSingle (long channel_id) {
         return mVimeoApiService.unsubscribeFromChannel(channel_id);
     }
 }

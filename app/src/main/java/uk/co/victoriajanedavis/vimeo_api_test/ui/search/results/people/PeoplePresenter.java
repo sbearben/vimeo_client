@@ -3,6 +3,7 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.data.DataManager;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
@@ -21,5 +22,13 @@ public class PeoplePresenter extends ResultsTabPresenter<VimeoUser> {
     @Override
     public Observable<Response<VimeoCollection<VimeoUser>>> getObservable(String url, String query, Integer page, Integer per_page) {
         return mDataManager.getUserCollectionByUrlAndQuery(url, query, page, per_page);
+    }
+
+    public Single<Response<Void>> getFollowUserSingle (long user_id) {
+        return mDataManager.getFollowUserSingle(user_id);
+    }
+
+    public Single<Response<Void>> getUnfollowUserSingle (long user_id) {
+        return mDataManager.getUnfollowUserSingle(user_id);
     }
 }

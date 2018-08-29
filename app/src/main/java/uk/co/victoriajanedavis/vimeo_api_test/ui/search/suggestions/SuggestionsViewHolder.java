@@ -18,7 +18,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 
-public class SuggestionsViewHolder extends ListItemViewHolder<SuggestionItem> implements View.OnClickListener {
+public class SuggestionsViewHolder extends ListItemViewHolder<String> implements View.OnClickListener {
 
     @BindView(R.id.item_suggestion_name_textview) TextView mSuggestionTextView;
     @BindView(R.id.item_suggestion_arrow_imageview) AppCompatImageView mArrowImageView;
@@ -33,9 +33,9 @@ public class SuggestionsViewHolder extends ListItemViewHolder<SuggestionItem> im
     }
 
     @Override
-    public void bind (@NonNull SuggestionItem suggestionItem) {
-        mListItem = suggestionItem;
-        mSuggestionTextView.setText(suggestionItem.getSuggestion());
+    public void bind (@NonNull String suggestion) {
+        mListItem = suggestion;
+        mSuggestionTextView.setText(suggestion);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SuggestionsViewHolder extends ListItemViewHolder<SuggestionItem> im
     public void onArrowIconClick() {
         if (mContext != null) {
             OnClickListener listener = (OnClickListener) mContext;
-            listener.onArrowIconClick(mListItem.getSuggestion());
+            listener.onArrowIconClick(mListItem);
         }
     }
 
@@ -54,7 +54,7 @@ public class SuggestionsViewHolder extends ListItemViewHolder<SuggestionItem> im
     public void onClick (View view) {
         if (mContext != null) {
             OnClickListener listener = (OnClickListener) mContext;
-            listener.onViewHolderClick(mListItem.getSuggestion());
+            listener.onViewHolderClick(mListItem);
         }
     }
 

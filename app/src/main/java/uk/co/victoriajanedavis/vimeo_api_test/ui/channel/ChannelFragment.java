@@ -29,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoChannel;
@@ -42,6 +45,8 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ExpandableTextView;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowToggleButton;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.UserVideoViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.ExpandableTextViewUtil;
@@ -61,6 +66,7 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
     @BindView(R.id.fragment_channel_imageview) AppCompatImageView mImageView;
     @BindView(R.id.fragment_channel_name_textview) TextView mNameTextView;
     @BindView(R.id.fragment_channel_videosfollowers_textview) TextView mVideosFollowersTextView;
+    @BindView(R.id.fragment_channel_follow_button_layout) FollowToggleButton mFollowButton;
 
     //@BindView(R.id.fragment_channel_description_layout) ConstraintLayout mDescriptionLayout;
     @BindView(R.id.layout_expandable_textview_textview) ExpandableTextView mDescriptionTextView;
@@ -77,6 +83,9 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
 
     protected VimeoChannel mChannel;
     private ExpandableTextViewUtil mExpandableTextViewUtil;
+
+    private FollowButtonRxBinding mFollowButtonRxBinding;
+    private Disposable mFollowButtonDisposable;
 
 
     public static ChannelFragment newInstance (VimeoChannel channel) {
@@ -109,6 +118,30 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         updateChannelViews(mChannel);
 
         return v;
+    }
+
+    @Override
+    protected void initViews(View view) {
+        super.initViews(view);
+        mFollowButtonRxBinding = new FollowButtonRxBinding(mChannel, mFollowButton, new FollowButtonRxBinding.FollowButtonClickListener() {
+            @Override
+            public Single<Response<Void>> onFollowButtonClick(long channel_id) {
+                return mPresenter.getSubscribeToChannelSingle(channel_id);
+            }
+
+            @Override
+            public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
+                return mPresenter.getUnsubscribeFromChannelSingle(channel_id);
+            }
+        });
+        mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mFollowButtonDisposable.dispose();
+        mFollowButtonRxBinding.setFollowButtonClickListener(null);
     }
 
     @Override

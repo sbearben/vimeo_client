@@ -1,5 +1,7 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.base;
 
+import android.os.Parcelable;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -8,10 +10,9 @@ import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.data.DataManager;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.RemoteObserver;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.util.RxUtil;
 
-public abstract class CollectionPresenter<A extends CollectionMvpView<T>, T extends ParcelableListItem>
+public abstract class CollectionPresenter<A extends CollectionMvpView<T>, T extends Parcelable>
         extends BasePresenter<A> {
 
     private static final String TAG = "CollectionPresenter";

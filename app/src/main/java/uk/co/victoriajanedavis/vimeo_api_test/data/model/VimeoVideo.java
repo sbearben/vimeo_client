@@ -10,10 +10,9 @@ import java.util.Date;
 
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoStats;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
-public class VimeoVideo implements ParcelableListItem {
+public class VimeoVideo implements ListItem, Parcelable {
 
     // NOTE: to open a full screen video in a web browser the format is: https://player.vimeo.com/video/{id} (maybe implement this opening onclick in a WebView)
 

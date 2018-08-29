@@ -1,9 +1,10 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.base;
 
-import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
+import android.os.Parcelable;
 
-public interface CollectionMvpView<T extends ParcelableListItem> extends MvpView {
+import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
+
+public interface CollectionMvpView<T extends Parcelable> extends MvpView {
 
     void showItems(VimeoCollection<T> itemCollection);
 }

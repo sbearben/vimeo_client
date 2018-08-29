@@ -11,10 +11,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.ListItemFollowInteractor;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
-public class VimeoUser implements ParcelableListItem {
+public class VimeoUser implements Parcelable, ListItemFollowInteractor {
 
     public static final String ACCOUNT_TYPE_BASIC = "basic";
     public static final String ACCOUNT_TYPE_PLUS = "plus";
@@ -107,10 +107,15 @@ public class VimeoUser implements ParcelableListItem {
 
     @Override
     public long getId() {
-        if (id == ListItem.ID_UNINITIALIZED) {
+        if (id == ListItem.ID_UNINITIALIZED || id == 0) {
             id = VimeoApiServiceUtil.generateIdFromUri(getUri());
         }
         return id;
+    }
+
+    @Override
+    public VimeoInteraction getFollowInteraction() {
+        return metadata.getFollowInteraction();
     }
 
     @Override

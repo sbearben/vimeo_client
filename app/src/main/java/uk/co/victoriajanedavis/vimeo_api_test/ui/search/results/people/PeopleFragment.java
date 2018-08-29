@@ -16,11 +16,12 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
 
-public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements FollowButtonViewHolder.FollowButtonClickListener {
+public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements FollowButtonRxBinding.FollowButtonClickListener {
 
     private static final String TAG = "PeopleFragment";
 
@@ -77,12 +78,12 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements Fol
 
     // The next two Overrides are for FollowButtonViewHolder.FollowButtonClickListener
     @Override
-    public Single<Response<Void>> onFollowButtonClick(long channel_id) {
-        return null;
+    public Single<Response<Void>> onFollowButtonClick(long user_id) {
+        return mPresenter.getFollowUserSingle(user_id);
     }
 
     @Override
-    public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
-        return null;
+    public Single<Response<Void>> onUnfollowButtonClick(long user_id) {
+        return mPresenter.getUnfollowUserSingle(user_id);
     }
 }

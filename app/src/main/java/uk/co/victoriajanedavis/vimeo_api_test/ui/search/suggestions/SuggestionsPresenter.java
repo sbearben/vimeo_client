@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class SuggestionsPresenter extends BasePresenter<SuggestionsMvpView> {
     private final DataManager mDataManager;
     private Disposable mDisposable;
 
-    private List<SuggestionItem> mSuggestionsList;
+    private List<String> mSuggestionsList;
 
 
     @Inject
@@ -63,7 +64,7 @@ public class SuggestionsPresenter extends BasePresenter<SuggestionsMvpView> {
                         if (!isViewAttached()) return;
                         getMvpView().hideProgress();
 
-                        mSuggestionsList = SuggestionItem.stringSetToSuggestionItemList(suggestionsSet);
+                        mSuggestionsList = new ArrayList<>(suggestionsSet); //SuggestionItem.stringSetToSuggestionItemList(suggestionsSet);
                         getMvpView().showSuggestions(mSuggestionsList);
                     }
 

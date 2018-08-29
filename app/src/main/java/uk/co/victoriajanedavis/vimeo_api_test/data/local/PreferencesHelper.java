@@ -11,13 +11,14 @@ import javax.inject.Inject;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoAccessToken;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationContext;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationScope;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionItem;
 
 @ApplicationScope
 public class PreferencesHelper {
 
-    public static final String PREF_FILE_NAME = "android_vimeo_api_test_pref_file";
-    public static final String TOKEN_EMPTY_FIELD = "";
+    private static final String PREF_FILE_NAME = "android_vimeo_api_test_pref_file";
+    private static final String TOKEN_EMPTY_FIELD = "";
+
+    private static final String PREF_SUGGESTION_SET = "suggestionSet";
 
     private final SharedPreferences mPref;
 
@@ -55,12 +56,12 @@ public class PreferencesHelper {
 
     public void setSearchSuggestionsSet (Set<String> suggestionSet) {
         mPref.edit()
-                .putStringSet(SuggestionItem.PREF_SUGGESTION_SET, suggestionSet)
+                .putStringSet(PREF_SUGGESTION_SET, suggestionSet)
                 .apply();
     }
 
     public Set<String> getSearchSuggestionsSet() {
-        return mPref.getStringSet(SuggestionItem.PREF_SUGGESTION_SET, new HashSet<>());
+        return mPref.getStringSet(PREF_SUGGESTION_SET, new HashSet<>());
     }
 
 }

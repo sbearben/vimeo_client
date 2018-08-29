@@ -5,5 +5,5 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.MvpView;
 
 public interface SuggestionsMvpView extends MvpView {
 
-    void showSuggestions(List<SuggestionItem> suggestionsList);
+    void showSuggestions(List<String> suggestionsList);
 }

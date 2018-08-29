@@ -123,7 +123,7 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
     /***** MVP View methods implementation *****/
 
     @Override
-    public void showSuggestions(List<SuggestionItem> suggestionsList) {
+    public void showSuggestions(List<String> suggestionsList) {
         // TODO: I believe this if statment and its body are moot given we aren't changing between a normal list and a search list
         if (mSearchAdapter.getViewType() != ListAdapter.VIEW_TYPE_LIST) {
             mSearchAdapter.removeAll();

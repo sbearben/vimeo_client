@@ -24,7 +24,7 @@ import java.util.List;
  * {@link RecyclerView.Adapter} populated with {@link ListItem}
  * makes the call to the {@link ListAdapter.InteractionListener}.
  */
-public class ListAdapter<T extends ListItem> extends RecyclerView.Adapter<ListItemViewHolder<T>> {
+public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> {
 
     public static final String TAG = ListAdapter.class.getSimpleName();
 
@@ -78,6 +78,7 @@ public class ListAdapter<T extends ListItem> extends RecyclerView.Adapter<ListIt
         return mDataList.size();
     }
 
+    /*
     @Override
     public long getItemId(int position) {
         if (hasStableIds()) {
@@ -87,6 +88,7 @@ public class ListAdapter<T extends ListItem> extends RecyclerView.Adapter<ListIt
             return RecyclerView.NO_ID;
         }
     }
+    */
 
     @NonNull
     @Override
@@ -221,7 +223,7 @@ public class ListAdapter<T extends ListItem> extends RecyclerView.Adapter<ListIt
     /**
      * Interface for handling list interactions
      */
-    public interface InteractionListener<T extends ListItem> {
+    public interface InteractionListener<T> {
         void onListClick(T item, View sharedElementView, int adapterPosition);
     }
 

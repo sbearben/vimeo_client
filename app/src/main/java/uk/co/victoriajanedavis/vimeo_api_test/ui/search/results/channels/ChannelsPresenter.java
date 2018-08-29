@@ -25,11 +25,11 @@ public class ChannelsPresenter extends ResultsTabPresenter<VimeoChannel> {
         return mDataManager.getChannelCollectionByUrlAndQuery(url, query, page, per_page);
     }
 
-    public Single<Response<Void>> getSubscribeToChannelCompletable (long channel_id) {
-        return mDataManager.getSubscribeToChannelCompletable(channel_id);
+    public Single<Response<Void>> getSubscribeToChannelSingle (long channel_id) {
+        return mDataManager.getSubscribeToChannelSingle(channel_id);
     }
 
-    public Single<Response<Void>> getUnsubscribeFromChannelCompletable (long channel_id) {
-        return mDataManager.getUnsubscribeFromChannelCompletable(channel_id);
+    public Single<Response<Void>> getUnsubscribeFromChannelSingle (long channel_id) {
+        return mDataManager.getUnsubscribeFromChannelSingle(channel_id);
     }
 }

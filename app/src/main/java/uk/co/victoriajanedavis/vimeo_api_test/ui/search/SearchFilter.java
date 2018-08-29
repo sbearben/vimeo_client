@@ -6,17 +6,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionItem;
-
 
 public class SearchFilter extends Filter {
 
     private final SearchAdapter mSearchAdapter;
-    private final List<SuggestionItem> mOriginalList;
-    private final List<SuggestionItem> mFilteredList;
+    private final List<String> mOriginalList;
+    private final List<String> mFilteredList;
 
 
-    SearchFilter (SearchAdapter adapter, List<SuggestionItem> originalList) {
+    SearchFilter (SearchAdapter adapter, List<String> originalList) {
         super();
         mSearchAdapter = adapter;
         this.mOriginalList = new LinkedList<>(originalList);
@@ -33,8 +31,8 @@ public class SearchFilter extends Filter {
         } else {
             final String filterPattern = charSequence.toString().toLowerCase().trim();
 
-            for (SuggestionItem item : mOriginalList) {
-                if (item.getSuggestion().toLowerCase().startsWith(filterPattern)) {
+            for (String item : mOriginalList) {
+                if (item.toLowerCase().startsWith(filterPattern)) {
                     mFilteredList.add(item);
                 }
             }
@@ -49,7 +47,7 @@ public class SearchFilter extends Filter {
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
         mSearchAdapter.removeAll();
-        mSearchAdapter.addItems((List<SuggestionItem>) filterResults.values);
+        mSearchAdapter.addItems((List<String>) filterResults.values);
         mSearchAdapter.notifyDataSetChanged();
     }
 }

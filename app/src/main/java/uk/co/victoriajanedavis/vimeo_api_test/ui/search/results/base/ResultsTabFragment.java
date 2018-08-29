@@ -1,44 +1,26 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.EndlessRecyclerViewOnScrollListener;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.ResultsFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
-public abstract class ResultsTabFragment<T extends ParcelableListItem>
+public abstract class ResultsTabFragment<T extends Parcelable>
         extends CollectionFragment<ResultsTabMvpView<T>, T> implements ResultsTabMvpView<T>,
         SwipeRefreshLayout.OnRefreshListener, ResultsFragment.QuerySubmitCallback {
 

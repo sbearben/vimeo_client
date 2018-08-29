@@ -9,10 +9,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ParcelableListItem;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.ListItemFollowInteractor;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
-public class VimeoChannel implements ParcelableListItem {
+public class VimeoChannel implements Parcelable, ListItemFollowInteractor {
 
     @SerializedName("uri") @Expose private String uri;
     @SerializedName("name") @Expose private String name;
@@ -96,6 +96,11 @@ public class VimeoChannel implements ParcelableListItem {
             id = VimeoApiServiceUtil.generateIdFromUri(getUri());
         }
         return id;
+    }
+
+    @Override
+    public VimeoInteraction getFollowInteraction() {
+        return metadata.getFollowInteraction();
     }
 
     @Override

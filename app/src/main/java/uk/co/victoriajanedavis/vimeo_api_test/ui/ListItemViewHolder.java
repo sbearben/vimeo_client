@@ -13,7 +13,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
  *  Subclasses must implement a constructor of form:
  *      SubTypeViewHolder(Context context, BaseFragment baseFragment, LayoutInflator layoutInflater, ViewGroup parent)
  */
-public abstract class ListItemViewHolder<T extends ListItem> extends RecyclerView.ViewHolder {
+public abstract class ListItemViewHolder<T> extends RecyclerView.ViewHolder {
 
     protected Context mContext;
     protected BaseFragment mBaseFragment;
@@ -44,7 +44,7 @@ public abstract class ListItemViewHolder<T extends ListItem> extends RecyclerVie
     /**
      * Interface for generating new ViewHolders
      */
-    public interface ListItemViewHolderGenerator<T extends ListItem> {
+    public interface ListItemViewHolderGenerator<T> {
         ListItemViewHolder<T> generateViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent);
     }
 

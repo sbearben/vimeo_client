@@ -31,6 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
@@ -42,6 +43,8 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ExpandableTextView;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowToggleButton;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.UserVideoViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.ExpandableTextViewUtil;
@@ -57,10 +60,12 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
     @BindView(R.id.fragment_user_followers_textview) TextView mFollowersTextView;
     @BindView(R.id.fragment_user_following_textview) TextView mFollowingTextView;
     @BindView(R.id.fragment_user_likes_textview) TextView mLikesTextView;
+
     @BindView(R.id.fragment_user_name_textview) TextView mNameTextView;
     @BindView(R.id.fragment_user_location_textview) TextView mLocationTextView;
-    @BindView(R.id.fragment_user_videocount_textview) TextView mVideoCountTextView;
+    @BindView(R.id.fragment_user_follow_button_layout) protected FollowToggleButton mFollowButton;
 
+    @BindView(R.id.fragment_user_videocount_textview) TextView mVideoCountTextView;
     @BindView(R.id.layout_expandable_textview_textview) ExpandableTextView mBioTextView;
     @BindView(R.id.layout_expandable_textview_imageview) AppCompatImageView mBioExpandImageView;
 
@@ -72,6 +77,8 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
     protected VimeoUser mUser;
     private ExpandableTextViewUtil mExpandableTextViewUtil;
 
+    protected FollowButtonRxBinding mFollowButtonRxBinding;
+    protected Disposable mFollowButtonDisposable;
 
 
     @Override

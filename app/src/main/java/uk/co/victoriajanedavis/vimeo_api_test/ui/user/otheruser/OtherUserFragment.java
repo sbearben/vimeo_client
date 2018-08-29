@@ -3,11 +3,15 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.base.UserFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.base.UserPresenter;
 
@@ -42,6 +46,30 @@ public class OtherUserFragment extends UserFragment {
         mPresenter.attachView(this);
 
         mUser = (VimeoUser) getArguments().getParcelable(ARG_VIMEO_USER);
+    }
+
+    @Override
+    protected void initViews(View view) {
+        super.initViews(view);
+        mFollowButtonRxBinding = new FollowButtonRxBinding(mUser, mFollowButton, new FollowButtonRxBinding.FollowButtonClickListener() {
+            @Override
+            public Single<Response<Void>> onFollowButtonClick(long user_id) {
+                return mPresenter.getFollowUserSingle(user_id);
+            }
+
+            @Override
+            public Single<Response<Void>> onUnfollowButtonClick(long user_id) {
+                return mPresenter.getUnfollowUserSingle(user_id);
+            }
+        });
+        mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mFollowButtonDisposable.dispose();
+        mFollowButtonRxBinding.setFollowButtonClickListener(null);
     }
 
     @Override

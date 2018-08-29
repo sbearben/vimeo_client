@@ -6,17 +6,16 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 
-public class FollowButtonListAdapter<T extends ListItem> extends ListAdapter<T> {
+public class FollowButtonListAdapter<T extends ListItemFollowInteractor> extends ListAdapter<T> {
 
-    private FollowButtonViewHolder.FollowButtonClickListener mFollowButtonClickListener;
+    private FollowButtonRxBinding.FollowButtonClickListener mFollowButtonClickListener;
 
 
     public FollowButtonListAdapter (Context context, BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<T> viewHolderGenerator,
-                                    FollowButtonViewHolder.FollowButtonClickListener followButtonClickListener) {
+                                    FollowButtonRxBinding.FollowButtonClickListener followButtonClickListener) {
         super(context, fragment, viewHolderGenerator);
         mFollowButtonClickListener = followButtonClickListener;
     }
