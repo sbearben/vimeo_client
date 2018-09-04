@@ -29,8 +29,7 @@ public class FollowButtonRxBinding {
     private boolean mOriginalState;
 
 
-    public FollowButtonRxBinding (FollowToggleButton followButton) {
-        this(null, followButton, null);
+    public FollowButtonRxBinding() {
     }
 
     public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton,
@@ -51,7 +50,7 @@ public class FollowButtonRxBinding {
 
     public Disposable setupFollowButtonRxBindingStream() {
         return RxCompoundButton.checkedChanges(mFollowButton)
-                //.skipInitialValue()
+                .skipInitialValue()
                 //.takeUntil(RxView.detaches(parent))
                 .switchMapSingle(isChecked -> {
                     mFollowableItem.getFollowInteraction().setAdded(isChecked);

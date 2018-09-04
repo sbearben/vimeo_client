@@ -1,6 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBindi
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
 
 public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements FollowButtonRxBinding.FollowButtonClickListener {
 
@@ -37,6 +40,17 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements Fol
         super.onCreate(savedInstanceState);
         fragmentComponent().inject(this);
         getPresenter().attachView(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) return;
+
+        if (requestCode == OtherUserFragment.REQUEST_USER) {
+            VimeoUser channel = (VimeoUser) data.getParcelableExtra(OtherUserFragment.EXTRA_VIMEO_USER);
+            int position = (int) data.getIntExtra(OtherUserFragment.EXTRA_USER_POSITION, -1);
+            mListAdapter.updateItem(position, channel);
+        }
     }
 
     @Override

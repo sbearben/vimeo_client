@@ -161,7 +161,6 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         mFollowButtonDisposable.dispose();
         mFollowButtonRxBinding.setFollowButtonClickListener(null);
 
@@ -169,6 +168,7 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
             Glide.with(this).clear(mImageView);
             Glide.with(this).clear(mUserImageView);
         }
+        super.onDestroyView();
     }
 
     @Override
@@ -199,6 +199,11 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         return mChannel.getMetadata().getVideosConnection().getUri();
     }
 
+    @Override
+    protected String getQuery() {
+        return null;
+    }
+
     public void setResponseResult() {
         Intent data = new Intent();
         data.putExtra (EXTRA_VIMEO_CHANNEL, mChannel);
@@ -207,11 +212,6 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         if (getActivity() != null) {
             getActivity().setResult(RESULT_OK, data);
         }
-    }
-
-    @Override
-    protected String getQuery() {
-        return null;
     }
 
     /***** MVP View methods implementation *****/

@@ -47,8 +47,8 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionsV
  * messy host. I'm not sure what other options there would be in order to mimic the search functionality of the
  * Vimeo app.
  */
-public class SearchActivity extends BaseActivity implements SearchView.OnQueryTextListener,
-        SuggestionsViewHolder.OnClickListener, ResultsTabFragment.GetQueryCallback {
+public class SearchActivity extends BaseActivity implements SuggestionsViewHolder.OnClickListener,
+        ResultsTabFragment.GetQueryCallback {
 
     private static final String TAG = "SearchActivity";
 
@@ -111,7 +111,9 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     protected void onDestroy() {
         super.onDestroy();
         mSearchView.setOnQueryTextListener(null);
+        mSearchItem = null;
     }
+
 
     private void onRequestPastSearches() {
         Disposable d = Observable.fromCallable(mPreferencesHelper::getSearchSuggestionsSet)
@@ -206,7 +208,17 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         mSearchItem = menu.findItem(R.id.action_search);
         //mSearchItem.expandActionView();
         mSearchView = (SearchView) mSearchItem.getActionView();
-        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return SearchActivity.this.onQueryTextSubmit(query);
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return SearchActivity.this.onQueryTextChange(newText);
+            }
+        });
 
         mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -237,7 +249,6 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         this.finish();
     }
 
-    @Override
     public boolean onQueryTextSubmit(String query) {
         //mSearchView.clearFocus();
         mSearchQuery = query;
@@ -262,7 +273,6 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         return true;
     }
 
-    @Override
     public boolean onQueryTextChange(String queryText) {
         SuggestionsFragment suggestionsFragment = (SuggestionsFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_SEARCH_SUGGESTIONS_TAG);
         if (suggestionsFragment != null) {

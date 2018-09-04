@@ -19,6 +19,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserActivity;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
@@ -44,15 +45,9 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
     public void bind (@NonNull VimeoUser vimeoUser) {
         mListItem = vimeoUser;
 
-        if (mListItem.getFollowInteraction() != null) {
-            mFollowButton.setVisibility(View.VISIBLE);
-            mFollowButton.setChecked(mListItem.getFollowInteraction().isAdded());
-            mOriginalState = mFollowButton.isChecked();
-        }
-
         mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
-        //mDisposable = setUpFollowButtonRxBindingStream();
+        mDisposable = setUpFollowButtonRxBindingStream();
 
         mNameTextView.setText(mListItem.getName());
 
@@ -69,21 +64,21 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
                 .into(mImageView);
     }
 
+    /*
     @OnCheckedChanged(R.id.item_follow_button_layout)
     public void onFollowCheckChanged() {
         if (mDisposable == null) {
             mDisposable = setUpFollowButtonRxBindingStream();
         }
     }
+    */
 
     @Override
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
-        if (mDisposable != null) {
-            mDisposable.dispose();
-            mDisposable = null;
-        }
+        mDisposable.dispose();
+        mDisposable = null;
     }
 
     @Override
@@ -94,7 +89,10 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
 
     @Override
     public void onClick (View view) {
-        Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem);
-        mBaseFragment.getContext().startActivity(intent);
+        //Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem);
+        //mBaseFragment.getContext().startActivity(intent);
+
+        Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem, getLayoutPosition());
+        mBaseFragment.startActivityForResult(intent, OtherUserFragment.REQUEST_USER);
     }
 }

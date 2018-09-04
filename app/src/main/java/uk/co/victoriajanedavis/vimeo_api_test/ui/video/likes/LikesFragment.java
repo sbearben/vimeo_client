@@ -1,6 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video.likes;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAda
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people.UserViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabPresenter;
 
@@ -50,6 +53,17 @@ public class LikesFragment extends VideoTabFragment<VimeoUser> implements Follow
         getPresenter().attachView(this);
 
         mConnection = (VimeoConnection) getArguments().getParcelable(ARG_VIMEO_CONNECTION);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) return;
+
+        if (requestCode == OtherUserFragment.REQUEST_USER) {
+            VimeoUser channel = (VimeoUser) data.getParcelableExtra(OtherUserFragment.EXTRA_VIMEO_USER);
+            int position = (int) data.getIntExtra(OtherUserFragment.EXTRA_USER_POSITION, -1);
+            mListAdapter.updateItem(position, channel);
+        }
     }
 
     @Override

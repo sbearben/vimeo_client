@@ -1,6 +1,7 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -15,19 +16,30 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBindi
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.base.UserFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.base.UserPresenter;
 
+import static android.app.Activity.RESULT_OK;
+
 public class OtherUserFragment extends UserFragment {
 
     private static final String TAG = "OtherUserFragment";
     private static final String ARG_VIMEO_USER = "vimeo_user";
+    private static final String ARG_USER_POSITION = "user_position";
+
+    public static final String EXTRA_VIMEO_USER = "uk.co.victoriajanedavis.vimeo_api_test.OtherUserFragment.vimeo_user";
+    public static final String EXTRA_USER_POSITION = "uk.co.victoriajanedavis.vimeo_api_test.OtherUserFragment.user_position";
 
     public static final String FRAGMENT_OTHER_USER_TAG = "fragment_other_user";
 
+    public static final int REQUEST_USER = 1;
+
     @Inject OtherUserPresenter mPresenter;
 
+    private int mPosition;
 
-    public static OtherUserFragment newInstance (VimeoUser user) {
+
+    public static OtherUserFragment newInstance (VimeoUser user, int position) {
         Bundle args = new Bundle();
         args.putParcelable(ARG_VIMEO_USER, user);
+        args.putInt(ARG_USER_POSITION, position);
 
         OtherUserFragment fragment = new OtherUserFragment();
         fragment.setArguments(args);
@@ -46,6 +58,7 @@ public class OtherUserFragment extends UserFragment {
         mPresenter.attachView(this);
 
         mUser = (VimeoUser) getArguments().getParcelable(ARG_VIMEO_USER);
+        mPosition = (int) getArguments().getInt(ARG_USER_POSITION);
     }
 
     @Override
@@ -60,6 +73,15 @@ public class OtherUserFragment extends UserFragment {
             @Override
             public Single<Response<Void>> onUnfollowButtonClick(long user_id) {
                 return mPresenter.getUnfollowUserSingle(user_id);
+            }
+        }, new FollowButtonRxBinding.NetworkCallFinishedCallback() {
+            @Override
+            public void onSuccess() {
+                setResponseResult();
+            }
+
+            @Override
+            public void onFailure() {
             }
         });
         mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
@@ -86,6 +108,16 @@ public class OtherUserFragment extends UserFragment {
     @Override
     public String getCollectionUri() {
         return mUser.getMetadata().getVideosConnection().getUri();
+    }
+
+    public void setResponseResult() {
+        Intent data = new Intent();
+        data.putExtra (EXTRA_VIMEO_USER, mUser);
+        data.putExtra (EXTRA_USER_POSITION, mPosition);
+
+        if (getActivity() != null) {
+            getActivity().setResult(RESULT_OK, data);
+        }
     }
 
     /***** MVP View methods implementation *****/

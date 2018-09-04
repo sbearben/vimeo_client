@@ -44,15 +44,9 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
     public void bind (@NonNull VimeoChannel vimeoChannel) {
         mListItem = vimeoChannel;
 
-        if (mListItem.getFollowInteraction() != null) {
-            mFollowButton.setVisibility(View.VISIBLE);
-            mFollowButton.setChecked(mListItem.getFollowInteraction().isAdded());
-            mOriginalState = mFollowButton.isChecked();
-        }
-
         mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
-        //mDisposable = setUpFollowButtonRxBindingStream();
+        mDisposable = setUpFollowButtonRxBindingStream();
 
         mNameTextView.setText(mListItem.getName());
 
@@ -69,21 +63,22 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
                 .into(mImageView);
     }
 
+    /*
     @OnCheckedChanged(R.id.item_follow_button_layout)
     public void onFollowCheckChanged() {
+        Log.d (TAG, "mDisposable is null: " + (mDisposable == null));
         if (mDisposable == null) {
             mDisposable = setUpFollowButtonRxBindingStream();
         }
     }
+    */
 
     @Override
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
-        if (mDisposable != null) {
-            mDisposable.dispose();
-            mDisposable = null;
-        }
+        mDisposable.dispose();
+        mDisposable = null;
     }
 
     @Override

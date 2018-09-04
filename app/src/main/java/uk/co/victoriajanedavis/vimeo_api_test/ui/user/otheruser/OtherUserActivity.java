@@ -15,11 +15,13 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.SingleFragmentActivity;
 public class OtherUserActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_VIMEO_USER = "uk.co.victoriajanedavis.vimeo_api_test.vimeo_user";
+    private static final String EXTRA_USER_POSITION = "uk.co.victoriajanedavis.vimeo_api_test.OtherUserActivity.user_position";
 
 
-    public static Intent newIntent (Context packageContext, VimeoUser user) {
+    public static Intent newIntent (Context packageContext, VimeoUser user, int position) {
         Intent intent = new Intent(packageContext, OtherUserActivity.class);
         intent.putExtra(EXTRA_VIMEO_USER, user);
+        intent.putExtra(EXTRA_USER_POSITION, position);
         return intent;
     }
 
@@ -41,7 +43,8 @@ public class OtherUserActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         VimeoUser user = (VimeoUser) getIntent().getParcelableExtra(EXTRA_VIMEO_USER);
-        return OtherUserFragment.newInstance(user);
+        int position = (int) getIntent().getIntExtra(EXTRA_USER_POSITION, -1);
+        return OtherUserFragment.newInstance(user, position);
     }
 
     @Override

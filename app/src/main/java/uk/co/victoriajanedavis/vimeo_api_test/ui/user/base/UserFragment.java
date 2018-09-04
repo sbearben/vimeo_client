@@ -103,10 +103,10 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (!((AppCompatActivity) getContext()).isFinishing()) {
             Glide.with(this).clear(mImageView);
         }
+        super.onDestroyView();
     }
 
     //@OnClick(R.id.message_tryagain_button)

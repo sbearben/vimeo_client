@@ -18,7 +18,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.channel.ChannelFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
 
-public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> implements FollowButtonRxBinding.FollowButtonClickListener {
+public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> {
 
     private static final String TAG = "ChannelsFragment";
 
@@ -68,7 +68,17 @@ public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> implement
 
     @Override
     public ListAdapter<VimeoChannel> createListAdapter() {
-        return new FollowButtonListAdapter<VimeoChannel>(this, ChannelViewHolder::new, this);
+        return new FollowButtonListAdapter<VimeoChannel>(this, ChannelViewHolder::new, new FollowButtonRxBinding.FollowButtonClickListener() {
+            @Override
+            public Single<Response<Void>> onFollowButtonClick(long channel_id) {
+                return mPresenter.getSubscribeToChannelSingle(channel_id);
+            }
+
+            @Override
+            public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
+                return mPresenter.getUnsubscribeFromChannelSingle(channel_id);
+            }
+        });
     }
 
     @Override
@@ -84,16 +94,5 @@ public class ChannelsFragment extends ResultsTabFragment<VimeoChannel> implement
     @Override
     public String getPluralHeaderMetric() {
         return "channels";
-    }
-
-    // The next two Overrides are for FollowButtonViewHolder.FollowButtonClickListener
-    @Override
-    public Single<Response<Void>> onFollowButtonClick(long channel_id) {
-        return mPresenter.getSubscribeToChannelSingle(channel_id);
-    }
-
-    @Override
-    public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
-        return mPresenter.getUnsubscribeFromChannelSingle(channel_id);
     }
 }

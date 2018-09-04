@@ -29,7 +29,7 @@ public abstract class FollowButtonViewHolder<T extends ListItemFollowInteractor>
         super(baseFragment, itemView);
         ButterKnife.bind(this, itemView);
 
-        mFollowButtonRxBinding = new FollowButtonRxBinding(mFollowButton);
+        mFollowButtonRxBinding = new FollowButtonRxBinding();
 
         //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
     }
