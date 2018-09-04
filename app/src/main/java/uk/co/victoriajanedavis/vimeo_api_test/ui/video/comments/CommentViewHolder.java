@@ -67,6 +67,7 @@ public class CommentViewHolder extends ListItemViewHolder<VimeoComment> {
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
+        mImageView.setImageDrawable(null);
     }
 
     //@OnClick(R.id.item_comment_reply_textview)

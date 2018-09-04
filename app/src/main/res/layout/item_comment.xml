@@ -65,7 +65,6 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:textSize="13sp"
-        android:textAllCaps="true"
         android:focusable="true"
         android:clickable="true"
         android:background="?android:attr/selectableItemBackground"

@@ -77,6 +77,8 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
+        mImageView.setImageDrawable(null);
+
         mDisposable.dispose();
         mDisposable = null;
     }

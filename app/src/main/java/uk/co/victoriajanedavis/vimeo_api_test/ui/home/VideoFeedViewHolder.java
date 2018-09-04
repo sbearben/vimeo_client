@@ -66,6 +66,7 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
+        mImageView.setImageDrawable(null);
     }
 
     @Override

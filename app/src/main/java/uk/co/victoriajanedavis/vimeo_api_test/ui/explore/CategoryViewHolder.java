@@ -58,6 +58,8 @@ public class CategoryViewHolder extends ListItemViewHolder<VimeoCategory> implem
     public void recycle() {
         Glide.with(mBaseFragment).clear(mBackGroundImageView);
         Glide.with(mBaseFragment).clear(mIconImageView);
+        mBackGroundImageView.setImageDrawable(null);
+        mIconImageView.setImageDrawable(null);
     }
 
     @Override

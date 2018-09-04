@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
+import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
@@ -81,5 +82,33 @@ public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> im
     @Override
     protected String getQuery() {
         return null;
+    }
+
+
+    /***** MVP View methods implementation *****/
+
+    @Override
+    public void showItems (VimeoCollection<VimeoVideo> itemCollection) {
+        if (!mSwipeRefreshLayout.isActivated()) {
+            mSwipeRefreshLayout.setEnabled(true);
+        }
+
+        super.showItems(itemCollection);
+    }
+
+    @Override
+    public void showProgress() {
+        if (mListAdapter.isEmpty() && !mSwipeRefreshLayout.isRefreshing()) {
+            mContentLoadingProgress.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideProgress() {
+        if (getView() != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mContentLoadingProgress.setVisibility(View.GONE);
+            mListAdapter.removeLoadingView();
+        }
     }
 }
