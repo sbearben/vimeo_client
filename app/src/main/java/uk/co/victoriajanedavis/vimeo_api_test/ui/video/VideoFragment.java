@@ -246,6 +246,11 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
     public void onDestroyView() {
         super.onDestroyView();
         mViewPager.setAdapter(null);
+
+        if (!((AppCompatActivity) getContext()).isFinishing()) {
+            Glide.with(this).clear(mImageView);
+            Glide.with(this).clear(mUserImageView);
+        }
     }
 
     @Override

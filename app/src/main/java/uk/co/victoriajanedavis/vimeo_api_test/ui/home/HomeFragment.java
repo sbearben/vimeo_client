@@ -61,10 +61,6 @@ public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> im
         return R.layout.fragment_home;
     }
 
-    protected ListItemViewHolder<VimeoVideo> generateViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        return new VideoFeedViewHolder(context, baseFragment, inflater, parent);
-    }
-
     @StringRes
     protected int getOnEmptyListErrorMessageStringRes() {
         return R.string.error_no_videos_to_display;
@@ -75,7 +71,7 @@ public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> im
     }
 
     protected ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, VideoFeedViewHolder::new);
+        return new ListAdapter<>( this, VideoFeedViewHolder::new);
     }
 
     protected String getCollectionUri() {

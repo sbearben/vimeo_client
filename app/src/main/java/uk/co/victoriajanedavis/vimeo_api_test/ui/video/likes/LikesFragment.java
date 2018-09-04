@@ -71,7 +71,7 @@ public class LikesFragment extends VideoTabFragment<VimeoUser> implements Follow
 
     @Override
     public ListAdapter<VimeoUser> createListAdapter() {
-        return new FollowButtonListAdapter<VimeoUser>(getContext(), this, UserViewHolder::new, this);
+        return new FollowButtonListAdapter<VimeoUser>(this, UserViewHolder::new, this);
     }
 
     @Override

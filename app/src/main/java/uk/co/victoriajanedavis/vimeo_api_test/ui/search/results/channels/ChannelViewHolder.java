@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoChannel;
@@ -31,11 +32,10 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
     @BindView(R.id.item_channel_imageview) AppCompatImageView mImageView;
     @BindView(R.id.item_channel_name_textview) TextView mNameTextView;
     @BindView(R.id.item_channel_videosfollowers_textview) TextView mVideosFollowersTextView;
-    //@BindView(R.id.item_channel_follow_button_layout) FollowToggleButton mFollowButton;
 
 
-    public ChannelViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_channel, parent, false));
+    public ChannelViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_channel, parent, false));
 
         itemView.setOnClickListener(this);
     }
@@ -50,8 +50,9 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
             mOriginalState = mFollowButton.isChecked();
         }
 
-        initFollowButtonRxBinding(mListItem);
-        mDisposable = setUpFollowButtonRxBindingStream();
+        mFollowButtonRxBinding.setFollowButton(mFollowButton);
+        mFollowButtonRxBinding.setFollowableItem(mListItem);
+        //mDisposable = setUpFollowButtonRxBindingStream();
 
         mNameTextView.setText(mListItem.getName());
 
@@ -68,18 +69,32 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
                 .into(mImageView);
     }
 
+    @OnCheckedChanged(R.id.item_follow_button_layout)
+    public void onFollowCheckChanged() {
+        if (mDisposable == null) {
+            mDisposable = setUpFollowButtonRxBindingStream();
+        }
+    }
+
     @Override
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
-        mDisposable.dispose();
-        setFollowButtonClickListener(null);
-        mFollowButtonRxBinding.setFollowButtonClickListener(null);
+        if (mDisposable != null) {
+            mDisposable.dispose();
+            mDisposable = null;
+        }
+    }
+
+    @Override
+    public void releaseInternalStates() {
+        super.releaseInternalStates();
+        //mFollowButtonRxBinding.releaseInternalStates();
     }
 
     @Override
     public void onClick (View view) {
-        Intent intent = ChannelActivity.newIntent(mContext, mListItem);
-        mContext.startActivity(intent);
+        Intent intent = ChannelActivity.newIntent(mBaseFragment.getContext(), mListItem, getLayoutPosition());
+        mBaseFragment.startActivityForResult(intent, ChannelsFragment.REQUEST_CHANNEL);
     }
 }

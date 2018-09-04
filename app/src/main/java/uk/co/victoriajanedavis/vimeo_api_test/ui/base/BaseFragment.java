@@ -43,13 +43,13 @@ public class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        Log.d (this.getClass().getSimpleName(), "onAttach()");
+        //Log.d (this.getClass().getSimpleName(), "onAttach()");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d (this.getClass().getSimpleName(), "onCreate()");
+        //Log.d (this.getClass().getSimpleName(), "onCreate()");
 
         // Create the FragmentComponent and reuses cached ConfigPersistentComponent if this is
         // being called after a configuration change.
@@ -73,45 +73,45 @@ public class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        Log.d (this.getClass().getSimpleName(), "onActivityCreated()");
+        //Log.d (this.getClass().getSimpleName(), "onActivityCreated()");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(this.getClass().getSimpleName(), "onStart()");
+        //Log.d(this.getClass().getSimpleName(), "onStart()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(this.getClass().getSimpleName(), "onResume()");
+        //Log.d(this.getClass().getSimpleName(), "onResume()");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong(KEY_FRAGMENT_ID, mFragmentId);
-        Log.d(this.getClass().getSimpleName(), "onSaveInstanceState()");
+        //Log.d(this.getClass().getSimpleName(), "onSaveInstanceState()");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(this.getClass().getSimpleName(), "onPause()");
+        //Log.d(this.getClass().getSimpleName(), "onPause()");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(this.getClass().getSimpleName(), "onStop()");
+        //Log.d(this.getClass().getSimpleName(), "onStop()");
     }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(this.getClass().getSimpleName(), "onDestroyView()");
+        //Log.d(this.getClass().getSimpleName(), "onDestroyView()");
     }
 
     @Override
@@ -120,23 +120,26 @@ public class BaseFragment extends Fragment {
         // TODO: this is for LeakCanary
         VimeoApplication.get(mContext).mustDie(this);
 
-        Log.d(this.getClass().getSimpleName(), "onDestroy()");
+        //Log.d(this.getClass().getSimpleName(), "onDestroy()");
     }
 
     @Override
     public void onDetach() {
+        //Log.d(this.getClass().getSimpleName(), "onDetach()");
         if (!((Activity) mContext).isChangingConfigurations()) {
             Timber.i("Clearing ConfigPersistentComponent id=%d", mFragmentId);
             sComponentsMap.remove(mFragmentId);
         }
-        Log.d(this.getClass().getSimpleName(), "onDetach()");
+
+        mContext = null;
+        mActivity = null;
         super.onDetach();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.d(this.getClass().getSimpleName(), "setUserVisibleHint(): " + isVisibleToUser);
+        //Log.d(this.getClass().getSimpleName(), "setUserVisibleHint(): " + isVisibleToUser);
     }
 
     public FragmentComponent fragmentComponent() {

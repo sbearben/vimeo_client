@@ -129,7 +129,7 @@ public class VimeoChannel implements Parcelable, ListItemFollowInteractor {
         this.created_time = new Date(in.readLong());
         this.user = in.readParcelable(VimeoUser.class.getClassLoader());
         this.header = in.readParcelable(VimeoPictures.class.getClassLoader());
-        this.metadata = in.readParcelable(VimeoMetadataVideo.class.getClassLoader());
+        this.metadata = in.readParcelable(VimeoMetadataChannel.class.getClassLoader());
         //mUrls = new ArrayList<>();
         //in.readList(mUrls, Url.class.getClassLoader());
     }

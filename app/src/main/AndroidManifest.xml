@@ -44,6 +44,10 @@
             android:name=".ui.channel.ChannelActivity">
         </activity>
 
+        <activity
+            android:name=".ui.reply.ReplyActivity">
+        </activity>
+
     </application>
 
 </manifest>

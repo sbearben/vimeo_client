@@ -14,9 +14,9 @@ public class FollowButtonListAdapter<T extends ListItemFollowInteractor> extends
     private FollowButtonRxBinding.FollowButtonClickListener mFollowButtonClickListener;
 
 
-    public FollowButtonListAdapter (Context context, BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<T> viewHolderGenerator,
+    public FollowButtonListAdapter (BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<T> viewHolderGenerator,
                                     FollowButtonRxBinding.FollowButtonClickListener followButtonClickListener) {
-        super(context, fragment, viewHolderGenerator);
+        super(fragment, viewHolderGenerator);
         mFollowButtonClickListener = followButtonClickListener;
     }
 
@@ -28,7 +28,7 @@ public class FollowButtonListAdapter<T extends ListItemFollowInteractor> extends
         }
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        FollowButtonViewHolder<T> viewHolder = (FollowButtonViewHolder<T>) mViewHolderGenerator.generateViewHolder(mContext, mBaseFragment, layoutInflater, parent);
+        FollowButtonViewHolder<T> viewHolder = (FollowButtonViewHolder<T>) mViewHolderGenerator.generateViewHolder(mBaseFragment, layoutInflater, parent);
         viewHolder.setFollowButtonClickListener(mFollowButtonClickListener);
 
         return viewHolder;

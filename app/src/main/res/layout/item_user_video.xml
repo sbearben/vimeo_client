@@ -29,7 +29,7 @@
         android:paddingBottom="3dp"
         android:textSize="10sp"
         android:textColor="@color/white"
-        android:background="@color/dimfilter"
+        android:background="@color/dimFilter"
         app:layout_constraintBottom_toBottomOf="@id/user_video_imageview"
         app:layout_constraintEnd_toEndOf="@id/user_video_imageview"
         tools:text="03:45"/>

@@ -142,7 +142,7 @@ public class VimeoUser implements Parcelable, ListItemFollowInteractor {
         this.bio = in.readString();
         this.account = in.readString();
         this.pictures = in.readParcelable(VimeoPictures.class.getClassLoader());
-        this.metadata = in.readParcelable(VimeoMetadataVideo.class.getClassLoader());
+        this.metadata = in.readParcelable(VimeoMetadataUser.class.getClassLoader());
         this.videosCollection = in.readParcelable(VimeoCollection.class.getClassLoader());
     }
 

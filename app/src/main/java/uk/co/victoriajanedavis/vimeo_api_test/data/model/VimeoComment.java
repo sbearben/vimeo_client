@@ -17,6 +17,7 @@ public class VimeoComment implements ListItem, Parcelable {
     @SerializedName("text") @Expose private String text;
     @SerializedName("created_on") @Expose private Date created_time;
     @SerializedName("user") @Expose private VimeoUser user;
+    @SerializedName("metadata") @Expose private VimeoMetadataComment metadata;
 
     private long id = ListItem.ID_UNINITIALIZED;
 
@@ -53,9 +54,17 @@ public class VimeoComment implements ListItem, Parcelable {
         this.user = user;
     }
 
+    public VimeoMetadataComment getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(VimeoMetadataComment metadata) {
+        this.metadata = metadata;
+    }
+
     @Override
     public long getId() {
-        if (id == ListItem.ID_UNINITIALIZED) {
+        if (id == ListItem.ID_UNINITIALIZED || id == 0) {
             id = VimeoApiServiceUtil.generateIdFromUri(getUri());
         }
         return id;
@@ -72,6 +81,7 @@ public class VimeoComment implements ListItem, Parcelable {
         dest.writeString(this.text);
         dest.writeLong(this.created_time.getTime());
         dest.writeParcelable(this.user, flags);
+        dest.writeParcelable(this.metadata, flags);
     }
 
     protected VimeoComment(Parcel in) {
@@ -79,6 +89,7 @@ public class VimeoComment implements ListItem, Parcelable {
         this.text = in.readString();
         this.created_time = new Date(in.readLong());
         this.user = in.readParcelable(VimeoUser.class.getClassLoader());
+        this.metadata = in.readParcelable(VimeoMetadataComment.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<VimeoComment> CREATOR = new Parcelable.Creator<VimeoComment>() {

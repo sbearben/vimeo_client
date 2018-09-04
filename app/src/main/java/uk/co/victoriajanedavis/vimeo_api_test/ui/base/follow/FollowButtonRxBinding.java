@@ -21,33 +21,37 @@ public class FollowButtonRxBinding {
 
     private ListItemFollowInteractor mFollowableItem;
     private FollowToggleButton mFollowButton;
+
     private FollowButtonClickListener mFollowButtonClickListener;
+    private NetworkCallFinishedCallback mNetworkCallFinishedCallback;
     //private Toast mErrorToast;
 
     private boolean mOriginalState;
 
 
-    public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton) {
-        this(item, followButton, null);
+    public FollowButtonRxBinding (FollowToggleButton followButton) {
+        this(null, followButton, null);
     }
 
     public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton,
                                   FollowButtonClickListener followButtonClickListener) {
-        mFollowableItem = item;
+        this(item, followButton, followButtonClickListener, null);
+    }
+
+    public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton,
+                                  FollowButtonClickListener followButtonClickListener,
+                                  NetworkCallFinishedCallback networkCallFinishedCallback) {
         mFollowButton = followButton;
         mFollowButtonClickListener = followButtonClickListener;
+        mNetworkCallFinishedCallback = networkCallFinishedCallback;
+        if (item != null) setFollowableItem(item);
 
-        if (mFollowableItem.getFollowInteraction() != null) {
-            mFollowButton.setVisibility(View.VISIBLE);
-            mFollowButton.setChecked(mFollowableItem.getFollowInteraction().isAdded());
-            mOriginalState = mFollowButton.isChecked();
-        }
         //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
     }
 
     public Disposable setupFollowButtonRxBindingStream() {
         return RxCompoundButton.checkedChanges(mFollowButton)
-                .skipInitialValue()
+                //.skipInitialValue()
                 //.takeUntil(RxView.detaches(parent))
                 .switchMapSingle(isChecked -> {
                     mFollowableItem.getFollowInteraction().setAdded(isChecked);
@@ -65,15 +69,15 @@ public class FollowButtonRxBinding {
                 .map(voidResponse -> {
                     switch(VimeoApiServiceUtil.responseType(voidResponse)) {
                         case VimeoApiServiceUtil.RESPONSE_OK:
-                            return FollowUiModel.success(mFollowableItem.getId(), mFollowButton.isChecked());
+                            return FollowUiModel.success(mFollowButton.isChecked());
                         case VimeoApiServiceUtil.RESPONSE_ERROR:
                         case VimeoApiServiceUtil.RESPONSE_UNAUTHORIZED:
                         default:
-                            return FollowUiModel.failure(mFollowableItem.getId(), mFollowButton.isChecked(), voidResponse.message());
+                            return FollowUiModel.failure(mFollowButton.isChecked(), voidResponse.message());
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .startWith(FollowUiModel.inProgress(mFollowableItem.getId(), mFollowButton.isChecked()))
+                //.startWith(FollowUiModel.inProgress(mFollowableItem.getId(), mFollowButton.isChecked()))
                 .subscribe(model -> {
                     if (model.isInProgress()) {
                         //Log.d (TAG, "this is called");
@@ -81,10 +85,12 @@ public class FollowButtonRxBinding {
                     else {
                         if (model.isSuccess()) {
                             mOriginalState = model.isFollowing();
+                            if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onSuccess();
                         }
                         else {
                             mFollowableItem.getFollowInteraction().setAdded(mOriginalState);
                             mFollowButton.setChecked(mOriginalState, false);
+                            if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onFailure();
                             //mErrorToast.cancel();
                             //mErrorToast.show();
                         }
@@ -92,12 +98,36 @@ public class FollowButtonRxBinding {
                 }, t -> { throw new OnErrorNotImplementedException(t); });
     }
 
+    public void releaseInternalStates() {
+        mFollowButtonClickListener = null;
+        mFollowButton = null;
+    }
+
+    public void setFollowableItem(ListItemFollowInteractor followableItem) {
+        mFollowableItem = followableItem;
+        if (mFollowableItem.getFollowInteraction() != null) {
+            mFollowButton.setVisibility(View.VISIBLE);
+            mFollowButton.setChecked(mFollowableItem.getFollowInteraction().isAdded());
+            mOriginalState = mFollowButton.isChecked();
+        }
+
+    }
+
     public void setFollowButtonClickListener (FollowButtonClickListener listener) {
         mFollowButtonClickListener = listener;
+    }
+
+    public void setFollowButton (FollowToggleButton followButton) {
+        mFollowButton = followButton;
     }
 
     public interface FollowButtonClickListener {
         Single<Response<Void>> onFollowButtonClick(long id);
         Single<Response<Void>> onUnfollowButtonClick(long id);
+    }
+
+    public interface NetworkCallFinishedCallback {
+        void onSuccess();
+        void onFailure();
     }
 }

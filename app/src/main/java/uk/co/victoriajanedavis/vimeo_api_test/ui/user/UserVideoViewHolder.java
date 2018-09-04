@@ -33,8 +33,8 @@ public class UserVideoViewHolder extends ListItemViewHolder<VimeoVideo> implemen
     @BindView(R.id.user_video_timelength_textview) TextView mTimeTextView;
 
 
-    public UserVideoViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_user_video, parent, false));
+    public UserVideoViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_user_video, parent, false));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(this);
@@ -52,9 +52,9 @@ public class UserVideoViewHolder extends ListItemViewHolder<VimeoVideo> implemen
 
         mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
         GlideApp.with(mBaseFragment)
-                .load(mListItem.getPictures().getSizesList().get(2).getLink()) // get(1) since when looking at Json response it appears this is the location of the most reasonable size
-                .thumbnail(Glide.with(itemView.getContext())
-                        .load(mListItem.getPictures().getSizesList().get(0).getLink()))
+                .load(mListItem.getPictures().getSizesList().get(0).getLink()) // get(1) since when looking at Json response it appears this is the location of the most reasonable size
+                //.thumbnail(Glide.with(itemView.getContext())
+                        //.load(mListItem.getPictures().getSizesList().get(0).getLink()))
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
@@ -70,7 +70,7 @@ public class UserVideoViewHolder extends ListItemViewHolder<VimeoVideo> implemen
 
     @Override
     public void onClick (View view) {
-        Intent intent = VideoActivity.newIntent(mContext, mListItem);
-        mContext.startActivity(intent);
+        Intent intent = VideoActivity.newIntent(mBaseFragment.getContext(), mListItem);
+        mBaseFragment.getContext().startActivity(intent);
     }
 }

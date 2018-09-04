@@ -66,7 +66,7 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
         fragmentComponent().inject(this);
         mPresenter.attachView(this);
 
-        mCategoryListAdapter = new ListAdapter<>(getContext(), this, CategoryViewHolder::new);
+        mCategoryListAdapter = new ListAdapter<>(this, CategoryViewHolder::new);
 
         if (savedInstanceState != null) {
             mCategoryListAdapter.addItems(savedInstanceState.getParcelableArrayList (SAVED_CATEGORY_LIST));
@@ -126,10 +126,6 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
         return R.layout.fragment_explore;
     }
 
-    protected ListItemViewHolder<VimeoVideo> generateViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        return new UserVideoViewHolder(context, baseFragment, inflater, parent);
-    }
-
     @StringRes
     protected int getOnEmptyListErrorMessageStringRes() {
         return R.string.error_no_videos_to_display;
@@ -140,7 +136,7 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
     }
 
     protected ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserVideoViewHolder::new);
+        return new ListAdapter<>(this, UserVideoViewHolder::new);
     }
 
     protected String getCollectionUri() {

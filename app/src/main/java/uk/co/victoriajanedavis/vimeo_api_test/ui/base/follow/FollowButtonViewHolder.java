@@ -18,7 +18,6 @@ public abstract class FollowButtonViewHolder<T extends ListItemFollowInteractor>
 
     @BindView(R.id.item_follow_button_layout) protected FollowToggleButton mFollowButton;
 
-    private FollowButtonRxBinding.FollowButtonClickListener mFollowButtonClickListener;
     //private Toast mErrorToast;
 
     protected FollowButtonRxBinding mFollowButtonRxBinding;
@@ -26,16 +25,13 @@ public abstract class FollowButtonViewHolder<T extends ListItemFollowInteractor>
     protected boolean mOriginalState;
 
 
-    public FollowButtonViewHolder (Context context, BaseFragment baseFragment, View itemView) {
-        super(context, baseFragment, itemView);
+    public FollowButtonViewHolder (BaseFragment baseFragment, View itemView) {
+        super(baseFragment, itemView);
         ButterKnife.bind(this, itemView);
 
-        //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
-    }
+        mFollowButtonRxBinding = new FollowButtonRxBinding(mFollowButton);
 
-    // This NEEDS to be called before setUpFollowButtonRxBindingStream()
-    protected void initFollowButtonRxBinding (T ListItem) {
-        mFollowButtonRxBinding = new FollowButtonRxBinding(mListItem, mFollowButton, mFollowButtonClickListener);
+        //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
     }
 
     protected Disposable setUpFollowButtonRxBindingStream() {
@@ -43,6 +39,6 @@ public abstract class FollowButtonViewHolder<T extends ListItemFollowInteractor>
     }
 
     public void setFollowButtonClickListener (FollowButtonRxBinding.FollowButtonClickListener listener) {
-        mFollowButtonClickListener = listener;
+        mFollowButtonRxBinding.setFollowButtonClickListener(listener);
     }
 }

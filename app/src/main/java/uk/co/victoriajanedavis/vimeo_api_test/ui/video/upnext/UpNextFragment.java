@@ -63,7 +63,7 @@ public class UpNextFragment extends VideoTabFragment<VimeoVideo> {
 
     @Override
     public ListAdapter<VimeoVideo> createListAdapter() {
-        return new UpNextListAdapter(getContext(), this, UpNextVideoViewHolder::new, getVideoFragment());
+        return new UpNextListAdapter(this, UpNextVideoViewHolder::new, getVideoFragment());
     }
 
     @Override

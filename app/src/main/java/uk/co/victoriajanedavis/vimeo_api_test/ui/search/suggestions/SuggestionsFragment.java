@@ -62,7 +62,7 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
         fragmentComponent().inject(this);
         mSuggestionsPresenter.attachView(this);
 
-        mSearchAdapter = new SearchAdapter(getContext(), this, SuggestionsViewHolder::new);
+        mSearchAdapter = new SearchAdapter(this, SuggestionsViewHolder::new);
     }
 
     @Override

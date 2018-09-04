@@ -4,17 +4,22 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import retrofit2.Response;
 
 public class VimeoApiServiceUtil {
+
+    private static final String TAG = "VimeoApiServiceUtil";
 
     public static final String RESPONSE_OK = "ok";
     public static final String RESPONSE_UNAUTHORIZED = "unauthorized";
@@ -29,6 +34,24 @@ public class VimeoApiServiceUtil {
     public static long generateIdFromUri (String uri) {
         String[] paths = uri.split("/");
         return Integer.valueOf(paths[paths.length-1]);
+    }
+
+    public static long generateVideoIdFromCommentUri (String uri) {
+        Pattern p = Pattern.compile("videos/([0-9]+)");
+        Matcher m = p.matcher(uri);
+        if (m.find()) {
+            return generateIdFromUri(m.group(1));
+        }
+        return -1;
+    }
+
+    public static long generateVideoIdFromCollectionUri (String uri) {
+        String[] paths = uri.split("/");
+        for (String path : paths) {
+            Log.d (TAG, "path: " + path);
+        }
+
+        return Integer.valueOf(paths[1]);
     }
 
     public static String formatSecondsToDuration (int seconds) {

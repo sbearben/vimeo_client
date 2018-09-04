@@ -59,8 +59,6 @@ public abstract class CollectionFragment<A extends CollectionMvpView<T>, T exten
     protected Unbinder mUnbinder;
 
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

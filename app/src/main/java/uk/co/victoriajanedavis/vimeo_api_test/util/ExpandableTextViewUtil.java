@@ -71,6 +71,7 @@ public class ExpandableTextViewUtil {
     private void setTextViewLayoutListener() {
         mTextView.setOnLayoutListener(v -> {
 
+            /*
             Log.d(TAG, "getHeight(): " + mTextView.getHeight());
             Log.d(TAG, "getLineHeight(): " + mTextView.getLineHeight());
             Log.d(TAG, "getMaxHeight(): " + mTextView.getMaxHeight());
@@ -78,7 +79,7 @@ public class ExpandableTextViewUtil {
             Log.d(TAG, "getLineCount(): " + mTextView.getLineCount());
             Log.d(TAG, "getMaxLines(): " + mTextView.getMaxLines());
             Log.d(TAG, "getMinLines(): " + mTextView.getMinLines());
-
+            */
 
             // This is a hacky way to get the max height since mTextView.getHeight() isn't working properly after the first time.
             mMaxHeight = mTextView.getLineCount()*mTextView.getLineHeight();
@@ -93,8 +94,8 @@ public class ExpandableTextViewUtil {
             mMaxHeight += extraHeight;
             mStartingHeight += extraHeight;
 
-            Log.d(TAG, "maxHeight: " + mMaxHeight);
-            Log.d(TAG, "startingHeight: " + mStartingHeight);
+            //Log.d(TAG, "maxHeight: " + mMaxHeight);
+            //Log.d(TAG, "startingHeight: " + mStartingHeight);
 
             mTextView.setHeight(mStartingHeight);
 

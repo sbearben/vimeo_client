@@ -14,6 +14,5 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.search.SearchActivity;
 public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
-    void inject(SearchActivity mainActivity);
-
+    void inject(SearchActivity searchActivity);
 }

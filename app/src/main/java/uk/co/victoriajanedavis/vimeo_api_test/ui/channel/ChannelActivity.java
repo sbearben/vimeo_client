@@ -14,12 +14,14 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.SingleFragmentActivity;
 
 public class ChannelActivity extends SingleFragmentActivity {
 
-    private static final String EXTRA_VIMEO_CHANNEL = "uk.co.victoriajanedavis.vimeo_api_test.vimeo_channel";
+    private static final String EXTRA_VIMEO_CHANNEL = "uk.co.victoriajanedavis.vimeo_api_test.ChannelActivity.vimeo_channel";
+    private static final String EXTRA_CHANNEL_POSITION = "uk.co.victoriajanedavis.vimeo_api_test.ChannelActivity.channel_position";
 
 
-    public static Intent newIntent (Context packageContext, VimeoChannel channel) {
+    public static Intent newIntent (Context packageContext, VimeoChannel channel, int position) {
         Intent intent = new Intent(packageContext, ChannelActivity.class);
         intent.putExtra(EXTRA_VIMEO_CHANNEL, channel);
+        intent.putExtra(EXTRA_CHANNEL_POSITION, position);
         return intent;
     }
 
@@ -41,7 +43,8 @@ public class ChannelActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         VimeoChannel channel = (VimeoChannel) getIntent().getParcelableExtra(EXTRA_VIMEO_CHANNEL);
-        return ChannelFragment.newInstance(channel);
+        int position = (int) getIntent().getIntExtra(EXTRA_CHANNEL_POSITION, -1);
+        return ChannelFragment.newInstance(channel, position);
     }
 
     @Override

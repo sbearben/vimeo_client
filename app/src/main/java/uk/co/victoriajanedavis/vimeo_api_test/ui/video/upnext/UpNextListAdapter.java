@@ -14,9 +14,9 @@ public class UpNextListAdapter extends ListAdapter<VimeoVideo> {
 
     private UpNextVideoViewHolder.UpNextVideoClickListener mUpNextVideoClickListener;
 
-    public UpNextListAdapter (Context context, BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<VimeoVideo> viewHolderGenerator,
+    public UpNextListAdapter (BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<VimeoVideo> viewHolderGenerator,
                               UpNextVideoViewHolder.UpNextVideoClickListener upNextVideoClickListener) {
-        super(context, fragment, viewHolderGenerator);
+        super(fragment, viewHolderGenerator);
         mUpNextVideoClickListener = upNextVideoClickListener;
     }
 
@@ -28,7 +28,7 @@ public class UpNextListAdapter extends ListAdapter<VimeoVideo> {
         }
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        UpNextVideoViewHolder viewHolder = (UpNextVideoViewHolder) mViewHolderGenerator.generateViewHolder(mContext, mBaseFragment, layoutInflater, parent);
+        UpNextVideoViewHolder viewHolder = (UpNextVideoViewHolder) mViewHolderGenerator.generateViewHolder(mBaseFragment, layoutInflater, parent);
         viewHolder.setUpNextVideoClickListener(mUpNextVideoClickListener);
 
         return viewHolder;

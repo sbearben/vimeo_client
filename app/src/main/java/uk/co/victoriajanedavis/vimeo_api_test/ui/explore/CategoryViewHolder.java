@@ -29,8 +29,8 @@ public class CategoryViewHolder extends ListItemViewHolder<VimeoCategory> implem
     @BindView(R.id.category_name_textview) TextView mNameTextView;
 
 
-    public CategoryViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_category, parent, false));
+    public CategoryViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_category, parent, false));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(this);

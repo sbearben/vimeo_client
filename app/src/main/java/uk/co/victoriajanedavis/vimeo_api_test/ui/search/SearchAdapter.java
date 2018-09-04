@@ -13,8 +13,8 @@ public class SearchAdapter extends ListAdapter<String> { //implements Filterable
     private SearchFilter mSearchFilter;
 
 
-    public SearchAdapter (Context context, BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<String> viewHolderGenerator) {
-        super(context, fragment, viewHolderGenerator);
+    public SearchAdapter (BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<String> viewHolderGenerator) {
+        super(fragment, viewHolderGenerator);
     }
 
     /*

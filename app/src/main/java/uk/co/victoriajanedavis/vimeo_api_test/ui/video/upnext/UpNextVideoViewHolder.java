@@ -14,8 +14,8 @@ public class UpNextVideoViewHolder extends UserVideoViewHolder {
     private UpNextVideoClickListener mUpNextVideoClickListener;
 
 
-    public UpNextVideoViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater, parent);
+    public UpNextVideoViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater, parent);
     }
 
     public void setUpNextVideoClickListener (UpNextVideoClickListener upNextVideoClickListener) {

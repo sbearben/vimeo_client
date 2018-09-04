@@ -6,6 +6,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -155,5 +156,16 @@ public interface VimeoApiService {
 
     @DELETE("me/channels/{channel_id}")
     Single<Response<Void>> unsubscribeFromChannel(@Path("channel_id") long channel_id);
+
+    @POST("videos/{video_id}/comments")
+    @FormUrlEncoded
+    Single<VimeoComment> postCommentOnVideo(@Path("video_id") long video_id,
+                                   @Field("text") String comment);
+
+    @POST("videos/{video_id}/comments/{comment_id}/replies")
+    @FormUrlEncoded
+    Single<VimeoComment> postReplyToCommentOnVideo(@Path("video_id") long video_id,
+                                          @Path("comment_id") long comment_id,
+                                          @Field("text") String reply);
 
 }

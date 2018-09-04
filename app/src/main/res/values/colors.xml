@@ -9,6 +9,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorPrimaryDisabled">#4AC5F4</color>
 
     <color name="colorRegentGray">#8699A6</color>
     <color name="colorGlacier">#89b2c6</color>
@@ -20,7 +21,8 @@
     <color name="whiteOpacity54">#8AFFFFFF</color>
     <color name="whiteOpacity5">#0DFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="dimfilter">#4f000000</color>
+    <color name="dimFilter">#4f000000</color>
+    <color name="dimmerFilter">#A8000000</color>
 
     <color name="lightLightGray">#F5F5F5</color>
     <color name="lightGray">#F1F1F1</color>

@@ -63,6 +63,7 @@ public abstract class VideoTabFragment<T extends Parcelable>
         }
     }
 
+    @Override
     @LayoutRes
     protected int getLayoutResId() {
         return R.layout.fragment_video_tab;

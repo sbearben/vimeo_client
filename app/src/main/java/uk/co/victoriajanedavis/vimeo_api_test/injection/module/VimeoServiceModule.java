@@ -12,11 +12,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.victoriajanedavis.vimeo_api_test.data.local.PreferencesHelper;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoAccessToken;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoMetadataChannel;
+import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoMetadataComment;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoMetadataUser;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoMetadataVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoApiService;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoApiServiceHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataChannelDeserializer;
+import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataCommentDeserializer;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataUserDeserializer;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataVideoDeserializer;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationScope;
@@ -52,6 +54,7 @@ public class VimeoServiceModule {
                 .registerTypeHierarchyAdapter(VimeoMetadataUser.class, new VimeoMetadataUserDeserializer())
                 .registerTypeHierarchyAdapter(VimeoMetadataVideo.class, new VimeoMetadataVideoDeserializer())
                 .registerTypeHierarchyAdapter(VimeoMetadataChannel.class, new VimeoMetadataChannelDeserializer())
+                .registerTypeHierarchyAdapter(VimeoMetadataComment.class, new VimeoMetadataCommentDeserializer())
                 .create();
     }
 

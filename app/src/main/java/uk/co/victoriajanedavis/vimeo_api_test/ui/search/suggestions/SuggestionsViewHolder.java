@@ -24,8 +24,8 @@ public class SuggestionsViewHolder extends ListItemViewHolder<String> implements
     @BindView(R.id.item_suggestion_arrow_imageview) AppCompatImageView mArrowImageView;
 
 
-    public SuggestionsViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_suggestion, parent, false));
+    public SuggestionsViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_suggestion, parent, false));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener (this);
@@ -44,16 +44,16 @@ public class SuggestionsViewHolder extends ListItemViewHolder<String> implements
 
     @OnClick(R.id.item_suggestion_arrow_imageview)
     public void onArrowIconClick() {
-        if (mContext != null) {
-            OnClickListener listener = (OnClickListener) mContext;
+        if (mBaseFragment.getContext() != null) {
+            OnClickListener listener = (OnClickListener) mBaseFragment.getContext();
             listener.onArrowIconClick(mListItem);
         }
     }
 
     @Override
     public void onClick (View view) {
-        if (mContext != null) {
-            OnClickListener listener = (OnClickListener) mContext;
+        if (mBaseFragment.getContext() != null) {
+            OnClickListener listener = (OnClickListener) mBaseFragment.getContext();
             listener.onViewHolderClick(mListItem);
         }
     }

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -98,6 +101,14 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
         mMessageButton.setOnClickListener(v -> onRefreshMessageButtonClick());
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (!((AppCompatActivity) getContext()).isFinishing()) {
+            Glide.with(this).clear(mImageView);
+        }
+    }
+
     //@OnClick(R.id.message_tryagain_button)
     public void onRefreshMessageButtonClick() {
         super.onRefresh();
@@ -108,17 +119,13 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
         return R.layout.fragment_user;
     }
 
-    protected ListItemViewHolder<VimeoVideo> generateViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        return new UserVideoViewHolder(context, baseFragment, inflater, parent);
-    }
-
     @StringRes
     protected int getOnEmptyListErrorMessageStringRes() {
         return R.string.error_no_videos_to_display;
     }
 
     protected ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserVideoViewHolder::new);
+        return new ListAdapter<>(this, UserVideoViewHolder::new);
     }
 
     @Override

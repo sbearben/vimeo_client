@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
@@ -33,8 +34,8 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
     //@BindView(R.id.item_user_follow_button_layout) FollowToggleButton mFollowButton;
 
 
-    public UserViewHolder(Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_user, parent, false));
+    public UserViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_user, parent, false));
 
         itemView.setOnClickListener (this);
     }
@@ -49,8 +50,9 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
             mOriginalState = mFollowButton.isChecked();
         }
 
-        initFollowButtonRxBinding(mListItem);
-        mDisposable = setUpFollowButtonRxBindingStream();
+        mFollowButtonRxBinding.setFollowButton(mFollowButton);
+        mFollowButtonRxBinding.setFollowableItem(mListItem);
+        //mDisposable = setUpFollowButtonRxBindingStream();
 
         mNameTextView.setText(mListItem.getName());
 
@@ -59,7 +61,7 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
         mVideosFollowersTextView.setText(videoCountAndFollowers);
 
         GlideApp.with(mBaseFragment)
-                .load(mListItem.getPictures().getSizesList().get(2).getLink())
+                .load(mListItem.getPictures().getSizesList().get(1).getLink())
                 .placeholder(R.drawable.user_image_placeholder)
                 .fallback(R.drawable.user_image_placeholder)
                 .circleCrop()
@@ -67,18 +69,32 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
                 .into(mImageView);
     }
 
+    @OnCheckedChanged(R.id.item_follow_button_layout)
+    public void onFollowCheckChanged() {
+        if (mDisposable == null) {
+            mDisposable = setUpFollowButtonRxBindingStream();
+        }
+    }
+
     @Override
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
-        mDisposable.dispose();
-        setFollowButtonClickListener(null);
-        mFollowButtonRxBinding.setFollowButtonClickListener(null);
+        if (mDisposable != null) {
+            mDisposable.dispose();
+            mDisposable = null;
+        }
+    }
+
+    @Override
+    public void releaseInternalStates() {
+        super.releaseInternalStates();
+        //mFollowButtonRxBinding.releaseInternalStates();
     }
 
     @Override
     public void onClick (View view) {
-        Intent intent = OtherUserActivity.newIntent(mContext, mListItem);
-        mContext.startActivity(intent);
+        Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem);
+        mBaseFragment.getContext().startActivity(intent);
     }
 }

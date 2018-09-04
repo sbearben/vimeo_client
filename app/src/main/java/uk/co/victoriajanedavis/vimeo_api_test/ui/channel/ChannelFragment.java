@@ -1,6 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.channel;
 
+import android.arch.lifecycle.ReportFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import javax.inject.Inject;
 
@@ -52,12 +57,17 @@ import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.ExpandableTextViewUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
 
+import static android.app.Activity.RESULT_OK;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVideo> implements ChannelMvpView {
 
     private static final String TAG = "ChannelFragment";
     private static final String ARG_VIMEO_CHANNEL = "vimeo_channel";
+    private static final String ARG_CHANNEL_POSITION = "channel_position";
+
+    public static final String EXTRA_VIMEO_CHANNEL = "uk.co.victoriajanedavis.vimeo_api_test.ChannelFragment.vimeo_channel";
+    public static final String EXTRA_CHANNEL_POSITION = "uk.co.victoriajanedavis.vimeo_api_test.ChannelFragment.channel_position";
 
     public static final String FRAGMENT_CHANNEL_TAG = "fragment_channel";
 
@@ -81,16 +91,18 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
     @BindView(R.id.fragment_channel_recyclerview_container) ConstraintLayout mRecyclerContainerLayout;
     @BindView(R.id.layout_recyclerview_with_message_empty_recyclerview_layout) LinearLayout mEmptyRecyclerLayout;
 
-    protected VimeoChannel mChannel;
+    private VimeoChannel mChannel;
+    private int mPosition;
     private ExpandableTextViewUtil mExpandableTextViewUtil;
 
     private FollowButtonRxBinding mFollowButtonRxBinding;
     private Disposable mFollowButtonDisposable;
 
 
-    public static ChannelFragment newInstance (VimeoChannel channel) {
+    public static ChannelFragment newInstance (VimeoChannel channel, int position) {
         Bundle args = new Bundle();
         args.putParcelable(ARG_VIMEO_CHANNEL, channel);
+        args.putInt(ARG_CHANNEL_POSITION, position);
 
         ChannelFragment fragment = new ChannelFragment();
         fragment.setArguments(args);
@@ -109,6 +121,7 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         mPresenter.attachView(this);
 
         mChannel = (VimeoChannel) getArguments().getParcelable(ARG_VIMEO_CHANNEL);
+        mPosition = (int) getArguments().getInt(ARG_CHANNEL_POSITION);
     }
 
     @Override
@@ -133,6 +146,15 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
             public Single<Response<Void>> onUnfollowButtonClick(long channel_id) {
                 return mPresenter.getUnsubscribeFromChannelSingle(channel_id);
             }
+        }, new FollowButtonRxBinding.NetworkCallFinishedCallback() {
+            @Override
+            public void onSuccess() {
+                setResponseResult();
+            }
+
+            @Override
+            public void onFailure() {
+            }
         });
         mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
     }
@@ -142,6 +164,11 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         super.onDestroyView();
         mFollowButtonDisposable.dispose();
         mFollowButtonRxBinding.setFollowButtonClickListener(null);
+
+        if (!((AppCompatActivity) getContext()).isFinishing()) {
+            Glide.with(this).clear(mImageView);
+            Glide.with(this).clear(mUserImageView);
+        }
     }
 
     @Override
@@ -155,10 +182,6 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
         return R.layout.fragment_channel;
     }
 
-    protected ListItemViewHolder<VimeoVideo> generateViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        return new UserVideoViewHolder(context, baseFragment, inflater, parent);
-    }
-
     @StringRes
     protected int getOnEmptyListErrorMessageStringRes() {
         return R.string.error_no_videos_to_display;
@@ -169,11 +192,21 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
     }
 
     protected ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserVideoViewHolder::new);
+        return new ListAdapter<>(this, UserVideoViewHolder::new);
     }
 
     protected String getCollectionUri() {
         return mChannel.getMetadata().getVideosConnection().getUri();
+    }
+
+    public void setResponseResult() {
+        Intent data = new Intent();
+        data.putExtra (EXTRA_VIMEO_CHANNEL, mChannel);
+        data.putExtra (EXTRA_CHANNEL_POSITION, mPosition);
+
+        if (getActivity() != null) {
+            getActivity().setResult(RESULT_OK, data);
+        }
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AllVideosFragment extends ResultsTabFragment<VimeoVideo> {
 
     @Override
     public ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>(getContext(), this, UserVideoViewHolder::new);
+        return new ListAdapter<>(this, UserVideoViewHolder::new);
     }
 
     @Override

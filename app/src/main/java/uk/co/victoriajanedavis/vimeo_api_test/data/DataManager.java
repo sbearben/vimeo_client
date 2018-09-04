@@ -176,4 +176,12 @@ public class DataManager {
     public Single<Response<Void>> getUnsubscribeFromChannelSingle (long channel_id) {
         return mVimeoApiService.unsubscribeFromChannel(channel_id);
     }
+
+    public Single<VimeoComment> postCommentOnVideo(long video_id, String comment) {
+        return mVimeoApiService.postCommentOnVideo(video_id, comment);
+    }
+
+    public Single<VimeoComment> postReplyToCommentOnVideo(long video_id, long comment_id, String comment) {
+        return mVimeoApiService.postReplyToCommentOnVideo(video_id, comment_id, comment);
+    }
 }

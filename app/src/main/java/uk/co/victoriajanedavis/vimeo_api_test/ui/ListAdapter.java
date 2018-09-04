@@ -28,17 +28,10 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
 
     public static final String TAG = ListAdapter.class.getSimpleName();
 
-    protected Context mContext;
     protected BaseFragment mBaseFragment;
 
     private InteractionListener mListInteractionListener;
     protected final List<T> mDataList;
-
-    /* TODO: I'm using teh BiFunction here to generate our ViewHolders since I can't call a constructor for whatever class extends ListItemViewHolder<T>
-     * Solution found here: https://stackoverflow.com/a/36315051/7648952
-     *   - Unfortunately using the apply method of BiFunction is only supported in Android API >= 24. This is an issue I don't currently have a solution for
-     */
-    //private BiFunction<LayoutInflater, ViewGroup, ListItemViewHolder<T>> mViewHolderSupplier;
     protected ListItemViewHolder.ListItemViewHolderGenerator<T> mViewHolderGenerator;
 
     /**
@@ -57,15 +50,13 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
     protected int mViewType;
 
 
-    public ListAdapter (Context context, BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<T> viewHolderGenerator) {
-        mContext = context;
+    public ListAdapter (BaseFragment fragment, ListItemViewHolder.ListItemViewHolderGenerator<T> viewHolderGenerator) {
         mBaseFragment = fragment;
         mViewHolderGenerator = viewHolderGenerator;
 
         mDataList = new ArrayList<>();
         mViewType = VIEW_TYPE_LIST;
         mListInteractionListener = null;
-
     }
 
     @Override
@@ -98,7 +89,7 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
         }
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return mViewHolderGenerator.generateViewHolder(mContext, mBaseFragment, layoutInflater, parent);
+        return mViewHolderGenerator.generateViewHolder(mBaseFragment, layoutInflater, parent);
     }
 
     @Override
@@ -117,14 +108,20 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
         /* If we don't perform this check recycle() causes the app to crash when we back out of it.
          *   - issue and solution here: https://github.com/bumptech/glide/issues/1484
          */
-        if (!((AppCompatActivity) mContext).isFinishing()) {
+        if (!((AppCompatActivity) mBaseFragment.getContext()).isFinishing()) {
             holder.recycle();
         }
     }
 
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ListItemViewHolder<T> holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.releaseInternalStates();
+    }
+
     protected ListItemViewHolder<T> onIndicationViewHolder(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ProgressBarViewHolder (mContext, mBaseFragment, layoutInflater, parent);
+        return new ProgressBarViewHolder (mBaseFragment, layoutInflater, parent);
     }
 
     public void add(T item) {
@@ -145,7 +142,8 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
         mDataList.addAll(itemsList);
         //notifyItemRangeInserted(getItemCount(), mDataList.size() - 1);
         // NOTE: I commented out the above line and switched it to the below line since the above seemed to be a bug
-        notifyItemRangeInserted(mDataList.size() - 1, getItemCount());
+        //notifyItemRangeInserted(mDataList.size() - 1, getItemCount());
+        notifyItemRangeInserted(mDataList.size()-itemsList.size(), itemsList.size());
     }
 
     public List<T> getItems() {
@@ -164,6 +162,12 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
     public void removeAll() {
         mDataList.clear();
         notifyDataSetChanged();
+    }
+
+    public void updateItem(int index, T item) {
+        mDataList.remove(index);
+        mDataList.add(index, item);
+        notifyItemChanged(index);
     }
 
     public boolean addLoadingView() {
@@ -205,9 +209,9 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
 
         public final ProgressBar progressBar;
 
-        public ProgressBarViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        public ProgressBarViewHolder (BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
             //super(view);
-            super (context, baseFragment, inflater.inflate (R.layout.item_progress_bar, parent, false));
+            super (baseFragment, inflater.inflate (R.layout.item_progress_bar, parent, false));
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
         }
 

@@ -33,8 +33,8 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
     @BindView(R.id.video_feed_timelength_textview) TextView mTimeTextView;
 
 
-    public VideoFeedViewHolder (Context context, BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (context, baseFragment, inflater.inflate (R.layout.item_video_feed, parent, false));
+    public VideoFeedViewHolder (BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
+        super (baseFragment, inflater.inflate (R.layout.item_video_feed, parent, false));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener (this);
@@ -53,8 +53,8 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
         mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
         GlideApp.with(mBaseFragment)
                 .load(mListItem.getPictures().getSizesList().get(2).getLink()) // get(2) since when looking at Json response it appears this is the location of the most reasonable size
-                .thumbnail(Glide.with(itemView.getContext())
-                        .load(mListItem.getPictures().getSizesList().get(0).getLink()))
+                //.thumbnail(Glide.with(itemView.getContext())
+                        //.load(mListItem.getPictures().getSizesList().get(0).getLink()))
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
@@ -70,7 +70,7 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
 
     @Override
     public void onClick (View view) {
-        Intent intent = VideoActivity.newIntent(mContext, mListItem);
-        mContext.startActivity(intent);
+        Intent intent = VideoActivity.newIntent(mBaseFragment.getContext(), mListItem);
+        mBaseFragment.getContext().startActivity(intent);
     }
 }

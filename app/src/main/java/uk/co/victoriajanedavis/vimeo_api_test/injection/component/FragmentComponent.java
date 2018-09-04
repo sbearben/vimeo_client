@@ -6,6 +6,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.injection.module.FragmentModule;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.channel.ChannelFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.explore.ExploreFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.home.HomeFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.reply.ReplyFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.ResultsFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.allvideos.AllVideosFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.channels.ChannelsFragment;
@@ -42,4 +43,7 @@ public interface FragmentComponent {
 
     void inject(OtherUserFragment otherUserFragment);
     void inject(ChannelFragment channelFragment);
+
+    void inject(ReplyFragment replyFragment);
+
 }

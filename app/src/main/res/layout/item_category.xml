@@ -43,7 +43,7 @@
                 android:id="@+id/category_dimfilter_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@color/dimfilter" />
+                app:srcCompat="@color/dimFilter" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/category_icon_imageview"
