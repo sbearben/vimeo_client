@@ -6,7 +6,7 @@ Clone the repository and import the root folder into your IDE (tested on Android
 
 From there you will also need to create a new app on the Vimeo developer site, and generate an App Callback Url (required for Oauth2 login).
 
-Once you have these three items, in Android Stuido you should add them to your **gradle.properties** file (project's root folder).
+Once you have these three items, in Android Studio you should add them to your **gradle.properties** file (project's root folder).
 * vimeoClientId = < YOUR-CLIENT-ID >
 * vimeoClientSecret = < YOUR-CLIENT-SECRET >
 * vimeoOauthRedirect = < YOUR-REDIRECT-URL >
@@ -26,7 +26,7 @@ The app is built using an MVP architecture, and uses:
 ### Future Features
 
 * Ability to reply and comment on videos
-* Ability to follow users/channels
+*  <strike>Ability to follow users/channels</strike>
 * User logout
 * A View for Categories (currently in the Explore tab they are unclickable)
 
