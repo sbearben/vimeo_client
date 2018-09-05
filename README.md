@@ -25,7 +25,7 @@ The app is built using an MVP architecture, and uses:
 
 ### Future Features
 
-* Ability to reply and comment on videos
+* Ability to reply to comments <strike>and comment on videos</strike>
 *  <strike>Ability to follow users/channels</strike>
 * User logout
 * A View for Categories (currently in the Explore tab they are unclickable)
