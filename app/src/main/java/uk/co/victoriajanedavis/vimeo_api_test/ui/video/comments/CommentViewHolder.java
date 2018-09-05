@@ -59,7 +59,7 @@ public class CommentViewHolder extends ListItemViewHolder<VimeoComment> {
                 .placeholder(R.drawable.user_image_placeholder)
                 .fallback(R.drawable.user_image_placeholder)
                 .circleCrop()
-                .transition(withCrossFade())
+                //.transition(withCrossFade())
                 .into(mImageView);
     }
 

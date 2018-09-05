@@ -28,8 +28,7 @@
         </activity>
 
         <activity
-            android:name=".ui.search.SearchActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.search.SearchActivity">
         </activity>
 
         <activity

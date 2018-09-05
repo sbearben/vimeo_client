@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
@@ -32,7 +36,6 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
     @BindView(R.id.item_user_imageview) AppCompatImageView mImageView;
     @BindView(R.id.item_user_name_textview) TextView mNameTextView;
     @BindView(R.id.item_user_videosfollowers_textview) TextView mVideosFollowersTextView;
-    //@BindView(R.id.item_user_follow_button_layout) FollowToggleButton mFollowButton;
 
 
     public UserViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
@@ -43,44 +46,39 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
 
     @Override
     public void bind (@NonNull VimeoUser vimeoUser) {
+        Log.d (TAG, "Bind: " + getLayoutPosition());
         mListItem = vimeoUser;
 
-        mFollowButtonRxBinding.setFollowButton(mFollowButton);
+        //mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
-        mDisposable = setUpFollowButtonRxBindingStream();
+        mDisposables.add(mFollowButtonRxBinding.subscribeToStream());
 
         mNameTextView.setText(mListItem.getName());
 
-        String videoCountAndFollowers = VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
-                mListItem.getMetadata().getFollowersConnection().getTotal());
-        mVideosFollowersTextView.setText(videoCountAndFollowers);
+        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
+                mListItem.getMetadata().getFollowersConnection().getTotal()))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(str -> mVideosFollowersTextView.setText(str)));
+
 
         GlideApp.with(mBaseFragment)
                 .load(mListItem.getPictures().getSizesList().get(1).getLink())
                 .placeholder(R.drawable.user_image_placeholder)
                 .fallback(R.drawable.user_image_placeholder)
                 .circleCrop()
-                .transition(withCrossFade())
+                //.transition(withCrossFade())
                 .into(mImageView);
     }
 
-    /*
-    @OnCheckedChanged(R.id.item_follow_button_layout)
-    public void onFollowCheckChanged() {
-        if (mDisposable == null) {
-            mDisposable = setUpFollowButtonRxBindingStream();
-        }
-    }
-    */
-
     @Override
     public void recycle() {
+        Log.d (TAG, "Recycled: " + getLayoutPosition());
         Glide.with(mBaseFragment)
                 .clear(mImageView);
         mImageView.setImageDrawable(null);
 
-        mDisposable.dispose();
-        mDisposable = null;
+        mDisposables.clear();
     }
 
     @Override
@@ -91,9 +89,6 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
 
     @Override
     public void onClick (View view) {
-        //Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem);
-        //mBaseFragment.getContext().startActivity(intent);
-
         Intent intent = OtherUserActivity.newIntent(mBaseFragment.getContext(), mListItem, getLayoutPosition());
         mBaseFragment.startActivityForResult(intent, OtherUserFragment.REQUEST_USER);
     }

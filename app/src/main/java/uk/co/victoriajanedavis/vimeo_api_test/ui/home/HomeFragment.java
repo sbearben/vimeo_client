@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionPresenter;
+import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 
 public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> implements HomeMvpView, SwipeRefreshLayout.OnRefreshListener {
 
@@ -29,9 +32,23 @@ public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> im
 
     @BindView(R.id.fragment_home_swipe_to_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private int mScreenWidth;
+    private int mScreenHeight;
+
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This code is used to get the screen dimensions of the user's device
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((AppCompatActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        mScreenWidth = displayMetrics.widthPixels;
+        mScreenHeight = displayMetrics.heightPixels;
     }
 
     @Override
@@ -72,7 +89,15 @@ public class HomeFragment extends CollectionFragment<HomeMvpView, VimeoVideo> im
     }
 
     protected ListAdapter<VimeoVideo> createListAdapter() {
-        return new ListAdapter<>( this, VideoFeedViewHolder::new);
+        boolean isTabletLayout = DisplayMetricsUtil.isScreenW(CollectionFragment.SCREEN_TABLET_DP_WIDTH);
+        int imageViewWidth, imageViewHeight;
+
+        if (isTabletLayout) imageViewWidth = mScreenWidth/CollectionFragment.TAB_LAYOUT_SPAN_SIZE;
+        else imageViewWidth = mScreenWidth;
+
+        imageViewHeight = (int) (imageViewWidth/1.778);
+
+        return new AdjustableImageViewListAdapter(this, VideoFeedViewHolder::new, imageViewWidth, imageViewHeight);
     }
 
     protected String getCollectionUri() {

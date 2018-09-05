@@ -3,8 +3,11 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
@@ -62,6 +65,11 @@ public class OtherUserFragment extends UserFragment {
     }
 
     @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
     protected void initViews(View view) {
         super.initViews(view);
         mFollowButtonRxBinding = new FollowButtonRxBinding(mUser, mFollowButton, new FollowButtonRxBinding.FollowButtonClickListener() {
@@ -84,14 +92,14 @@ public class OtherUserFragment extends UserFragment {
             public void onFailure() {
             }
         });
-        mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
+        mFollowButtonDisposable = mFollowButtonRxBinding.subscribeToStream();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mFollowButtonDisposable.dispose();
-        mFollowButtonRxBinding.setFollowButtonClickListener(null);
+        mFollowButtonRxBinding.releaseInternalStates();
     }
 
     @Override

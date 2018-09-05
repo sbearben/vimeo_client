@@ -14,6 +14,11 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoChannel;
@@ -44,41 +49,33 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
     public void bind (@NonNull VimeoChannel vimeoChannel) {
         mListItem = vimeoChannel;
 
-        mFollowButtonRxBinding.setFollowButton(mFollowButton);
+        //mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
-        mDisposable = setUpFollowButtonRxBindingStream();
+        mDisposables.add(mFollowButtonRxBinding.subscribeToStream());
 
         mNameTextView.setText(mListItem.getName());
 
-        String videoCountAndFollowers = VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
-                mListItem.getMetadata().getUsersConnection().getTotal());
-        mVideosFollowersTextView.setText(videoCountAndFollowers);
+        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
+                mListItem.getMetadata().getUsersConnection().getTotal()))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(str -> mVideosFollowersTextView.setText(str)));
 
         GlideApp.with(mBaseFragment)
                 .load(mListItem.getHeader().getSizesList().get(0).getLink())
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                .transition(withCrossFade())
+                //.transition(withCrossFade())
                 .into(mImageView);
     }
-
-    /*
-    @OnCheckedChanged(R.id.item_follow_button_layout)
-    public void onFollowCheckChanged() {
-        Log.d (TAG, "mDisposable is null: " + (mDisposable == null));
-        if (mDisposable == null) {
-            mDisposable = setUpFollowButtonRxBindingStream();
-        }
-    }
-    */
 
     @Override
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
-        mDisposable.dispose();
-        mDisposable = null;
+
+        mDisposables.clear();
     }
 
     @Override

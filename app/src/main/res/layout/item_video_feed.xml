@@ -12,7 +12,6 @@
         android:id="@+id/video_feed_imageview"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

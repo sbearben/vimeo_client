@@ -20,10 +20,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} populated with {@link ListItem}
- * makes the call to the {@link ListAdapter.InteractionListener}.
- */
+
 public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> {
 
     public static final String TAG = ListAdapter.class.getSimpleName();
@@ -116,7 +113,7 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
     @Override
     public void onViewDetachedFromWindow(@NonNull ListItemViewHolder<T> holder) {
         super.onViewDetachedFromWindow(holder);
-        holder.releaseInternalStates();
+        //holder.releaseInternalStates();
     }
 
     protected ListItemViewHolder<T> onIndicationViewHolder(ViewGroup parent) {
@@ -142,7 +139,6 @@ public class ListAdapter<T> extends RecyclerView.Adapter<ListItemViewHolder<T>> 
         mDataList.addAll(itemsList);
         //notifyItemRangeInserted(getItemCount(), mDataList.size() - 1);
         // NOTE: I commented out the above line and switched it to the below line since the above seemed to be a bug
-        //notifyItemRangeInserted(mDataList.size() - 1, getItemCount());
         notifyItemRangeInserted(mDataList.size()-itemsList.size(), itemsList.size());
     }
 

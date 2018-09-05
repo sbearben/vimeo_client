@@ -1,8 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +58,12 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                .transition(withCrossFade())
+                //.transition(withCrossFade())
                 .into(mImageView);
+    }
+
+    public void setImageViewDimensions (int width, int height) {
+        mImageView.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
     }
 
     @Override

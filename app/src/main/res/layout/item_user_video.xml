@@ -12,7 +12,6 @@
         android:id="@+id/user_video_imageview"
         android:layout_width="134dp"
         android:layout_height="75dp"
-        android:scaleType="fitXY"
         android:layout_marginStart="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -136,7 +136,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         int videoHeight;
         if (mScreenWidth < mScreenHeight) {
             // We're in portrait mode since screen width < height
-            videoHeight = (int)(mScreenWidth/1.777);
+            videoHeight = (int)(mScreenWidth/1.778);
         }
         else {
             // We're in landscape mode
@@ -150,13 +150,13 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         mDetailsLayout.setLayoutParams(params);
 
         GlideApp.with(this)
-                .load(mVideo.getPictures().getSizesList().get(3).getLinkWithPlayButton())
+                .load(mVideo.getPictures().getSizesList().get(2).getLinkWithPlayButton())
                 .thumbnail(Glide.with(this)
                         .load(mVideo.getPictures().getSizesList().get(0).getLinkWithPlayButton()))
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                .transition(withCrossFade())
+                //.transition(withCrossFade())
                 .into(mImageView);
         //initWebView();
 

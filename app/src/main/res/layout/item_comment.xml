@@ -14,7 +14,6 @@
         android:id="@+id/item_comment_imageview"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/user_image_placeholder" />

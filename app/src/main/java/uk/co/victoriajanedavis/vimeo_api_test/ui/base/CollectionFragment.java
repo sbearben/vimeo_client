@@ -41,9 +41,9 @@ public abstract class CollectionFragment<A extends CollectionMvpView<T>, T exten
     private static final String TAG = "CollectionFragment";
     private static final String SAVED_COLLECTION_LIST = "fragment_home_saved_video_list";
 
-    private static final int TAB_LAYOUT_SPAN_SIZE = 2;
+    protected static final int TAB_LAYOUT_SPAN_SIZE = 2;
     private static final int TAB_LAYOUT_ITEM_SPAN_SIZE = 1;
-    private static final int SCREEN_TABLET_DP_WIDTH = 600;
+    protected static final int SCREEN_TABLET_DP_WIDTH = 600;
 
     protected ListAdapter<T> mListAdapter;
 

@@ -128,6 +128,7 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
+
         updateChannelViews(mChannel);
 
         return v;
@@ -156,13 +157,13 @@ public class ChannelFragment extends CollectionFragment<ChannelMvpView, VimeoVid
             public void onFailure() {
             }
         });
-        mFollowButtonDisposable = mFollowButtonRxBinding.setupFollowButtonRxBindingStream();
+        mFollowButtonDisposable = mFollowButtonRxBinding.subscribeToStream();
     }
 
     @Override
     public void onDestroyView() {
         mFollowButtonDisposable.dispose();
-        mFollowButtonRxBinding.setFollowButtonClickListener(null);
+        mFollowButtonRxBinding.releaseInternalStates();
 
         if (!((AppCompatActivity) getContext()).isFinishing()) {
             Glide.with(this).clear(mImageView);

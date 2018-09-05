@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
+import io.reactivex.functions.Action;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
@@ -29,12 +33,8 @@ public class FollowButtonRxBinding {
     private boolean mOriginalState;
 
 
-    public FollowButtonRxBinding() {
-    }
-
-    public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton,
-                                  FollowButtonClickListener followButtonClickListener) {
-        this(item, followButton, followButtonClickListener, null);
+    public FollowButtonRxBinding(FollowToggleButton followButton) {
+        this(null, followButton, null, null);
     }
 
     public FollowButtonRxBinding (ListItemFollowInteractor item, FollowToggleButton followButton,
@@ -48,10 +48,10 @@ public class FollowButtonRxBinding {
         //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
     }
 
-    public Disposable setupFollowButtonRxBindingStream() {
+    private Observable<FollowUiModel> getRxBindingObservable() {
         return RxCompoundButton.checkedChanges(mFollowButton)
                 .skipInitialValue()
-                //.takeUntil(RxView.detaches(parent))
+                //.takeUntil(RxView.detaches(mParent))
                 .switchMapSingle(isChecked -> {
                     mFollowableItem.getFollowInteraction().setAdded(isChecked);
                     if (isChecked) {
@@ -75,30 +75,35 @@ public class FollowButtonRxBinding {
                             return FollowUiModel.failure(mFollowButton.isChecked(), voidResponse.message());
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
+                .doOnDispose(() -> Log.d (TAG, "RxBinding disposed!"))
+                .observeOn(AndroidSchedulers.mainThread());
                 //.startWith(FollowUiModel.inProgress(mFollowableItem.getId(), mFollowButton.isChecked()))
-                .subscribe(model -> {
-                    if (model.isInProgress()) {
-                        //Log.d (TAG, "this is called");
-                    }
-                    else {
-                        if (model.isSuccess()) {
-                            mOriginalState = model.isFollowing();
-                            if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onSuccess();
-                        }
-                        else {
-                            mFollowableItem.getFollowInteraction().setAdded(mOriginalState);
-                            mFollowButton.setChecked(mOriginalState, false);
-                            if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onFailure();
-                            //mErrorToast.cancel();
-                            //mErrorToast.show();
-                        }
-                    }
-                }, t -> { throw new OnErrorNotImplementedException(t); });
+    }
+
+    public Disposable subscribeToStream() {
+        return getRxBindingObservable().subscribe(model -> {
+            if (model.isInProgress()) {
+                //Log.d (TAG, "this is called");
+            }
+            else {
+                if (model.isSuccess()) {
+                    mOriginalState = model.isFollowing();
+                    if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onSuccess();
+                }
+                else {
+                    mFollowableItem.getFollowInteraction().setAdded(mOriginalState);
+                    mFollowButton.setChecked(mOriginalState, false);
+                    if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onFailure();
+                    //mErrorToast.cancel();
+                    //mErrorToast.show();
+                }
+            }
+        }, t -> { throw new OnErrorNotImplementedException(t); });
     }
 
     public void releaseInternalStates() {
         mFollowButtonClickListener = null;
+        mNetworkCallFinishedCallback = null;
         mFollowButton = null;
     }
 
@@ -106,7 +111,7 @@ public class FollowButtonRxBinding {
         mFollowableItem = followableItem;
         if (mFollowableItem.getFollowInteraction() != null) {
             mFollowButton.setVisibility(View.VISIBLE);
-            mFollowButton.setChecked(mFollowableItem.getFollowInteraction().isAdded());
+            mFollowButton.setChecked(mFollowableItem.getFollowInteraction().isAdded(), false);
             mOriginalState = mFollowButton.isChecked();
         }
 
