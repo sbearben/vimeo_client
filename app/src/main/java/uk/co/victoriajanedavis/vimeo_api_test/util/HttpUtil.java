@@ -8,8 +8,6 @@ import retrofit2.Response;
 
 public class HttpUtil {
 
-    private static final String TAG = "HttpUtil";
-
     public static final String RESPONSE_OK = "ok";
     public static final String RESPONSE_UNAUTHORIZED = "unauthorized";
     public static final String RESPONSE_ERROR = "error";
