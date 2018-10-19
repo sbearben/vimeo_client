@@ -29,7 +29,7 @@ public class AuthenticationInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         if (mAccessTokenHolder.getVimeoAccessToken() == null) {
-            throw new IOException("Error: accessToken hasn't been set on AuthenticatorInterceptor");
+            throw new NullPointerException("Error: accessToken hasn't been set on AuthenticatorInterceptor");
         }
         VimeoAccessToken accessToken = mAccessTokenHolder.getVimeoAccessToken();
         Request original = chain.request();

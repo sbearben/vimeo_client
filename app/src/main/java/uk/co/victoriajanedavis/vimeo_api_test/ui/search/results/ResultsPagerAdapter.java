@@ -18,8 +18,6 @@ public class ResultsPagerAdapter extends FragmentPagerAdapter {
     private static final int NUMBER_TABS = 4;
 
     private Context mContext;
-    //private LinkedHashMap<Integer, Fragment> mPageReferenceMap;
-    //mPageReferenceMap.put(index, myFragment);
 
 
     public ResultsPagerAdapter (Context context, FragmentManager fm) {

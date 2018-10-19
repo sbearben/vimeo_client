@@ -2,35 +2,29 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow;
 
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxCompoundButton;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
-import io.reactivex.functions.Action;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.HttpUtil;
 
 public class FollowButtonRxBinding {
 
     private static final String TAG = "FollowButtonRxBinding";
 
-    private ListItemFollowInteractor mFollowableItem;
+    private ListItemFollowInteractor mFollowableItem; //User/Channel model - needed for IDs and 'following' state
     private FollowToggleButton mFollowButton;
 
-    private FollowButtonClickListener mFollowButtonClickListener;
-    private NetworkCallFinishedCallback mNetworkCallFinishedCallback;
-    //private Toast mErrorToast;
+    private FollowButtonClickListener mFollowButtonClickListener; // Used in switchMap to make follow/unfollow network calls (in Presenter)
+    private NetworkCallFinishedCallback mNetworkCallFinishedCallback; // Used in Detail screen to set the result Bundle with state
 
-    private boolean mOriginalState;
+    private boolean mOriginalState; // Original state of follow button before the next successful button click occurs
 
 
     public FollowButtonRxBinding(FollowToggleButton followButton) {
@@ -44,14 +38,11 @@ public class FollowButtonRxBinding {
         mFollowButtonClickListener = followButtonClickListener;
         mNetworkCallFinishedCallback = networkCallFinishedCallback;
         if (item != null) setFollowableItem(item);
-
-        //mErrorToast = Toast.makeText(mContext, "Failed to " + ((!mOriginalState) ? "unfollow" : "follow"), Toast.LENGTH_SHORT);
     }
 
     private Observable<FollowUiModel> getRxBindingObservable() {
         return RxCompoundButton.checkedChanges(mFollowButton)
                 .skipInitialValue()
-                //.takeUntil(RxView.detaches(mParent))
                 .switchMapSingle(isChecked -> {
                     mFollowableItem.getFollowInteraction().setAdded(isChecked);
                     if (isChecked) {
@@ -66,37 +57,30 @@ public class FollowButtonRxBinding {
                     }
                 })
                 .map(voidResponse -> {
-                    switch(VimeoApiServiceUtil.responseType(voidResponse)) {
-                        case VimeoApiServiceUtil.RESPONSE_OK:
+                    switch(HttpUtil.responseType(voidResponse)) {
+                        case HttpUtil.RESPONSE_OK:
                             return FollowUiModel.success(mFollowButton.isChecked());
-                        case VimeoApiServiceUtil.RESPONSE_ERROR:
-                        case VimeoApiServiceUtil.RESPONSE_UNAUTHORIZED:
+                        case HttpUtil.RESPONSE_ERROR:
+                        case HttpUtil.RESPONSE_UNAUTHORIZED:
                         default:
                             return FollowUiModel.failure(mFollowButton.isChecked(), voidResponse.message());
                     }
                 })
                 .doOnDispose(() -> Log.d (TAG, "RxBinding disposed!"))
                 .observeOn(AndroidSchedulers.mainThread());
-                //.startWith(FollowUiModel.inProgress(mFollowableItem.getId(), mFollowButton.isChecked()))
     }
 
     public Disposable subscribeToStream() {
         return getRxBindingObservable().subscribe(model -> {
-            if (model.isInProgress()) {
-                //Log.d (TAG, "this is called");
+            if (model.isSuccess()) {
+                mOriginalState = model.isFollowing();
+                if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onSuccess();
             }
             else {
-                if (model.isSuccess()) {
-                    mOriginalState = model.isFollowing();
-                    if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onSuccess();
-                }
-                else {
-                    mFollowableItem.getFollowInteraction().setAdded(mOriginalState);
-                    mFollowButton.setChecked(mOriginalState, false);
-                    if (mNetworkCallFinishedCallback != null) mNetworkCallFinishedCallback.onFailure();
-                    //mErrorToast.cancel();
-                    //mErrorToast.show();
-                }
+                mFollowableItem.getFollowInteraction().setAdded(mOriginalState);
+                mFollowButton.setChecked(mOriginalState, false);
+                //mErrorToast.cancel();
+                //mErrorToast.show();
             }
         }, t -> { throw new OnErrorNotImplementedException(t); });
     }
@@ -121,10 +105,6 @@ public class FollowButtonRxBinding {
         mFollowButtonClickListener = listener;
     }
 
-    public void setFollowButton (FollowToggleButton followButton) {
-        mFollowButton = followButton;
-    }
-
     public interface FollowButtonClickListener {
         Single<Response<Void>> onFollowButtonClick(long id);
         Single<Response<Void>> onUnfollowButtonClick(long id);
@@ -132,6 +112,5 @@ public class FollowButtonRxBinding {
 
     public interface NetworkCallFinishedCallback {
         void onSuccess();
-        void onFailure();
     }
 }

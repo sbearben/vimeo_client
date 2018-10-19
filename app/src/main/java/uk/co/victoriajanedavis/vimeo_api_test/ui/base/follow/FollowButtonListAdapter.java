@@ -1,12 +1,11 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 
 public class FollowButtonListAdapter<T extends ListItemFollowInteractor> extends ListAdapter<T> {

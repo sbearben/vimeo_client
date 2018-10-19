@@ -71,10 +71,12 @@
             android:inputType="text"
             android:textSize="15sp"
             android:background="@color/transparent"
+            android:gravity="top"
             app:layout_constraintTop_toBottomOf="@id/fragment_reply_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/fragment_reply_edittext_hint"/>
+            android:hint="@string/fragment_reply_edittext_hint" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -1,37 +1,29 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video.upnext;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import uk.co.victoriajanedavis.vimeo_api_test.VimeoApplication;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.UserVideoViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.video.UpNextVideoClickEvent;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxBehaviourEventBus;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxPublishEventBus;
 
 public class UpNextVideoViewHolder extends UserVideoViewHolder {
 
-    private UpNextVideoClickListener mUpNextVideoClickListener;
+    private RxPublishEventBus mEventBus;
 
 
     public UpNextVideoViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
         super (baseFragment, inflater, parent);
-    }
-
-    public void setUpNextVideoClickListener (UpNextVideoClickListener upNextVideoClickListener) {
-        mUpNextVideoClickListener = upNextVideoClickListener;
+        mEventBus = VimeoApplication.get(parent.getContext()).getComponent().publishEventBus();
     }
 
     @Override
     public void onClick (View view) {
-        mUpNextVideoClickListener.onUpNextVideoClick(mListItem);
-    }
-
-    /*
-     * Interface that the root Fragment has to implement (in this case, VideoFragment since it
-     * contains the TabLayout that has all the child Fragments
-     */
-    public interface UpNextVideoClickListener {
-        void onUpNextVideoClick (VimeoVideo video);
+        mEventBus.post(new UpNextVideoClickEvent(mListItem));
     }
 }

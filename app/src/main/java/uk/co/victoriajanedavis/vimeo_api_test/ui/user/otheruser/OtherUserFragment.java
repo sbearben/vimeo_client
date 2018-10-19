@@ -82,16 +82,8 @@ public class OtherUserFragment extends UserFragment {
             public Single<Response<Void>> onUnfollowButtonClick(long user_id) {
                 return mPresenter.getUnfollowUserSingle(user_id);
             }
-        }, new FollowButtonRxBinding.NetworkCallFinishedCallback() {
-            @Override
-            public void onSuccess() {
-                setResponseResult();
-            }
+        }, this::setResponseResult);
 
-            @Override
-            public void onFailure() {
-            }
-        });
         mFollowButtonDisposable = mFollowButtonRxBinding.subscribeToStream();
     }
 

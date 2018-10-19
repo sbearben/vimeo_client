@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.user.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -10,54 +9,37 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.EndlessRecyclerViewOnScrollListener;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ExpandableTextView;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.ExpandableTextView;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowToggleButton;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.UserVideoViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
-import uk.co.victoriajanedavis.vimeo_api_test.util.ExpandableTextViewUtil;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public abstract class UserFragment extends CollectionFragment<UserMvpView, VimeoVideo> implements UserMvpView {
 
     private static final String TAG = "UserFragment";
+    private static final String SAVED_USER = "fragment_user_saved_user";
 
     @BindView(R.id.fragment_user_imageview) AppCompatImageView mImageView;
     @BindView(R.id.fragment_user_followers_textview) TextView mFollowersTextView;
@@ -67,6 +49,7 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
     @BindView(R.id.fragment_user_name_textview) TextView mNameTextView;
     @BindView(R.id.fragment_user_location_textview) TextView mLocationTextView;
     @BindView(R.id.fragment_user_follow_button_layout) protected FollowToggleButton mFollowButton;
+    @BindView(R.id.fragment_user_logout_button_layout) protected Button mLogoutButton;
 
     @BindView(R.id.fragment_user_videocount_textview) TextView mVideoCountTextView;
     @BindView(R.id.layout_expandable_textview_textview) ExpandableTextView mBioTextView;
@@ -78,11 +61,19 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
     @BindView(R.id.fragment_user_signin_webview) protected WebView mWebView;
 
     protected VimeoUser mUser;
-    private ExpandableTextViewUtil mExpandableTextViewUtil;
 
     protected FollowButtonRxBinding mFollowButtonRxBinding;
     protected Disposable mFollowButtonDisposable;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mUser = savedInstanceState.getParcelable (SAVED_USER);
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -108,6 +99,12 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
             Glide.with(this).clear(mImageView);
         }
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVED_USER, mUser);
     }
 
     //@OnClick(R.id.message_tryagain_button)
@@ -148,18 +145,15 @@ public abstract class UserFragment extends CollectionFragment<UserMvpView, Vimeo
                 .transition(withCrossFade())
                 .into(mImageView);
 
-        mFollowersTextView.setText(VimeoApiServiceUtil.formatForUserMetric(user.getMetadata().getFollowersConnection().getTotal(), "follower", "followers"));
-        mFollowingTextView.setText(VimeoApiServiceUtil.formatForUserMetric(user.getMetadata().getFollowingConnection().getTotal(), "following", "following"));
-        mLikesTextView.setText(VimeoApiServiceUtil.formatForUserMetric(user.getMetadata().getLikesConnection().getTotal(), "like", "likes"));
+        mFollowersTextView.setText(VimeoTextUtil.formatForUserMetric(user.getMetadata().getFollowersConnection().getTotal(), "follower", "followers"));
+        mFollowingTextView.setText(VimeoTextUtil.formatForUserMetric(user.getMetadata().getFollowingConnection().getTotal(), "following", "following"));
+        mLikesTextView.setText(VimeoTextUtil.formatForUserMetric(user.getMetadata().getLikesConnection().getTotal(), "like", "likes"));
 
         mNameTextView.setText(user.getName());
-        VimeoApiServiceUtil.hideOrDisplayTextViewIfNullString(mLocationTextView, user.getLocation());
+        VimeoTextUtil.hideOrDisplayTextViewIfNullString(mLocationTextView, user.getLocation());
 
-        if (mExpandableTextViewUtil != null) {
-            mExpandableTextViewUtil.clear();
-        }
-        VimeoApiServiceUtil.hideOrDisplayTextViewIfNullString(mBioTextView, user.getBio());
-        mExpandableTextViewUtil = new ExpandableTextViewUtil(mBioTextView, mBioExpandImageView);
+        VimeoTextUtil.hideOrDisplayTextViewIfNullString(mBioTextView, user.getBio());
+        mBioTextView.setImageIcon(mBioExpandImageView);
 
         mVideoCountTextView.setText(getResources().getQuantityString(R.plurals.user_videos_plural,
                 user.getMetadata().getVideosConnection().getTotal(), user.getMetadata().getVideosConnection().getTotal()));

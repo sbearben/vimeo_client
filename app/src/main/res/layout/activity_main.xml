@@ -39,8 +39,8 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@id/activity_main_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_bottomnav_search"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
+        <!--android:src="@drawable/ic_bottomnav_search"/>-->
 
     <View
         android:id="@+id/activity_main_divider"

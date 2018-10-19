@@ -109,6 +109,15 @@
                     android:drawablePadding="1dp"
                     tools:text="Brooklyn, NY"/>
 
+                <include layout="@layout/item_logout_button"
+                    android:id="@+id/fragment_user_logout_button_layout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintTop_toTopOf="@id/fragment_user_name_textview"
+                    app:layout_constraintBottom_toBottomOf="@+id/fragment_user_location_textview"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
                 <include layout="@layout/item_follow_button"
                     android:id="@+id/fragment_user_follow_button_layout"
                     android:layout_width="100dp"

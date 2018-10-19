@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.user;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -20,10 +19,10 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.VideoActivity;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -55,16 +54,16 @@ public class UserVideoViewHolder extends ListItemViewHolder<VimeoVideo> implemen
         mTitleTextView.setText(mListItem.getName());
         mUserTextView.setText(mListItem.getUser().getName());
 
-        //String videoAgeAndPlays = VimeoApiServiceUtil.formatVideoAgeAndPlays(mListItem.getStats().getPlays(), mListItem.getCreatedTime());
+        //String videoAgeAndPlays = HttpUtil.formatVideoAgeAndPlays(mListItem.getStats().getPlays(), mListItem.getCreatedTime());
         //mPlaysAgeTextView.setText(videoAgeAndPlays);
 
-        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatVideoAgeAndPlays(mListItem.getStats().getPlays(), mListItem.getCreatedTime()))
+        mDisposables.add(Single.fromCallable(() -> VimeoTextUtil.formatVideoAgeAndPlays(mListItem.getStats().getPlays(), mListItem.getCreatedTime()))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(str -> mPlaysAgeTextView.setText(str)));
 
-        //mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
-        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatSecondsToDuration(mListItem.getDurationSeconds()))
+        //mTimeTextView.setText(HttpUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
+        mDisposables.add(Single.fromCallable(() -> VimeoTextUtil.formatSecondsToDuration(mListItem.getDurationSeconds()))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(str -> mTimeTextView.setText(str)));

@@ -21,13 +21,63 @@ import android.util.DisplayMetrics;
 
 public class DisplayMetricsUtil {
 
-    /**
-     * Return true if the width in DP of the device is equal or greater than the given value
-     */
-    public static boolean isScreenW(int widthDp) {
+    private static final int SCREEN_TABLET_DP_WIDTH = 600;
+    public static float VIDEO_ASPECT_RATIO = ((float)16)/9;
+
+
+    public static boolean isTabletLayout() {
+        return isScreenW(SCREEN_TABLET_DP_WIDTH);
+    }
+
+    // Return true if the width in DP of the device is equal or greater than the given value
+    private static boolean isScreenW(int widthDp) {
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
         float screenWidth = displayMetrics.widthPixels / displayMetrics.density;
         return screenWidth >= widthDp;
+    }
+
+    public static Dimensions getScreenDimensions() {
+        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+        return new Dimensions(displayMetrics.widthPixels, displayMetrics.heightPixels);
+    }
+
+    public static Dimensions getDimensionsRequiredToFillWidthMaintainingAspectRatio(
+            Dimensions screenDimensions, boolean isTabletLayout) {
+        int width, height;
+
+        if (isTabletLayout) width = screenDimensions.getWidth()/LayoutManagerUtil.TAB_LAYOUT_SPAN_SIZE;
+        else width = screenDimensions.getWidth();
+        height = (int) (width/VIDEO_ASPECT_RATIO);
+
+        return new Dimensions(width, height);
+    }
+
+    public static int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = Resources.getSystem().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public static class Dimensions {
+
+        private int mWidth;
+        private int mHeight;
+
+        public Dimensions(int width, int height) {
+            mWidth = width;
+            mHeight = height;
+        }
+
+        public int getWidth() {
+            return mWidth;
+        }
+
+        public int getHeight() {
+            return mHeight;
+        }
     }
 
 }

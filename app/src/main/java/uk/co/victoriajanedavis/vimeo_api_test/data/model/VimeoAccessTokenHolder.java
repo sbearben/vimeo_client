@@ -24,4 +24,12 @@ public class VimeoAccessTokenHolder {
     public void setVimeoAccessToken (VimeoAccessToken accessToken) {
         mAccessToken = accessToken;
     }
+
+    public void login (VimeoAccessToken accessToken) {
+        mAccessToken = accessToken;
+    }
+
+    public void logout() {
+        mAccessToken = VimeoAccessToken.newInstance();
+    }
 }

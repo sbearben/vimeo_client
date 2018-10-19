@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions.SuggestionsAdapter;
+
 
 public class SearchFilter extends Filter {
 
-    private final SearchAdapter mSearchAdapter;
+    private final SuggestionsAdapter mSuggestionAdapter;
     private final List<String> mOriginalList;
     private final List<String> mFilteredList;
 
 
-    SearchFilter (SearchAdapter adapter, List<String> originalList) {
+    SearchFilter (SuggestionsAdapter adapter, List<String> originalList) {
         super();
-        mSearchAdapter = adapter;
+        mSuggestionAdapter = adapter;
         this.mOriginalList = new LinkedList<>(originalList);
         this.mFilteredList = new ArrayList<>();
     }
@@ -46,8 +48,8 @@ public class SearchFilter extends Filter {
     @SuppressWarnings("unchecked")
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-        mSearchAdapter.removeAll();
-        mSearchAdapter.addItems((List<String>) filterResults.values);
-        mSearchAdapter.notifyDataSetChanged();
+        mSuggestionAdapter.removeAll();
+        mSuggestionAdapter.addAllSuggestions((List<String>) filterResults.values);
+        mSuggestionAdapter.notifyDataSetChanged();
     }
 }

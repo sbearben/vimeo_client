@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video.comments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -15,15 +14,14 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoComment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.reply.ReplyActivity;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.reply.ReplyFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -49,7 +47,7 @@ public class CommentViewHolder extends ListItemViewHolder<VimeoComment> {
         mReplyButtonTextView.setVisibility(mBaseFragment.isUserLoggedIn() ? View.VISIBLE : View.GONE);
 
         mNameTextView.setText(mListItem.getUser().getName());
-        String commentAge = String.format(Locale.getDefault(), " ⋅ %s", VimeoApiServiceUtil.dateCreatedToTimePassed(mListItem.getCreatedTime()));
+        String commentAge = String.format(Locale.getDefault(), " ⋅ %s", VimeoTextUtil.dateCreatedToTimePassed(mListItem.getCreatedTime()));
         mCommentAgeTextView.setText(commentAge);
 
         mCommentTextView.setText(mListItem.getText());
@@ -73,7 +71,7 @@ public class CommentViewHolder extends ListItemViewHolder<VimeoComment> {
     //@OnClick(R.id.item_comment_reply_textview)
     public void onReplyButtonClick (View view) {
         Intent intent = ReplyActivity.newIntent(mBaseFragment.getContext(),
-                VimeoApiServiceUtil.generateVideoIdFromCommentUri(mListItem.getUri()), mListItem,
+                VimeoTextUtil.generateVideoIdFromCommentUri(mListItem.getUri()), mListItem,
                 ReplyFragment.RESPONSE_TYPE_REPLY);
 
         mBaseFragment.startActivityForResult(intent, CommentsFragment.REQUEST_REPLY);

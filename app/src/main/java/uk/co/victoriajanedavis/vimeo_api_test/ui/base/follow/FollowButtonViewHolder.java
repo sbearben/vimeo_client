@@ -1,17 +1,12 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 
 public abstract class FollowButtonViewHolder<T extends ListItemFollowInteractor> extends ListItemViewHolder<T> {

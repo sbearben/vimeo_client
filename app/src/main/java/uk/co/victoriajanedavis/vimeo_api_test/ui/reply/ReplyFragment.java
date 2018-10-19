@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -36,6 +37,7 @@ import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoComment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.util.ViewUtil;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -105,7 +107,6 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentComponent().inject(this);
-        mPresenter.attachView(this);
 
         mVideoId = (long) getArguments().getLong(ARG_VIDEO_ID);
         mComment = (VimeoComment) getArguments().getParcelable(ARG_VIMEO_COMMENT);
@@ -115,6 +116,7 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mPresenter.attachView(this);
         View v = inflater.inflate(R.layout.fragment_reply, container, false);
         ButterKnife.bind(this, v);
 
@@ -138,8 +140,8 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
         super.onActivityCreated(savedInstanceState);
 
         // Setup the Toolbar
-        getAppCompatActivity().setSupportActionBar(mToolbar);
-        ActionBar actionBar = getAppCompatActivity().getSupportActionBar();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
@@ -159,14 +161,10 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        mDisposable.dispose();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
         mPresenter.detachView();
+        mDisposable.dispose();
+        super.onDestroyView();
+
     }
 
     private void showErrorSnackbar(String errorMessage) {
@@ -200,25 +198,19 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
         mProgressLayout.setVisibility(View.VISIBLE);
         mProgress.setVisibility(View.VISIBLE);
 
-        // Disable user touches on the screen during the progress
         if (getActivity() != null) {
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            ViewUtil.disableTouchInput(getActivity());
         }
     }
 
     @Override
     public void hideProgress() {
-        if (getView() != null) {
-            mProgressLayout.setVisibility(View.GONE);
-            mProgress.setVisibility(View.GONE);
-        }
+        mProgressLayout.setVisibility(View.GONE);
+        mProgress.setVisibility(View.GONE);
 
-        // Re-enable user screen input
         if (getActivity() != null) {
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            ViewUtil.enableTouchInput(getActivity());
         }
-
     }
 
     @Override
@@ -227,6 +219,10 @@ public class ReplyFragment extends BaseFragment implements ReplyMvpView {
 
     @Override
     public void showError(String errorMessage) {
+        if (getActivity() != null) {
+            ViewUtil.hideKeyboard(getActivity());
+        }
+
         showErrorSnackbar(errorMessage);
     }
 

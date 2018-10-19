@@ -16,10 +16,10 @@ import butterknife.ButterKnife;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItemViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.VideoActivity;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -50,15 +50,12 @@ public class VideoFeedViewHolder extends ListItemViewHolder<VimeoVideo> implemen
         int totalLikes = mListItem.getMetadata().getLikesConnection().getTotal();
         mLikesTextView.setText(itemView.getResources().getQuantityString(R.plurals.video_feed_likes_plural, totalLikes, totalLikes));
 
-        mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
+        mTimeTextView.setText(VimeoTextUtil.formatSecondsToDuration(mListItem.getDurationSeconds()));
         GlideApp.with(mBaseFragment)
-                .load(mListItem.getPictures().getSizesList().get(2).getLink()) // get(2) since when looking at Json response it appears this is the location of the most reasonable size
-                //.thumbnail(Glide.with(itemView.getContext())
-                        //.load(mListItem.getPictures().getSizesList().get(0).getLink()))
+                .load(mListItem.getPictures().getSizesList().get(2).getLink())
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                //.transition(withCrossFade())
                 .into(mImageView);
     }
 

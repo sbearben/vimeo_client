@@ -10,9 +10,9 @@ import com.google.gson.annotations.SerializedName;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItem;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.ListItemFollowInteractor;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 public class VimeoUser implements Parcelable, ListItemFollowInteractor {
 
@@ -108,9 +108,17 @@ public class VimeoUser implements Parcelable, ListItemFollowInteractor {
     @Override
     public long getId() {
         if (id == ListItem.ID_UNINITIALIZED || id == 0) {
-            id = VimeoApiServiceUtil.generateIdFromUri(getUri());
+            id = VimeoTextUtil.generateIdFromUri(getUri());
         }
         return id;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof VimeoUser))return false;
+        return this.getId() == ((VimeoUser) other).getId();
     }
 
     @Override

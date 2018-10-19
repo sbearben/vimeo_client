@@ -1,5 +1,7 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video.comments;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -20,6 +22,7 @@ public class CommentsPresenter extends VideoTabPresenter<VimeoComment> {
 
     @Override
     public Observable<Response<VimeoCollection<VimeoComment>>> getObservable(String url, String query, Integer page, Integer per_page) {
+        Log.d("CommentsPresenter", "Network call - url: " + url);
         return mDataManager.getCommentCollectionByUrl(url, null, page, per_page);
     }
 }

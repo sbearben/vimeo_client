@@ -20,7 +20,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataUserDeserializer;
 import uk.co.victoriajanedavis.vimeo_api_test.data.remote.vimeo.VimeoMetadataVideoDeserializer;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 public class GsonVimeoTest {
 
@@ -1629,7 +1629,7 @@ public class GsonVimeoTest {
 
         VimeoVideo vimeoVideo = mGson.fromJson(json, VimeoVideo.class);
 
-        assertEquals(VimeoApiServiceUtil.generateIdFromUri(vimeoVideo.getUri()), 279643508);
+        assertEquals(VimeoTextUtil.generateIdFromUri(vimeoVideo.getUri()), 279643508);
         assertEquals(vimeoVideo.getUri(), "/videos/279643508");
         assertEquals(vimeoVideo.getName(), "Talos - D.O.A.M. (Death Of A Muse) Pt III");
         assertEquals(vimeoVideo.getDescription(), "Directed by Kevin McGloughlin\n\nMy aspiration for 'DOAM' was to blur the lines of distance and scale, representing our human interrelationship amidst varying environments.\n\nhttps://www.instagram.com/kevinmcgloughlin_gram/\n\nTaken from 'Then There Was War' EP, included on the deluxe edition of 'Wild Alee', out now: https://talos.lnk.to/WildAleeDLXID\n\nFollow Talos: \nSpotify: http://sptfy.com/Tfv \nApple: http://apple.co/2dOro0X \nFacebook: http://www.facebook.com/thisistalos\nTwitter: http://www.twitter.com/thisistalos \nInstagram: http://www.instagram.com/thisistalos \nWebsite: http://www.thisistalos.com");

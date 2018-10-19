@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.explore;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -8,15 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -29,17 +24,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCategory;
-import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.EndlessRecyclerViewOnScrollListener;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.MarginDividerItemDecoration;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionPresenter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.UserVideoViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
 
 public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVideo> implements ExploreMvpView {
 
@@ -76,14 +64,17 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mPresenter.attachView(this);
+
         View v = inflater.inflate(R.layout.fragment_explore, container, false);
         mUnbinder = ButterKnife.bind(this, v);
 
-        initViews(v);
-        //mListAdapter.setListInteractionListener(this);
         if (mListAdapter.isEmpty() || mCategoryListAdapter.isEmpty()) {
             onRefresh();
         }
+
+        initViews(v);
+
 
         return v;
     }
@@ -92,21 +83,15 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
     protected void initViews(View view) {
         super.initViews(view);
         mCategoriesRecycler.setHasFixedSize(true);
-        mCategoriesRecycler.setMotionEventSplittingEnabled(false);
         mCategoriesRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.HORIZONTAL, false));
         mCategoriesRecycler.setAdapter(mCategoryListAdapter);
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        //mCategoriesRecycler.setAdapter(null);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
         mPresenter.detachView();
+        mCategoriesRecycler.setAdapter(null);
+        super.onDestroyView();
     }
 
     @Override
@@ -166,11 +151,9 @@ public class ExploreFragment extends CollectionFragment<ExploreMvpView, VimeoVid
 
     @Override
     public void hideProgress() {
-        if (getView() != null) {
-            mContentLoadingProgress.setVisibility(View.GONE);
-            mAppBarLayout.setVisibility(View.VISIBLE);
-            mListAdapter.removeLoadingView();
-        }
+        mContentLoadingProgress.setVisibility(View.GONE);
+        mAppBarLayout.setVisibility(View.VISIBLE);
+        mListAdapter.removeLoadingView();
     }
 
     @Override

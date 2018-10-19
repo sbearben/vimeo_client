@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <uk.co.victoriajanedavis.vimeo_api_test.ui.ExpandableTextView
+    <uk.co.victoriajanedavis.vimeo_api_test.ui.base.ExpandableTextView
         android:id="@+id/layout_expandable_textview_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

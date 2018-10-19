@@ -43,9 +43,19 @@ public class VimeoAccessToken {
     @SerializedName(FIELD_SCOPE) @Expose private String scope;
     private List<String> scopeList;
     private String token_auth_level; // determines if we have an Authenticated token or Unauthenticated token
-    private Integer expires_in;
 
-    public VimeoAccessToken() {
+
+    public static VimeoAccessToken newInstance() {
+        VimeoAccessToken token = new VimeoAccessToken();
+        token.access_token = "";
+        token.token_type = "";
+        token.scope = "";
+        token.token_auth_level = "";
+
+        return token;
+    }
+
+    private VimeoAccessToken() {
         scopeList = new ArrayList<>();
     }
 
@@ -95,14 +105,6 @@ public class VimeoAccessToken {
 
     public void setTokenAuthLevel(@TokenAuthLevel String token_auth_level) {
         this.token_auth_level = token_auth_level;
-    }
-
-    public int getExpiry() {
-        return expires_in;
-    }
-
-    public void setExpiry(int expires_in) {
-        this.expires_in = expires_in;
     }
 
     public String getAuthorizationHeader() {

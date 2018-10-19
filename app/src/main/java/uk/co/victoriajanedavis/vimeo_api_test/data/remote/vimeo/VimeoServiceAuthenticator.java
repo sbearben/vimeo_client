@@ -18,7 +18,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.local.PreferencesHelper;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoAccessToken;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoAccessTokenHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationScope;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.HttpUtil;
 
 @ApplicationScope
 public class VimeoServiceAuthenticator implements Authenticator {
@@ -28,7 +28,6 @@ public class VimeoServiceAuthenticator implements Authenticator {
     private VimeoApiServiceHolder mApiServiceHolder;
     private VimeoAccessTokenHolder mAccessTokenHolder;
     private PreferencesHelper mPrefHelper;
-    //private CompositeDisposable mDisposables;
     private VimeoAccessToken newAccessToken;
 
 
@@ -61,7 +60,6 @@ public class VimeoServiceAuthenticator implements Authenticator {
            the Authenticated access token is no longer valid and the user needs to login again */
         if (mAccessTokenHolder.getVimeoAccessToken().getTokenAuthLevel().equals(VimeoAccessToken.TOKEN_LEVEL_AUTHENTICATED)) {
             // TODO: We need to log user out and throw up some sort of error dialog to the user that indicates they need to log back in
-            // logoutUser();
             return null;
         }
 
@@ -70,7 +68,7 @@ public class VimeoServiceAuthenticator implements Authenticator {
         Request newRequest = null;
 
         // Get the new Unauthenticated access token
-        apiService.getUnauthenticatedToken(VimeoApiServiceUtil.basicAuthorizationHeader(
+        apiService.getUnauthenticatedToken(HttpUtil.basicAuthorizationHeader(
                 BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET), null)
                 .blockingSubscribe(new Observer<VimeoAccessToken>() {
                     @Override
@@ -93,8 +91,6 @@ public class VimeoServiceAuthenticator implements Authenticator {
                     }
                 });
 
-        Log.i(TAG, "after call to get token");
-
         if (newAccessToken != null) {
             newAccessToken.setTokenAuthLevel(VimeoAccessToken.TOKEN_LEVEL_UNAUTHENTICATED); // need to set this since it isn't set automatically
             newRequest = response.request().newBuilder()
@@ -108,7 +104,6 @@ public class VimeoServiceAuthenticator implements Authenticator {
             // TODO: We need to throw up some sort of error dialog to the user that indicates we couldn't get a Unauthenticated token
         }
 
-        //mDisposables.clear();
         return newRequest;
     }
 

@@ -3,11 +3,14 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.explore;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.data.DataManager;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
@@ -16,6 +19,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.remote.RemoteObserver;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ConfigPersistent;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BasePresenter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionPresenter;
+import uk.co.victoriajanedavis.vimeo_api_test.util.HttpUtil;
 import uk.co.victoriajanedavis.vimeo_api_test.util.RxUtil;
 
 @ConfigPersistent
@@ -31,10 +35,6 @@ public class ExplorePresenter extends CollectionPresenter<ExploreMvpView, VimeoV
         getCategoryAndVideoLists(1, 10);
     }
 
-    /*
-     * NOTE: the arguments here will only be applied to getting the videos since there are only
-     * 16 Categories, so we'll get them all and don't need pagination
-     */
     private void getCategoryAndVideoLists (Integer page, Integer per_page) {
         checkViewAttached();
         RxUtil.dispose(mDisposable);
@@ -43,14 +43,14 @@ public class ExplorePresenter extends CollectionPresenter<ExploreMvpView, VimeoV
         mDataManager.getCategoryAndVideoCollection(page, per_page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RemoteObserver<VimeoCategoryAndVideoCollectionHolder>() {
+                .subscribe(new Observer<VimeoCategoryAndVideoCollectionHolder>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mDisposable = d;
                     }
 
                     @Override
-                    public void onSuccess(VimeoCategoryAndVideoCollectionHolder holder) {
+                    public void onNext(VimeoCategoryAndVideoCollectionHolder holder) {
                         if (!isViewAttached()) return;
                         getMvpView().hideProgress();
 
@@ -61,17 +61,23 @@ public class ExplorePresenter extends CollectionPresenter<ExploreMvpView, VimeoV
                     }
 
                     @Override
-                    public void onUnauthorized(Response<VimeoCategoryAndVideoCollectionHolder> response) {
+                    public void onError(Throwable e) {
                         if (!isViewAttached()) return;
                         getMvpView().hideProgress();
-                        getMvpView().showUnauthorizedError();
+
+                        if (e instanceof HttpException) {
+                            int code = ((HttpException) e).code();
+                            if (code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                                getMvpView().showUnauthorizedError();
+                                return;
+                            }
+                        }
+
+                        getMvpView().showError(e.getMessage());
                     }
 
                     @Override
-                    public void onError(Throwable throwable) {
-                        if (!isViewAttached()) return;
-                        getMvpView().hideProgress();
-                        getMvpView().showError(throwable.getMessage());
+                    public void onComplete() {
                     }
                 });
     }

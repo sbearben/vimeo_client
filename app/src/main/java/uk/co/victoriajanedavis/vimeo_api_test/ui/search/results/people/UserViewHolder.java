@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -24,7 +22,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserActivity;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -49,13 +47,12 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
         Log.d (TAG, "Bind: " + getLayoutPosition());
         mListItem = vimeoUser;
 
-        //mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
         mDisposables.add(mFollowButtonRxBinding.subscribeToStream());
 
         mNameTextView.setText(mListItem.getName());
 
-        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
+        mDisposables.add(Single.fromCallable(() -> VimeoTextUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
                 mListItem.getMetadata().getFollowersConnection().getTotal()))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +64,6 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
                 .placeholder(R.drawable.user_image_placeholder)
                 .fallback(R.drawable.user_image_placeholder)
                 .circleCrop()
-                //.transition(withCrossFade())
                 .into(mImageView);
     }
 
@@ -79,12 +75,6 @@ public class UserViewHolder extends FollowButtonViewHolder<VimeoUser> implements
         mImageView.setImageDrawable(null);
 
         mDisposables.clear();
-    }
-
-    @Override
-    public void releaseInternalStates() {
-        super.releaseInternalStates();
-        //mFollowButtonRxBinding.releaseInternalStates();
     }
 
     @Override

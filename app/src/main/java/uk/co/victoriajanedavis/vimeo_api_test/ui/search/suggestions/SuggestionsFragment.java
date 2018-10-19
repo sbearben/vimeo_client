@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,17 +23,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.search.SearchAdapter;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.search.SearchEvent;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxBehaviourEventBus;
 
 public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpView {
 
     private static final String TAG = "SuggestionsFragment";
 
     @Inject SuggestionsPresenter mSuggestionsPresenter;
-    private SearchAdapter mSearchAdapter;
+    @Inject
+    RxBehaviourEventBus mSearchEventBus;
+
+    private Disposable mDisposable;
+    private SuggestionsAdapter mSuggestionsAdapter;
 
     @BindView(R.id.fragment_suggestions_recyclerview) RecyclerView mSuggestionsRecycler;
 
@@ -52,17 +56,17 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentComponent().inject(this);
         mSuggestionsPresenter.attachView(this);
 
-        mSearchAdapter = new SearchAdapter(this, SuggestionsViewHolder::new);
+        mSuggestionsAdapter = new SuggestionsAdapter();
+
+        mDisposable = mSearchEventBus.filteredObservable(SearchEvent.class).skip(1).subscribe(event -> {
+            mSuggestionsAdapter.addSuggestion(event.getQuery());
+            mSuggestionsPresenter.onNewSearchQuery(event.getQuery());
+        });
     }
 
     @Override
@@ -72,8 +76,7 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
         mUnbinder = ButterKnife.bind(this, v);
 
         initViews(v);
-        //mSearchAdapter.setListInteractionListener(this);
-        if (mSearchAdapter.isEmpty()) {
+        if (mSuggestionsAdapter.isEmpty()) {
             mSuggestionsPresenter.onInitialListRequested();
         }
 
@@ -81,14 +84,12 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
     }
 
     private void initViews(View view) {
-        //mSuggestionsRecycler.setBackgroundColor(getResources().getColor(R.color.mediumLightGray));
         mSuggestionsRecycler.setMotionEventSplittingEnabled(false);
         mSuggestionsRecycler.setItemAnimator(new DefaultItemAnimator());
-        mSuggestionsRecycler.setAdapter(mSearchAdapter);
+        mSuggestionsRecycler.setAdapter(mSuggestionsAdapter);
 
         mSuggestionsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mSuggestionsRecycler.addItemDecoration (new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-
     }
 
     @Override
@@ -103,19 +104,15 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        //mSuggestionsPresenter.detachView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        mDisposable.dispose();
         mSuggestionsPresenter.detachView();
+        super.onDestroy();
+
     }
 
     @OnClick(R.id.message_tryagain_button)
     public void onRefresh() {
-        mSearchAdapter.removeAll();
+        mSuggestionsAdapter.removeAll();
         mSuggestionsPresenter.onInitialListRequested();
     }
 
@@ -124,19 +121,13 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
 
     @Override
     public void showSuggestions(List<String> suggestionsList) {
-        // TODO: I believe this if statment and its body are moot given we aren't changing between a normal list and a search list
-        if (mSearchAdapter.getViewType() != ListAdapter.VIEW_TYPE_LIST) {
-            mSearchAdapter.removeAll();
-            mSearchAdapter.setViewType(ListAdapter.VIEW_TYPE_LIST);
-        }
-
-        mSearchAdapter.addItems(suggestionsList);
-        //mSearchAdapter.refreshFilter();
+        mSuggestionsAdapter.addAllSuggestions(suggestionsList);
+        //mSuggestionsAdapter.refreshFilter();
     }
 
     @Override
     public void showProgress() {
-        if (mSearchAdapter.isEmpty()) {
+        if (mSuggestionsAdapter.isEmpty()) {
             mContentLoadingProgress.setVisibility(View.VISIBLE);
         }
     }
@@ -144,15 +135,10 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
     @Override
     public void hideProgress() {
         mContentLoadingProgress.setVisibility(View.GONE);
-        mSearchAdapter.removeLoadingView();
     }
 
     @Override
     public void showUnauthorizedError() {
-        mMessageImage.setImageResource(R.drawable.ic_error_outline_black_48dp);
-        mMessageText.setText(getString(R.string.error_generic_sharedpref_error, "Unauthorized"));
-        mMessageButton.setText(getString(R.string.action_try_again));
-        showMessageLayout(true);
     }
 
     @Override
@@ -165,19 +151,10 @@ public class SuggestionsFragment extends BaseFragment implements SuggestionsMvpV
 
     @Override
     public void showEmpty() {
-        mMessageImage.setImageResource(R.drawable.ic_clear_black_48dp);
-        mMessageText.setText(getString(R.string.error_no_items_to_display));
-        mMessageButton.setText(getString(R.string.action_check_again));
-        showMessageLayout(true);
     }
 
     @Override
     public void showMessageLayout(boolean show) {
         mMessageLayout.setVisibility(show ? View.VISIBLE : View.GONE);
     }
-
-    public SearchAdapter getSearchAdapter() {
-        return mSearchAdapter;
-    }
-
 }

@@ -11,18 +11,18 @@ import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationContext;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.ApplicationScope;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.module.ApplicationModule;
 import uk.co.victoriajanedavis.vimeo_api_test.injection.module.VimeoServiceModule;
-import uk.co.victoriajanedavis.vimeo_api_test.util.RxEventBus;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxBehaviourEventBus;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxPublishEventBus;
 
 @ApplicationScope
 @Component(modules = {ApplicationModule.class, VimeoServiceModule.class})
 public interface ApplicationComponent {
 
-    //void inject(SyncService syncService);
-
     @ApplicationContext Context context();
     Application application();
     PreferencesHelper preferencesHelper();
     DataManager dataManager();
-    RxEventBus eventBus();
+    RxBehaviourEventBus behaviourEventBus();
+    RxPublishEventBus publishEventBus();
     VimeoAccessTokenHolder vimeoAccessTokenHolder();
 }

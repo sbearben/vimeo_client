@@ -6,8 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItem;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListItem;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 public class VimeoCategory implements ListItem, Parcelable {
 
@@ -54,9 +54,17 @@ public class VimeoCategory implements ListItem, Parcelable {
     @Override
     public long getId() {
         if (id == ListItem.ID_UNINITIALIZED) {
-            id = VimeoApiServiceUtil.generateIdFromUri(getUri());
+            id = VimeoTextUtil.generateIdFromUri(getUri());
         }
         return id;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof VimeoCategory))return false;
+        return this.getId() == ((VimeoCategory) other).getId();
     }
 
     @Override

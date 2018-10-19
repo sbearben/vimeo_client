@@ -1,9 +1,6 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,19 +8,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -33,28 +24,32 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
+import uk.co.victoriajanedavis.vimeo_api_test.VimeoApplication;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ExpandableTextView;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.ExpandableTextView;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.upnext.UpNextFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.video.upnext.UpNextVideoViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.util.ExpandableTextViewUtil;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.DisplayMetricsUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxPublishEventBus;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
-public class VideoFragment extends BaseFragment implements VideoTabFragment.GetVideoCallback,
-        UpNextVideoViewHolder.UpNextVideoClickListener {
+public class VideoFragment extends BaseFragment {
 
     private static final String TAG = "VideoFragment";
     public static final String FRAGMENT_VIDEO_TAG = "fragment_video";
 
+    private static final String SAVED_VIMEO_VIDEO = "fragment_video_saved_video";
     private static final String ARG_VIMEO_VIDEO = "vimeo_video";
 
+    private RxPublishEventBus mEventBus;
+    private Disposable mDisposable;
+
+    //@BindView(R.id.fragment_video_imageview) WebView mImageView;
     @BindView(R.id.fragment_video_imageview) AppCompatImageView mImageView;
     @BindView(R.id.fragment_video_timelength_textview) TextView mTimeTextView;
 
@@ -81,9 +76,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
     private VideoPagerAdapter mPagerAdapter;
     private VimeoVideo mVideo;
 
-    private ExpandableTextViewUtil mExpandableTextViewUtil;
-    private int mScreenWidth;
-    private int mScreenHeight;
+    private DisplayMetricsUtil.Dimensions mScreenDimensions;
 
 
     public static VideoFragment newInstance (VimeoVideo video) {
@@ -103,15 +96,15 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //fragmentComponent().inject(this);
 
-        // This code is used to get the screen dimensions of the user's device
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((AppCompatActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mScreenWidth = displayMetrics.widthPixels;
-        mScreenHeight = displayMetrics.heightPixels;
+        mEventBus = VimeoApplication.get(getContext()).getComponent().publishEventBus();
+        mScreenDimensions = DisplayMetricsUtil.getScreenDimensions();
 
         mVideo = (VimeoVideo) getArguments().getParcelable(ARG_VIMEO_VIDEO);
+        if (savedInstanceState != null) {
+            mVideo = savedInstanceState.getParcelable(SAVED_VIMEO_VIDEO);
+        }
+
         mPagerAdapter = new VideoPagerAdapter(getContext(), getFragmentManager(), mVideo.getMetadata());
     }
 
@@ -121,26 +114,40 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         View v = inflater.inflate(R.layout.fragment_video, container, false);
         ButterKnife.bind(this, v);
 
+        //mEventBus.post(new UpNextVideoClickEvent(mVideo));
+        mDisposable = mEventBus.filteredObservable(UpNextVideoClickEvent.class).subscribe(
+                event -> {
+                    mVideo = event.getVideo();
+                    Log.d(TAG, "Video Title: " + mVideo.getName());
+                    initViews(getView());
+                    //updateUpNextFragment(video);
+                    mPagerAdapter.setVideoMetadata(mVideo.getMetadata());
+                });
+
+        initPager(v);
         initViews(v);
-        //mSearchAdapter.setListInteractionListener(this);
 
         return v;
     }
 
-    private void initViews(View view) {
+    private void initPager(View v) {
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
 
-        // Dynamically set the height of the video container to be 1/1.777 of the screen width (this is approximately the dimensions that Vimeo uses)
+    private void initViews(View view) {
+
+
+        // Dynamically set the height of the video container
         int videoHeight;
-        if (mScreenWidth < mScreenHeight) {
+        if (mScreenDimensions.getWidth() < mScreenDimensions.getHeight()) {
             // We're in portrait mode since screen width < height
-            videoHeight = (int)(mScreenWidth/1.778);
+            videoHeight = (int)(mScreenDimensions.getWidth()/VimeoVideo.ASPECT_RATIO);
         }
         else {
             // We're in landscape mode
-            videoHeight = mScreenHeight - getStatusBarHeight();
+            videoHeight = mScreenDimensions.getHeight() - DisplayMetricsUtil.getStatusBarHeight();
         }
         mImageView.setLayoutParams(new Constraints.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, videoHeight));
 
@@ -149,6 +156,7 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
         params.setMargins(0, videoHeight, 0, 0);
         mDetailsLayout.setLayoutParams(params);
 
+
         GlideApp.with(this)
                 .load(mVideo.getPictures().getSizesList().get(2).getLinkWithPlayButton())
                 .thumbnail(Glide.with(this)
@@ -156,21 +164,18 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                //.transition(withCrossFade())
                 .into(mImageView);
+
         //initWebView();
 
 
-        mTimeTextView.setText(VimeoApiServiceUtil.formatSecondsToDuration(mVideo.getDurationSeconds()));
+        mTimeTextView.setText(VimeoTextUtil.formatSecondsToDuration(mVideo.getDurationSeconds()));
         mTitleTextView.setText(mVideo.getName());
-        mPlaysAgeTextView.setText(VimeoApiServiceUtil.formatVideoAgeAndPlays(mVideo.getStats().getPlays(), mVideo.getCreatedTime()));
+        mPlaysAgeTextView.setText(VimeoTextUtil.formatVideoAgeAndPlays(mVideo.getStats().getPlays(), mVideo.getCreatedTime()));
 
-
-        if (mExpandableTextViewUtil != null) {
-            mExpandableTextViewUtil.clear();
-        }
-        VimeoApiServiceUtil.hideOrDisplayTextViewIfNullString(mDescriptionTextView, mVideo.getDescription());
-        mExpandableTextViewUtil = new ExpandableTextViewUtil(mDescriptionTextView, mDescriptionExpandImageView);
+        VimeoTextUtil.hideOrDisplayTextViewIfNullString(mDescriptionTextView, mVideo.getDescription());
+        mDescriptionTextView.setImageIcon(mDescriptionExpandImageView);
+        mDescriptionTextView.reinitialize();
 
         VimeoUser user = mVideo.getUser();
 
@@ -183,10 +188,17 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
                 .into(mUserImageView);
 
         mUserNameTextView.setText(user.getName());
-        String videoCountAndFollowers = VimeoApiServiceUtil.formatVideoCountAndFollowers(user.getMetadata().getVideosConnection().getTotal(),
+        String videoCountAndFollowers = VimeoTextUtil.formatVideoCountAndFollowers(user.getMetadata().getVideosConnection().getTotal(),
                 user.getMetadata().getFollowersConnection().getTotal());
         mUserVideosFollowersTextView.setText(videoCountAndFollowers);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVED_VIMEO_VIDEO, mVideo);
+    }
+
 
     /*
     @SuppressLint("SetJavaScriptEnabled")
@@ -221,61 +233,15 @@ public class VideoFragment extends BaseFragment implements VideoTabFragment.GetV
     }
     */
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
-    public void updateUpNextFragment (VimeoVideo video) {
-        if (getFragmentManager() != null) {
-            Fragment fragment = getFragmentManager().findFragmentByTag("android:switcher:" + R.id.fragment_video_viewpager + ":" + mViewPager.getCurrentItem());
-            if (fragment != null) {
-                if ((fragment instanceof UpNextFragment) && fragment.isVisible()) {
-                    UpNextFragment upNextFragment = (UpNextFragment) fragment;
-                    upNextFragment.setRecommendationsConnection (video.getMetadata().getRecommendationsConnection());
-                }
-            }
-        }
-    }
-
     @Override
     public void onDestroyView() {
         mViewPager.setAdapter(null);
+        mDisposable.dispose();
 
         if (!((AppCompatActivity) getContext()).isFinishing()) {
             Glide.with(this).clear(mImageView);
             Glide.with(this).clear(mUserImageView);
         }
         super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    // VideoTabFragment.GetVideoCallback
-    @Override
-    public VimeoVideo getVideo() {
-        return mVideo;
-    }
-
-
-    // UpNextVideoViewHolder.UpNextVideoClickListener
-    @Override
-    public void onUpNextVideoClick (VimeoVideo video) {
-        mVideo = video;
-        initViews(getView());
-        updateUpNextFragment(video);
-        mPagerAdapter.setVideoMetadata(video.getMetadata());
     }
 }

@@ -12,25 +12,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoCollection;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.CollectionFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.ResultsFragment;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.search.SearchEvent;
+import uk.co.victoriajanedavis.vimeo_api_test.util.eventbus.RxBehaviourEventBus;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 public abstract class ResultsTabFragment<T extends Parcelable>
         extends CollectionFragment<ResultsTabMvpView<T>, T> implements ResultsTabMvpView<T>,
-        SwipeRefreshLayout.OnRefreshListener, ResultsFragment.QuerySubmitCallback {
+        SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "VideoTabFragment";
+    private static final String TAG = "ResultsTabFragment";
+
+    @Inject
+    RxBehaviourEventBus mSearchEventBus;
+    private Disposable mDisposable;
 
     @BindView(R.id.fragment_results_tab_header_layout) ConstraintLayout mHeaderLayout;
     @BindView(R.id.item_list_header_textview) TextView mHeaderTextView;
     @BindView(R.id.fragment_results_tab_swipe_to_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private boolean mIsViewShown = false;
     private String mHeaderText = "";
     private String mQuery;
 
@@ -41,23 +48,11 @@ public abstract class ResultsTabFragment<T extends Parcelable>
         View v = inflater.inflate(R.layout.fragment_results_tab, container, false);
         mUnbinder = ButterKnife.bind(this, v);
 
+        mDisposable = mSearchEventBus.filteredObservable(SearchEvent.class).subscribe(event -> submitQuery(event.getQuery()));
+
         initViews(v);
-        //mListAdapter.setListInteractionListener(this);
 
         return v;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (!mIsViewShown) {
-            updateQueryAndRequestData();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -75,29 +70,14 @@ public abstract class ResultsTabFragment<T extends Parcelable>
         mHeaderTextView.setText(mHeaderText);
     }
 
-    private void updateQueryAndRequestData() {
-        if (getActivity() != null) {
-            String newQuery = ((GetQueryCallback) getActivity()).getQuery();
-            if (!newQuery.equals(mQuery)) {
-                mQuery = newQuery;
-                onRefresh();
-            }
-        }
+    @Override
+    public void onDestroyView() {
+        mSwipeRefreshLayout.setOnRefreshListener(null);
+        mDisposable.dispose();
+        super.onDestroyView();
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getView() != null) {
-            mIsViewShown = true;
-            updateQueryAndRequestData();
-        } else {
-            mIsViewShown = false;
-        }
-    }
-
-    @Override
-    public void submitQuery (String query) {
+    private void submitQuery (String query) {
         if (!query.equals(mQuery)) {
             mQuery = query;
             onRefresh();
@@ -118,11 +98,6 @@ public abstract class ResultsTabFragment<T extends Parcelable>
 
     public abstract String getPluralHeaderMetric();
 
-    // Interface that the hosting Activity must implement
-    public interface GetQueryCallback {
-        String getQuery();
-    }
-
     /***** MVP View methods implementation *****/
 
     @Override
@@ -131,11 +106,7 @@ public abstract class ResultsTabFragment<T extends Parcelable>
             mSwipeRefreshLayout.setEnabled(true);
         }
 
-        //mListAdapter.setCollectionTotal(itemCollection.getTotal()-1);
-        //mListAdapter.setSingularHeaderMetric(getSingularHeaderMetric());
-        //mListAdapter.setPluralHeaderMetric(getPluralHeaderMetric());
-
-        mHeaderText = VimeoApiServiceUtil.formatIntMetric(itemCollection.getTotal(), getSingularHeaderMetric(), getPluralHeaderMetric());
+        mHeaderText = VimeoTextUtil.formatIntMetric(itemCollection.getTotal(), getSingularHeaderMetric(), getPluralHeaderMetric());
         mHeaderTextView.setText(mHeaderText);
         mListAdapter.addItems(itemCollection.getData());
     }

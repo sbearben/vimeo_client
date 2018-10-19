@@ -45,13 +45,22 @@ public class PreferencesHelper {
     }
 
     public VimeoAccessToken getAccessToken() {
-        VimeoAccessToken accessToken = new VimeoAccessToken();
+        VimeoAccessToken accessToken = VimeoAccessToken.newInstance();
         accessToken.setAccessToken(mPref.getString(VimeoAccessToken.FIELD_ACCESS_TOKEN, TOKEN_EMPTY_FIELD));
         accessToken.setTokenType(mPref.getString(VimeoAccessToken.FIELD_TOKEN_TYPE, TOKEN_EMPTY_FIELD));
         accessToken.setScope(mPref.getString(VimeoAccessToken.FIELD_SCOPE, TOKEN_EMPTY_FIELD));
         accessToken.setTokenAuthLevel(mPref.getString(VimeoAccessToken.FIELD_TOKEN_AUTH_LEVEL, TOKEN_EMPTY_FIELD));
 
         return accessToken;
+    }
+
+    public void deleteAccessToken() {
+        mPref.edit()
+                .remove(VimeoAccessToken.FIELD_ACCESS_TOKEN)
+                .remove(VimeoAccessToken.FIELD_TOKEN_TYPE)
+                .remove(VimeoAccessToken.FIELD_SCOPE)
+                .remove(VimeoAccessToken.FIELD_TOKEN_AUTH_LEVEL)
+                .apply();
     }
 
     public void setSearchSuggestionsSet (Set<String> suggestionSet) {

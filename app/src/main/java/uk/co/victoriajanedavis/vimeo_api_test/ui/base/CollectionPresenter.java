@@ -3,6 +3,9 @@ package uk.co.victoriajanedavis.vimeo_api_test.ui.base;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

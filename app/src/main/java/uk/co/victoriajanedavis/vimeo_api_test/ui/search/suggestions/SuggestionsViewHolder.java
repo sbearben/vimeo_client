@@ -1,8 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.suggestions;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,49 +12,44 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 
-public class SuggestionsViewHolder extends ListItemViewHolder<String> implements View.OnClickListener {
+public class SuggestionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.item_suggestion_name_textview) TextView mSuggestionTextView;
     @BindView(R.id.item_suggestion_arrow_imageview) AppCompatImageView mArrowImageView;
 
+    private String mSuggestion;
 
-    public SuggestionsViewHolder(BaseFragment baseFragment, LayoutInflater inflater, ViewGroup parent) {
-        super (baseFragment, inflater.inflate (R.layout.item_suggestion, parent, false));
+
+    public SuggestionsViewHolder(LayoutInflater inflater, ViewGroup parent) {
+        super (inflater.inflate (R.layout.item_suggestion, parent, false));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener (this);
 
     }
 
-    @Override
     public void bind (@NonNull String suggestion) {
-        mListItem = suggestion;
+        mSuggestion = suggestion;
         mSuggestionTextView.setText(suggestion);
-    }
-
-    @Override
-    public void recycle() {
     }
 
     @OnClick(R.id.item_suggestion_arrow_imageview)
     public void onArrowIconClick() {
-        if (mBaseFragment.getContext() != null) {
-            OnClickListener listener = (OnClickListener) mBaseFragment.getContext();
-            listener.onArrowIconClick(mListItem);
+        if (itemView.getContext() != null) {
+            OnClickListener listener = (OnClickListener) itemView.getContext();
+            listener.onArrowIconClick(mSuggestion);
         }
     }
 
     @Override
     public void onClick (View view) {
-        if (mBaseFragment.getContext() != null) {
-            OnClickListener listener = (OnClickListener) mBaseFragment.getContext();
-            listener.onViewHolderClick(mListItem);
+        if (itemView.getContext() != null) {
+            OnClickListener listener = (OnClickListener) itemView.getContext();
+            listener.onViewHolderClick(mSuggestion);
         }
     }
 

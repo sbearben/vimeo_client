@@ -49,6 +49,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mFab.setImageDrawable(getResources().getDrawable(R.drawable.ic_bottomnav_search).mutate());
+
         // Set and get the toolbar
         setSupportActionBar(mToolbar);
         ActionBar supportActionBar = getSupportActionBar();
@@ -71,41 +73,23 @@ public class MainActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.action_home:
                     mSelectedFragmentTag = ACTION_HOME_TAG;
-                    selectedFragment = fm.findFragmentByTag(mSelectedFragmentTag);
-                    if (selectedFragment == null) {
-                        selectedFragment = HomeFragment.newInstance();
-                        fragmentTransaction.add(R.id.activity_main_fragment_container, selectedFragment, mSelectedFragmentTag);
-                    } else {
-                        fragmentTransaction.attach(selectedFragment);
-                    }
+                    selectedFragment = findOrInstantiateFragmentAndAttach(fm, fragmentTransaction, HomeFragment::newInstance);
                     supportActionBar.setTitle(R.string.menu_home);
                     break;
                 case R.id.action_explore:
                     mSelectedFragmentTag = ACTION_EXPLORE_TAG;
-                    selectedFragment = fm.findFragmentByTag(mSelectedFragmentTag);
-                    if (selectedFragment == null) {
-                        selectedFragment = ExploreFragment.newInstance();
-                        fragmentTransaction.add(R.id.activity_main_fragment_container, selectedFragment, mSelectedFragmentTag);
-                    } else {
-                        fragmentTransaction.attach(selectedFragment);
-                    }
+                    selectedFragment = findOrInstantiateFragmentAndAttach(fm, fragmentTransaction, ExploreFragment::newInstance);
                     supportActionBar.setTitle(R.string.menu_explore);
                     break;
                 case R.id.action_profile:
                     mSelectedFragmentTag = ACTION_PROFILE_TAG;
-                    selectedFragment = fm.findFragmentByTag(mSelectedFragmentTag);
-                    if (selectedFragment == null) {
-                        selectedFragment = CurrentUserFragment.newInstance();
-                        fragmentTransaction.add(R.id.activity_main_fragment_container, selectedFragment, mSelectedFragmentTag);
-                    } else {
-                        fragmentTransaction.attach(selectedFragment);
-                    }
+                    selectedFragment = findOrInstantiateFragmentAndAttach(fm, fragmentTransaction, CurrentUserFragment::newInstance);
                     supportActionBar.setTitle(R.string.menu_profile);
                     break;
             }
 
             fragmentTransaction.setPrimaryNavigationFragment(selectedFragment);
-            fragmentTransaction.setReorderingAllowed(true);
+            fragmentTransaction.setReorderingAllowed(true); // An optimization
             fragmentTransaction.commitNowAllowingStateLoss();
 
             return true;
@@ -124,6 +108,18 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public Fragment findOrInstantiateFragmentAndAttach(FragmentManager fm, FragmentTransaction ft, CreateFragmentLambda lambda) {
+        Fragment selectedFragment = fm.findFragmentByTag(mSelectedFragmentTag);
+        if (selectedFragment == null) {
+            selectedFragment = lambda.createFragment();
+            ft.add(R.id.activity_main_fragment_container, selectedFragment, mSelectedFragmentTag);
+        } else {
+            ft.attach(selectedFragment);
+        }
+
+        return selectedFragment;
+    }
+
     @Override
     public void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -134,5 +130,9 @@ public class MainActivity extends BaseActivity {
     public void onSearchFabClick() {
         Intent intent = SearchActivity.newIntent(this);
         startActivity(intent);
+    }
+
+    private interface CreateFragmentLambda {
+        Fragment createFragment();
     }
 }

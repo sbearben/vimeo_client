@@ -1,11 +1,13 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.user.currentuser;
 
 import javax.inject.Inject;
+import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.data.DataManager;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoAccessToken;
@@ -23,7 +25,7 @@ public class CurrentUserPresenter extends UserPresenter {
 
 
     @Inject
-    public CurrentUserPresenter(DataManager dataManager, VimeoAccessTokenHolder accessTokenHolder) {
+    CurrentUserPresenter(DataManager dataManager, VimeoAccessTokenHolder accessTokenHolder) {
         mDataManager = dataManager;
         mAccessTokenHolder = accessTokenHolder;
     }
@@ -41,14 +43,14 @@ public class CurrentUserPresenter extends UserPresenter {
         mDataManager.getUserAndVideoCollection(page, per_page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RemoteObserver<VimeoUser>() {
+                .subscribe(new Observer<VimeoUser>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mDisposable = d;
                     }
 
                     @Override
-                    public void onSuccess(VimeoUser user) {
+                    public void onNext(VimeoUser user) {
                         if (!isViewAttached()) return;
                         getMvpView().hideProgress();
 
@@ -63,22 +65,29 @@ public class CurrentUserPresenter extends UserPresenter {
                     }
 
                     @Override
-                    public void onUnauthorized(Response<VimeoUser> response) {
+                    public void onError(Throwable e) {
                         if (!isViewAttached()) return;
                         getMvpView().hideProgress();
-                        getMvpView().showUnauthorizedError();
+
+                        if (e instanceof HttpException) {
+                            int code = ((HttpException) e).code();
+                            if (code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                                getMvpView().showUnauthorizedError();
+                                return;
+                            }
+                        }
+
+                        getMvpView().showError(e.getMessage());
                     }
 
                     @Override
-                    public void onError(Throwable throwable) {
-                        if (!isViewAttached()) return;
-                        getMvpView().hideProgress();
-                        getMvpView().showError(throwable.getMessage());
+                    public void onComplete() {
                     }
                 });
     }
 
-    public void getOauthToken (String code, String redirect_uri) {
+
+    void getOauthToken (String code, String redirect_uri) {
         checkViewAttached();
         RxUtil.dispose(mDisposable);
         getMvpView().showMessageLayout(false);
@@ -97,7 +106,7 @@ public class CurrentUserPresenter extends UserPresenter {
                         if (!isViewAttached()) return;
                         vimeoAccessToken.setTokenAuthLevel(VimeoAccessToken.TOKEN_LEVEL_AUTHENTICATED);
                         mDataManager.setAccessToken(vimeoAccessToken);
-                        mAccessTokenHolder.setVimeoAccessToken(vimeoAccessToken);
+                        mAccessTokenHolder.login(vimeoAccessToken);
                         onInitialListRequested(null, null, null);
                     }
 
@@ -112,5 +121,11 @@ public class CurrentUserPresenter extends UserPresenter {
                     public void onComplete() {
                     }
                 });
+    }
+
+    void onLogout() {
+        mDataManager.deleteAccessToken();
+        mAccessTokenHolder.logout();
+        getMvpView().showUnauthorizedError();
     }
 }

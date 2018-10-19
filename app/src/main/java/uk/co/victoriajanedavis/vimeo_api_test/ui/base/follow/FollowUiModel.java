@@ -7,34 +7,23 @@ public class FollowUiModel {
      */
     private boolean mIsFollowingNewState;
 
-    private boolean mInProgress;
     private boolean mSuccess;
     private String mErrorMessage;
 
 
-    private FollowUiModel (boolean isFollowing, boolean inProgress,
-                           boolean success, String errorMessage) {
+    private FollowUiModel (boolean isFollowing, boolean success, String errorMessage) {
         mIsFollowingNewState = isFollowing;
-        mInProgress = inProgress;
         mSuccess = success;
         mErrorMessage = errorMessage;
 
     }
 
-    public static FollowUiModel inProgress(boolean isFollowing) {
-        return new FollowUiModel(isFollowing, true, false, null);
-    }
-
     public static FollowUiModel success(boolean isFollowing) {
-        return new FollowUiModel(isFollowing, false, true, null);
+        return new FollowUiModel(isFollowing, true, null);
     }
 
     public static FollowUiModel failure(boolean isFollowing, String errorMessage) {
-        return new FollowUiModel(isFollowing, false, false, errorMessage);
-    }
-
-    public boolean isInProgress() {
-        return mInProgress;
+        return new FollowUiModel(isFollowing, false, errorMessage);
     }
 
     public boolean isSuccess() {

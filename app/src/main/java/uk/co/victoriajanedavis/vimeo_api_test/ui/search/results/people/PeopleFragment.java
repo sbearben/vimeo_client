@@ -1,11 +1,13 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
@@ -14,12 +16,9 @@ import io.reactivex.Single;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.base.ResultsTabPresenter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
@@ -39,7 +38,18 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements Fol
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentComponent().inject(this);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getPresenter().attachView(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        getPresenter().detachView();
+        super.onDestroyView();
     }
 
     @Override
@@ -56,7 +66,6 @@ public class PeopleFragment extends ResultsTabFragment<VimeoUser> implements Fol
     @Override
     public void onDetach() {
         super.onDetach();
-        getPresenter().detachView();
     }
 
     @Override

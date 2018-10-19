@@ -4,7 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,23 +42,26 @@ public class CurrentUserFragment extends UserFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentComponent().inject(this);
+
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPresenter.attachView(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    protected void initViews(View view) {
+        super.initViews(view);
+        mLogoutButton.setVisibility(View.VISIBLE);
+        mLogoutButton.setOnClickListener(v -> mPresenter.onLogout() );
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
         mPresenter.detachView();
+        super.onDestroyView();
     }
 
     @SuppressLint("SetJavaScriptEnabled")

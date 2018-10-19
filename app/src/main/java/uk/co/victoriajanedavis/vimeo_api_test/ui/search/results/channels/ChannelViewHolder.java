@@ -1,10 +1,8 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.channels;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.victoriajanedavis.vimeo_api_test.GlideApp;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
@@ -25,7 +20,7 @@ import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoChannel;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.channel.ChannelActivity;
-import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoApiServiceUtil;
+import uk.co.victoriajanedavis.vimeo_api_test.util.VimeoTextUtil;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -49,13 +44,12 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
     public void bind (@NonNull VimeoChannel vimeoChannel) {
         mListItem = vimeoChannel;
 
-        //mFollowButtonRxBinding.setFollowButton(mFollowButton);
         mFollowButtonRxBinding.setFollowableItem(mListItem);
         mDisposables.add(mFollowButtonRxBinding.subscribeToStream());
 
         mNameTextView.setText(mListItem.getName());
 
-        mDisposables.add(Single.fromCallable(() -> VimeoApiServiceUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
+        mDisposables.add(Single.fromCallable(() -> VimeoTextUtil.formatVideoCountAndFollowers(mListItem.getMetadata().getVideosConnection().getTotal(),
                 mListItem.getMetadata().getUsersConnection().getTotal()))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,7 +60,6 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                //.transition(withCrossFade())
                 .into(mImageView);
     }
 
@@ -74,14 +67,9 @@ public class ChannelViewHolder extends FollowButtonViewHolder<VimeoChannel> impl
     public void recycle() {
         Glide.with(mBaseFragment)
                 .clear(mImageView);
+        mImageView.setImageDrawable(null);
 
         mDisposables.clear();
-    }
-
-    @Override
-    public void releaseInternalStates() {
-        super.releaseInternalStates();
-        //mFollowButtonRxBinding.releaseInternalStates();
     }
 
     @Override

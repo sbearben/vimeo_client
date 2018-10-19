@@ -47,18 +47,9 @@ public interface VimeoApiService {
                                                         @Field("code") String code,
                                                         @Field("redirect_uri") String redirect_uri);
 
-    @GET("channels/staffpicks/videos")
-    Observable<Response<VimeoCollection<VimeoVideo>>> getStaffPicksVideos (@Query("page") Integer page,
-                                                                           @Query("per_page") Integer per_page);
-
     @GET("categories")
-    Observable<Response<VimeoCollection<VimeoCategory>>> getCategories (@Query("page") Integer page,
-                                                                        @Query("per_page") Integer per_page);
-
-    @GET("videos")
-    Observable<Response<VimeoCollection<VimeoVideo>>> searchVideos (@Query("query") String query,
-                                                                    @Query("page") Integer page,
-                                                                    @Query("per_page") Integer per_page);
+    Observable<VimeoCollection<VimeoCategory>> getCategories (@Query("page") Integer page,
+                                                               @Query("per_page") Integer per_page);
 
     @GET
     Observable<Response<VimeoCollection<VimeoVideo>>> getVideoList (@Url String url,
@@ -72,66 +63,14 @@ public interface VimeoApiService {
                                                                       @Query("per_page") Integer per_page,
                                                                       @Query("type") List<String> type);
 
-    @GET("me/videos") // TODO: if needed can add 'sort, 'search', and 'direction' query here
-    Observable<Response<VimeoCollection<VimeoVideo>>> getMyVideos (@Query("query") String query,
-                                                                   @Query("page") Integer page,
-                                                                   @Query("per_page") Integer per_page,
-                                                                   @Query("filter") List<String> filter,
-                                                                   @Query("weak_search") Boolean weak_search);
-
-    @GET("users/{id}/videos") // TODO: if needed can add 'sort', 'search', and 'direction' query here
-    Observable<Response<VimeoCollection<VimeoVideo>>> getUsersVideos (@Path("id") long user_id,
-                                                                      @Query("page") Integer page,
-                                                                      @Query("per_page") Integer per_page,
-                                                                      @Query("filter") List<String> filter,
-                                                                      @Query("weak_search") Boolean weak_search);
-
     @GET("me")
-    Observable<Response<VimeoUser>> getMyProfile();
-
-    @GET("me/followers") // TODO: can add 'direction', 'query', and 'sort' queries here if needed
-    Observable<Response<VimeoCollection<VimeoUser>>> getMyFollowers (@Query("page") Integer page,
-                                                                     @Query("per_page") Integer per_page);
-
-    @GET("users/{id}/followers") // TODO: can add 'direction', 'query', and 'sort' queries here if needed
-    Observable<Response<VimeoCollection<VimeoUser>>> getUsersFollowers (@Path("id") long user_id,
-                                                                        @Query("page") Integer page,
-                                                                        @Query("per_page") Integer per_page);
-
-    @GET("me/following") // TODO: can add 'direction', 'query', and 'sort' queries here if needed
-    Observable<Response<VimeoCollection<VimeoUser>>> getMyFollowing (@Query("page") Integer page,
-                                                                     @Query("per_page") Integer per_page);
-
-    @GET("users/{id}/following") // TODO: can add 'direction', 'query', and 'sort' queries here if needed
-    Observable<Response<VimeoCollection<VimeoUser>>> getUsersFollowing (@Path("id") long user_id,
-                                                                        @Query("page") Integer page,
-                                                                        @Query("per_page") Integer per_page);
-
-    @GET("videos/{id}/comments")
-    Observable<Response<VimeoCollection<VimeoComment>>> getVideoComments (@Path("id") long video_id,
-                                                                          @Query("direction") String direction,
-                                                                          @Query("page") Integer page,
-                                                                          @Query("per_page") Integer per_page);
+    Observable<VimeoUser> getMyProfile();
 
     @GET
     Observable<Response<VimeoCollection<VimeoComment>>> getComments (@Url String url,
                                                                      @Query("direction") String direction,
                                                                      @Query("page") Integer page,
                                                                      @Query("per_page") Integer per_page);
-
-    @GET("videos/{id}/likes")
-    Observable<Response<VimeoCollection<VimeoUser>>> getVideoLikes (@Path("id") long video_id,
-                                                                    @Query("direction") String direction,
-                                                                    @Query("page") Integer page,
-                                                                    @Query("per_page") Integer per_page,
-                                                                    @Query("sort") String sort);
-
-    @GET
-    Observable<Response<VimeoCollection<VimeoUser>>> getLikes (@Url String url,
-                                                               @Query("direction") String direction,
-                                                               @Query("page") Integer page,
-                                                               @Query("per_page") Integer per_page,
-                                                               @Query("sort") String sort);
 
     @GET
     Observable<Response<VimeoCollection<VimeoChannel>>> searchChannels (@Url String url,
@@ -167,5 +106,12 @@ public interface VimeoApiService {
     Single<VimeoComment> postReplyToCommentOnVideo(@Path("video_id") long video_id,
                                           @Path("comment_id") long comment_id,
                                           @Field("text") String reply);
+    @GET
+    Observable<VimeoCollection<VimeoVideo>> getVideoList1 (@Url String url,
+                                                                    @Query("query") String query,
+                                                                    @Query("page") Integer page,
+                                                                    @Query("per_page") Integer per_page);
+
+
 
 }

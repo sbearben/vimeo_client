@@ -74,6 +74,9 @@
     <string name="follow_button_follow">Follow</string>
     <string name="follow_button_following">Following</string>
 
+    <!-- Logout Button -->
+    <string name="logout_button_logout">Logout</string>
+
     <!-- ReplyFragment -->
     <string name="fragment_reply_post">Post</string>
     <string name="fragment_reply_edittext_hint">Type&#8230;</string>

@@ -1,28 +1,21 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video.likes;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
 import retrofit2.Response;
 import uk.co.victoriajanedavis.vimeo_api_test.R;
-import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoComment;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoConnection;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoUser;
 import uk.co.victoriajanedavis.vimeo_api_test.data.model.VimeoVideo;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListAdapter;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.ListItemViewHolder;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.BaseFragment;
+import uk.co.victoriajanedavis.vimeo_api_test.ui.base.list.ListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonListAdapter;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonRxBinding;
-import uk.co.victoriajanedavis.vimeo_api_test.ui.base.follow.FollowButtonViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.search.results.people.UserViewHolder;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.user.otheruser.OtherUserFragment;
 import uk.co.victoriajanedavis.vimeo_api_test.ui.video.base.VideoTabFragment;
@@ -53,6 +46,9 @@ public class LikesFragment extends VideoTabFragment<VimeoUser> implements Follow
         getPresenter().attachView(this);
 
         mConnection = (VimeoConnection) getArguments().getParcelable(ARG_VIMEO_CONNECTION);
+        if (savedInstanceState != null) {
+            mConnection = savedInstanceState.getParcelable(SAVED_VIMEO_CONNECTION);
+        }
     }
 
     @Override
