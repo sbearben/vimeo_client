@@ -17,14 +17,12 @@ public abstract class ListItemViewHolder<T> extends RecyclerView.ViewHolder {
     protected BaseFragment mBaseFragment;
 
     protected T mListItem;
-    protected View mListItemView;
 
 
     public ListItemViewHolder (BaseFragment baseFragment, View itemView) {
         super (itemView);
 
         mBaseFragment = baseFragment;
-        mListItemView = itemView;
     }
 
     public abstract void bind (@NonNull T listItem);
