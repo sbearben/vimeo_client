@@ -42,9 +42,10 @@ public class UpNextFragment extends VideoTabFragment<VimeoVideo> {
         }
     }
 
+
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
         getPresenter().detachView();
     }
 

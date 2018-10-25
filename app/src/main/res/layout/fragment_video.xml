@@ -96,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <!--
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/fragment_video_imageview"
                         android:layout_width="match_parent"
@@ -104,9 +105,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:color/darker_gray" />
+                        app:srcCompat="@android:color/darker_gray" /> -->
 
-                    <!--
                     <WebView
                         android:id="@+id/fragment_video_imageview"
                         android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:color/darker_gray" /> -->
+                        app:srcCompat="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/fragment_video_timelength_textview"

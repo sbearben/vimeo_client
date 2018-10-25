@@ -69,13 +69,10 @@ public class UserVideoViewHolder extends ListItemViewHolder<VimeoVideo> implemen
                 .subscribe(str -> mTimeTextView.setText(str)));
 
         GlideApp.with(mBaseFragment)
-                .load(mListItem.getPictures().getSizesList().get(2).getLink()) // get(1) since when looking at Json response it appears this is the location of the most reasonable size
-                //.thumbnail(Glide.with(itemView.getContext())
-                        //.load(mListItem.getPictures().getSizesList().get(0).getLink()))
+                .load(mListItem.getPictures().getSizesList().get(2).getLink())
                 .placeholder(R.drawable.video_image_placeholder)
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
-                //.transition(withCrossFade())
                 .into(mImageView);
     }
 

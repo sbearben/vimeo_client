@@ -1,6 +1,9 @@
 package uk.co.victoriajanedavis.vimeo_api_test.ui.video;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -49,8 +56,8 @@ public class VideoFragment extends BaseFragment {
     private RxPublishEventBus mEventBus;
     private Disposable mDisposable;
 
-    //@BindView(R.id.fragment_video_imageview) WebView mImageView;
-    @BindView(R.id.fragment_video_imageview) AppCompatImageView mImageView;
+    @BindView(R.id.fragment_video_imageview) WebView mImageView;
+    //@BindView(R.id.fragment_video_imageview) AppCompatImageView mImageView;
     @BindView(R.id.fragment_video_timelength_textview) TextView mTimeTextView;
 
     @BindView(R.id.fragment_video_details_layout) ConstraintLayout mDetailsLayout;
@@ -137,8 +144,6 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void initViews(View view) {
-
-
         // Dynamically set the height of the video container
         int videoHeight;
         if (mScreenDimensions.getWidth() < mScreenDimensions.getHeight()) {
@@ -156,7 +161,7 @@ public class VideoFragment extends BaseFragment {
         params.setMargins(0, videoHeight, 0, 0);
         mDetailsLayout.setLayoutParams(params);
 
-
+        /*
         GlideApp.with(this)
                 .load(mVideo.getPictures().getSizesList().get(2).getLinkWithPlayButton())
                 .thumbnail(Glide.with(this)
@@ -165,8 +170,9 @@ public class VideoFragment extends BaseFragment {
                 .fallback(R.drawable.video_image_placeholder)
                 .fitCenter()
                 .into(mImageView);
+                */
 
-        //initWebView();
+        initWebView();
 
 
         mTimeTextView.setText(VimeoTextUtil.formatSecondsToDuration(mVideo.getDurationSeconds()));
@@ -200,7 +206,6 @@ public class VideoFragment extends BaseFragment {
     }
 
 
-    /*
     @SuppressLint("SetJavaScriptEnabled")
     public void initWebView() {
         String webplayerUrl = "https://player.vimeo.com/video/" + mVideo.getId();
@@ -231,7 +236,6 @@ public class VideoFragment extends BaseFragment {
         mImageView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; U; Android 2.0; en-us; Droid Build/ESD20) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17");
         mImageView.loadUrl(webplayerUrl);
     }
-    */
 
     @Override
     public void onDestroyView() {

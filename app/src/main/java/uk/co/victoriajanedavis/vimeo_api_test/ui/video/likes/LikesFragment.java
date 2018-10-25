@@ -63,8 +63,8 @@ public class LikesFragment extends VideoTabFragment<VimeoUser> implements Follow
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
         getPresenter().detachView();
     }
 

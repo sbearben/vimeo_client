@@ -54,6 +54,7 @@ public class CommentsFragment extends VideoTabFragment<VimeoComment> {
         if (savedInstanceState != null) {
             mConnection = savedInstanceState.getParcelable(SAVED_VIMEO_CONNECTION);
         }
+        setVimeoConnection();
     }
 
     @Override
@@ -72,15 +73,19 @@ public class CommentsFragment extends VideoTabFragment<VimeoComment> {
 
     @Override
     public void onRefresh() {
-        if (mListAdapter instanceof CommentHeaderListAdapter) {
-            ((CommentHeaderListAdapter<VimeoComment>) mListAdapter).setVimeoConnection(mConnection);
-        }
+        setVimeoConnection();
         super.onRefresh();
     }
 
+    public void setVimeoConnection() {
+        if (mListAdapter instanceof CommentHeaderListAdapter) {
+            ((CommentHeaderListAdapter<VimeoComment>) mListAdapter).setVimeoConnection(mConnection);
+        }
+    }
+
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
         getPresenter().detachView();
     }
 
